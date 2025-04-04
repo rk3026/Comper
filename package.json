@@ -1,6 +1,15 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm start --prefix privacy-forum-frontend",
+    "server": "npm start --prefix privacy-forum-backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
