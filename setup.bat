@@ -2,14 +2,14 @@
 echo ================================
 echo Installing frontend dependencies
 echo ================================
-cd privacy-forum-frontend
+cd app/privacy-forum-frontend
 call npm install
 cd ..
 
 echo ================================
 echo Installing backend dependencies
 echo ================================
-cd privacy-forum-backend
+cd app/privacy-forum-backend
 call npm install cors express body-parser sqlite3
 cd ..
 
