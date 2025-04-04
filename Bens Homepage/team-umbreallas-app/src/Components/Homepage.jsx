@@ -1,0 +1,57 @@
+import React from 'react';
+import './Homepage.css';
+
+const trendingCompetitions = [
+  {
+    title: 'Competition Placeholder 1',
+    description: 'This is a placeholder for a trending competition.',
+    startTime: 'April 10, 2025 10:00 AM',
+    endTime: 'April 12, 2025 6:00 PM'
+  },
+  {
+    title: 'Competition Placeholder 2',
+    description: 'This is a placeholder for a trending competition.',
+    startTime: 'April 15, 2025 8:00 AM',
+    endTime: 'April 16, 2025 4:00 PM'
+  },
+  {
+    title: 'Competition Placeholder 3',
+    description: 'This is a placeholder for a trending competition.',
+    startTime: 'April 20, 2025 12:00 PM',
+    endTime: 'April 22, 2025 8:00 PM'
+  }
+];
+
+export default function Homepage() {
+  return (
+    <div className="homepage-container">
+      <header className="homepage-header">
+        <h1>Welcome to Compers</h1>
+        <p>Your anonymous arena for competitive glory</p>
+      </header>
+
+      <section className="search-section">
+        <input
+          type="text"
+          placeholder="Search competitions or topics..."
+          className="search-bar"
+        />
+      </section>
+
+      <section className="trending-section">
+        <h2>Trending Competitions</h2>
+        <div className="trending-row">
+          {trendingCompetitions.map((comp, index) => (
+            <div key={index} className="competition-card">
+              <h3>{comp.title}</h3>
+              <p>{comp.description}</p>
+              <p><strong>Start:</strong> {comp.startTime}</p>
+              <p><strong>End:</strong> {comp.endTime}</p>
+              <button className="join-button">Join Anonymously</button>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
