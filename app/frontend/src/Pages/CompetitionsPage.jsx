@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Homepage.css'; // Use the same styles as Homepage
+import './CompetitionsPage.css'; // Use the existing styles
 
 export default function CompetitionsPage() {
   const [competitions, setCompetitions] = useState([]); // All competitions
@@ -91,6 +91,7 @@ export default function CompetitionsPage() {
       </section>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="competition-sections">
         <div className="trending-row">
           {filteredCompetitions.length === 0 ? (
@@ -118,6 +119,9 @@ export default function CompetitionsPage() {
 >>>>>>> 61d62b1 (Worked on All Competitions page)
 =======
       {/* List of Competitions */}
+=======
+      {/* Competitions List Container */}
+>>>>>>> dd863fd (Added pictures to Competitions Page)
       <div className="competitions-list">
         {filteredCompetitions.length === 0 ? (
           <p>No competitions found.</p>
@@ -128,6 +132,13 @@ export default function CompetitionsPage() {
               className="competition-card" 
               onClick={() => navigate(`/competitions/details`, { state: { competition: comp }})} // Pass competition details
             >
+              {/* Image at the top */}
+              {comp.attachmentURL && (
+                <div className="competition-image">
+                  <img src={comp.attachmentURL} alt={comp.title} width="100%" height="200px" style={{ objectFit: 'cover' }} />
+                </div>
+              )}
+
               <h2>{comp.title}</h2>
               <p>{comp.description}</p>
               <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
