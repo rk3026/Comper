@@ -1,6 +1,6 @@
 // models/Competition.js
-const { getPool } = require('../db/database');
-const sql = require('mssql');
+const { sql, getPool } = require('../db/database');
+//const sql = require('mssql');
 
 /**
  * Create a new competition record in the database.
