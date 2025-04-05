@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import './CreateCompetition.css';
 
 export default function CreateCompetition() {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [tags, setTags] = useState(['']);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const handleAddTag = () => {
     setTags([...tags, '']);
@@ -16,8 +20,16 @@ export default function CreateCompetition() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Placeholder for submitting form data
-    console.log('Competition created');
+
+    const competitionData = {
+      title,
+      description,
+      tags: tags.filter(tag => tag.trim() !== ''),
+      startDate,
+      endDate,
+    };
+
+    console.log('Competition data:', competitionData);
   };
 
   return (
@@ -25,10 +37,22 @@ export default function CreateCompetition() {
       <h1>Create a New Competition</h1>
       <form onSubmit={handleSubmit} className="create-form">
         <label>Title</label>
-        <input type="text" placeholder="Enter competition title" required />
+        <input
+          type="text"
+          placeholder="Enter competition title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
         <label>Description</label>
-        <textarea placeholder="Enter description" rows={4} required />
+        <textarea
+          placeholder="Enter description"
+          rows={4}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
 
         <label>Criteria Tags</label>
         {tags.map((tag, index) => (
@@ -46,10 +70,20 @@ export default function CreateCompetition() {
         </button>
 
         <label>Start Date</label>
-        <input type="datetime-local" required />
+        <input
+          type="datetime-local"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+        />
 
         <label>End Date</label>
-        <input type="datetime-local" required />
+        <input
+          type="datetime-local"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+        />
 
         <button type="submit" className="submit-button">
           Create Competition
