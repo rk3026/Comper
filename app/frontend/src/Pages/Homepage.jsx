@@ -50,11 +50,14 @@ export default function Homepage() {
         </button>
       </header>
 
+      {/* Search Bar Section */}
       <section className="search-section">
         <input
           type="text"
           placeholder="Search competitions or topics..."
           className="search-bar"
+          value={searchQuery}  // Bind the input value to the state
+          onChange={handleSearchChange}  // Update the state when the user types
         />
       </section>
 
