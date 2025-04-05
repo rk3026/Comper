@@ -2,24 +2,45 @@ CREATE TABLE competitions (
     id INT PRIMARY KEY IDENTITY(1,1),
     title NVARCHAR(255),
     filetype NVARCHAR(255),
-    description NVARCHAR(2000),
-    startDesc NVARCHAR(2000),
+    description TEXT,
+    startDesc TEXT,
     startTime SMALLDATETIME,
     deadline SMALLDATETIME,
     voteEndTime SMALLDATETIME,
     attachmentURL NVARCHAR(2000)
 );
 
-CREATE TABLE posts (
+CREATE TABLE submissions (
     id INT PRIMARY KEY IDENTITY(1,1),
+    compID INT FOREIGN KEY REFERENCES competitions(id),
+    submissionTime SMALLDATETIME,
+    voteCount INT,
+    totalCriteriaPoints BIGINT,
     title NVARCHAR(255),
-    filetype NVARCHAR(255),
-    description NVARCHAR(2000),
-    startDesc NVARCHAR(2000),
-    startTime SMALLDATETIME,
-    deadline SMALLDATETIME,
-    voteEndTime SMALLDATETIME,
+    description TEXT,
     attachmentURL NVARCHAR(2000)
+);
+
+CREATE TABLE criteria (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    compID INT FOREIGN KEY REFERENCES competitions(id),
+    name NVARCHAR(255),
+    description TEXT,
+    maxPoints INT
+);
+
+CREATE TABLE competitionComments (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    compID INT FOREIGN KEY REFERENCES competitions(id),
+    content TEXT,
+    creationTime SMALLDATETIME,
+);
+
+CREATE TABLE submissionComments (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    subID INT FOREIGN KEY REFERENCES submissions(id),
+    content TEXT,
+    creationTime SMALLDATETIME,
 );
 
 //example entries
