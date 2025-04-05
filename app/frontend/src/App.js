@@ -11,6 +11,7 @@ import CompetitionDetails from './Pages/CompetitionDetails';
 import CompetitionsPage from './Pages/CompetitionsPage';
 import SubmissionDetails from './Pages/SubmissionDetails';
 import TopicsPage from './Pages/TopicsPage';
+import TopicPage from './Pages/TopicPage';
 import ThreadPage from './Pages/ThreadPage';
 import VotingPage from './Pages/VotingPage';
 import Topbar from './Pages/Topbar';
@@ -38,8 +39,11 @@ function App() {
         {/* Voting */}
         <Route path="/vote/:compId/:submissionId" element={<VotingPage />} />
 
-        {/* Topics & Threads */}
+        {/* Topics */}
         <Route path="/topics" element={<TopicsPage />} />
+        <Route path="/topics/:name" element={<TopicPage />} />
+
+        {/* Threads */}
         <Route path="/threads/:threadID" element={<ThreadPage />} />
         <Route path="/competitions/details" element={<CompetitionDetails />} />
       </Routes>
