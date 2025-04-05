@@ -45,13 +45,23 @@ async function getThreadWithComments(req, res) {
 async function addCommentToThread(req, res) {
   try {
     const { threadID } = req.params;
-    const { content } = req.body;
-    await threadModel.addCommentToThread(threadID, content);
-    res.status(201).json({ message: 'Comment added' });
+    const { content, replyTo } = req.body;
+
+    // Insert the comment into the database
+    const result = await threadModel.addCommentToThread(threadID, content, replyTo);
+
+    // Assuming `result` contains the inserted comment's data, including `id` and `creationTime`
+    res.status(201).json({
+      id: result.id, // The ID assigned to the new comment
+      content: result.content,
+      creationTime: result.creationTime,
+      replyTo: result.replyTo,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
+
 
 module.exports = {
   createThread,
