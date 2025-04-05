@@ -10,7 +10,27 @@ async function getSubmission(req, res) {
   }
 };
 
-module.exports = { getSubmission };
+async function createSubmission(req, res) {
+    try {
+	const data = {
+	    compID: req.body.compID,
+	    submissionTime: (new Date()).toISOString(),
+	    voteCount: 0,
+	    totalCriteriaPoints: 0,
+	    title: req.body.title,
+	    description: req.body.description,
+	    attachmentURL: req.body.attachmentURL
+	};
+
+	await submissionModel.createSubmission(data);
+	res.status(201).json({ message: "submission was successful" });
+    } catch (err) {
+	console.log(err.message);
+	res.status(500).json({ error: err.message });
+    }
+}
+
+module.exports = { getSubmission, createSubmission };
 
 /*
 const { 

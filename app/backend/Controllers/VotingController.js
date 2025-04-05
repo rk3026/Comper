@@ -1,11 +1,11 @@
 // controllers/VotingController.js
-const voteModel = require('../models/Vote'); 
+const voteModel = require('../Models/Vote'); 
 
 async function castVote(req, res)
 {
   try {
     voteModel.castVote(req.params.subID, req.params.points);
-    res.status(200);
+    res.status(200).end();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

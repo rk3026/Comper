@@ -10,7 +10,6 @@ export default function ThreadPage() {
   const [loading, setLoading] = useState(true);
   const [replyTo, setReplyTo] = useState(null); // To store the comment ID being replied to
   const [selectedComment, setSelectedComment] = useState(null); // To track the selected comment for highlighting
-
   // Reference for the comment form to scroll to it
   const commentFormRef = useRef(null);
 
@@ -26,7 +25,9 @@ export default function ThreadPage() {
         });
         
         setComments(data.comments || []);
+
         setLoading(false);
+
       } catch (err) {
         console.error('Error fetching thread:', err);
         setLoading(false);
@@ -35,6 +36,8 @@ export default function ThreadPage() {
 
     fetchThreadData();
   }, [threadID]);
+
+
 
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {
@@ -56,6 +59,8 @@ export default function ThreadPage() {
             creationTime: result.creationTime ? new Date(result.creationTime).toISOString() : new Date().toISOString(),
             replyTo: result.replyTo,
           };
+
+          newEntry.id = comments.length+1; // Increment the comment count for the new entry
           setComments([...comments, newEntry]);
           setNewComment('');
           setReplyTo(null);  // Reset replyTo after posting
@@ -87,8 +92,8 @@ export default function ThreadPage() {
         behavior: 'smooth',
         block: 'center',
       });
-      setSelectedComment(commentId);  // This triggers the highlight by setting the selected comment
     }
+    setSelectedComment(Number(commentId));  // Convert commentId to a number for consistency
   };
   
 

@@ -24,4 +24,6 @@ router.delete('/:subID', submissionController.deleteSubmission);
 
 router.post('/details', submissionController.getSubmission);
 
+router.post('/create', submissionController.createSubmission);
+
 module.exports = router;

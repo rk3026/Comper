@@ -1,7 +1,5 @@
-// models/Competition.js
 const { sql, getPool } = require('../db/database');
 const { queryFromPool } = require('./Utility');
-//const sql = require('mssql');
 
 /**
  * Retrieve all competitions from the database.
@@ -24,8 +22,6 @@ async function getSubmissions(compID) {
  */
 async function createCompetition(data) {
   try {
-    console.log("createCompetition in Competition.js");
-
     const pool = await getPool();
     await pool.request()
       .input('title', sql.NVarChar(255), data.title)
@@ -48,4 +44,56 @@ async function createCompetition(data) {
   }
 }
 
-module.exports = { getCompetitions, getCompetitionDetails, getSubmissions, createCompetition };
+async function getCompetitionComments(compID) {
+  try {
+    // Fetch associated comments for the competition
+    const comments = await queryFromPool(`SELECT * FROM competitionComments WHERE compID = ${compID} ORDER BY creationTime ASC`);
+
+    // Return only the comments
+    return comments || [];
+  } catch (err) {
+    console.error('SQL error in getCompetitionComments:', err);
+    throw err;
+  }
+}
+
+/**
+ * Add a comment to a competition.
+ */
+async function addCommentToCompetition(compID, content, replyTo = null) {
+  try {
+    const pool = await getPool();
+    const result = await pool.request()
+      .input('content', sql.NVarChar(2000), content)
+      .input('replyTo', sql.Int, replyTo)  // Optional replyTo
+      .input('compID', sql.Int, compID)
+      .query(`
+        INSERT INTO [dbo].[competitionComments] (content, compID, creationTime)
+        OUTPUT INSERTED.id, INSERTED.content, INSERTED.creationTime
+        VALUES (@content, @compID, GETDATE());
+      `);
+
+    // Return the inserted comment data, including ID and creation time
+    const insertedComment = {
+      id: result.recordset[0].id, // Now the inserted comment data will be available in result.recordset
+      content: result.recordset[0].content,
+      replyTo: result.recordset[0].replyTo,
+      creationTime: result.recordset[0].creationTime,
+    };
+
+    return insertedComment;
+  } catch (err) {
+    console.error('SQL error in addCommentToCompetition:', err);
+    throw err;
+  }
+}
+
+
+module.exports = { 
+  getCompetitions, 
+  getCompetitionDetails, 
+  getSubmissions, 
+  createCompetition, 
+  getCompetitionComments, 
+  addCommentToCompetition 
+};
