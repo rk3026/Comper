@@ -47,9 +47,12 @@ export default function CompetitionDetails() {
     <div className="details-container">
       <h1>{competition.title}</h1>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> f4c6daf (Tried to solve conflict)
+=======
+>>>>>>> 4e88092 (Conflict Solved)
       <div className="competition-info">
         {competition.attachmentURL && (
           <div>
@@ -112,10 +115,14 @@ export default function CompetitionDetails() {
         </button>
       </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
   */}
 =======
 
 >>>>>>> f4c6daf (Tried to solve conflict)
+=======
+  */}
+>>>>>>> 4e88092 (Conflict Solved)
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
   );
