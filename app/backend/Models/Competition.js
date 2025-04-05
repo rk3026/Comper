@@ -38,6 +38,24 @@ async function createCompetition(data) {
         VALUES 
           (@title, @filetype, @description, @startDesc, @startTime, @deadline, @voteEndTime, @attachmentURL);
       `);
+
+      let maxCompID = (await queryFromPool(`SELECT MAX(id) FROM competitions;`))[0][''];
+
+      for(let i = 0; i < data.criteria.length; ++i)
+      {
+        await pool.request()
+        .input('compID', sql.Int, maxCompID)
+        .input('name', sql.NVarChar(255), data.criteria[i].name)
+        .input('description', sql.NVarChar(2000), data.criteria[i].description)
+        .input('maxPoints', sql.Int, data.criteria[i].maxPoints)
+        .query(`
+          INSERT INTO [dbo].[criteria]
+            (compID, name, description, maxPoints)
+          VALUES 
+            (@compID, @name, @description, @maxPoints);
+        `);
+      }
+
   } catch (err) {
     console.error('SQL error in createCompetition:', err);
     throw err;

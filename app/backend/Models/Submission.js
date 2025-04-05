@@ -6,7 +6,7 @@ async function createSubmission(data) {
   /*
   return queryFromPool(`
       INSERT INTO Submissions (compID, submissionTime, voteCount, totalCriteriaPoints, title, description, attachmentURL)
-      VALUES (${data.compID}, ${data.submissionTime}, ${data.voteCount}, ${data.totalCriteriaPoints}, ${data.title}, ${data.description}, ${data.attachmentUR}`)};
+      VALUES (${data.compID}, ${data.submissionTime}, ${data.voteCount}, ${data.totalCriteriaPoints}, ${data.title}, ${data.description}, ${data.attachmentURL}`)};
   */
 
     const pool = await getPool();
