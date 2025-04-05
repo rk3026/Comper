@@ -75,34 +75,54 @@ export default function SubmissionDetails() {
 
   return (
     <div className="details-submission">
-      <h1>{submission.title}</h1>
-      <p><strong>Description:</strong> {submission.description}</p>
-      <img src={submission.attachmentURL} alt="Submission" className="submission-image" width="100" height="100" />
-      <button className="vote-button" onClick={() => navigate(`/vote/${submission.compID}/${submissionId}`)}>VOTE</button>
+      <h1 className="submission-title">{submission.title}</h1>
+      <p className="submission-description">
+        <strong>Description:</strong> {submission.description}
+      </p>
+      {submission.attachmentURL && (
+        <div className="submission-image-container">
+          <img
+            src={submission.attachmentURL}
+            alt="Submission"
+            className="submission-image"
+          />
+        </div>
+      )}
+      <button
+        className="vote-button"
+        onClick={() => navigate(`/vote/${submission.compID}/${submissionId}`)}
+      >
+        Vote for this Submission
+      </button>
 
-      <hr />
-      <h2>Comments</h2>
+      <hr className="divider" />
+      <h2 className="comments-header">Comments</h2>
 
       <div className="comment-form">
         <textarea
+          className="comment-input"
           placeholder="Leave a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           rows={3}
-          cols={60}
         />
-        <br />
-        <button onClick={handleCommentSubmit}>Submit</button>
+        <button className="submit-comment-button" onClick={handleCommentSubmit}>
+          Submit Comment
+        </button>
       </div>
 
       <ul className="comment-list">
         {comments.length === 0 ? (
-          <li>No comments available.</li>
+          <li className="no-comments">No comments available.</li>
         ) : (
           comments.map((comment) => (
-            <li key={comment.id}>
-              <p>{comment.content}</p>
-              <small>{new Date(comment.creationTime).toLocaleString()}</small>
+            <li key={comment.id} className="comment-item">
+              <p className="comment-content">{comment.content}</p>
+              <div className="comment-timestamp-container">
+                <small className="comment-timestamp">
+                  {new Date(comment.creationTime).toLocaleString()}
+                </small>
+              </div>
             </li>
           ))
         )}
