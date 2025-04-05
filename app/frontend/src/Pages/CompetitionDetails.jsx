@@ -7,7 +7,8 @@ export default function CompetitionDetails() {
   const navigate = useNavigate();
   const competitionId = location.state?.competition.id;
 
-  const [competition, setCompetition] = useState([]);
+  const [competition, setCompetition] = useState({});
+  const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,8 +23,8 @@ export default function CompetitionDetails() {
       })
     }).then(response => response.json())
     .then(data => {
-      console.log(data);
-      setCompetition(data);
+      setCompetition(data.details);
+      setSubmissions(data.submissions);
       setLoading(false);
     })
     .catch(err => {
@@ -41,20 +42,18 @@ export default function CompetitionDetails() {
     );
   }
 
-  
-
   if (loading) {
     return <div>Loading Submissions...</div>;
   }
 
+  console.log(competition);
+
   return (
     <div className="details-container">
-      <h1>{competition.details.title}</h1>
-      {/*
+      <h1>{competition.title}</h1>
       <p><strong>Description:</strong> {competition.description}</p>
       <p><strong>Start:</strong> {competition.startTime}</p>
       <p><strong>End:</strong> {competition.endTime}</p>
-*/}
 
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
