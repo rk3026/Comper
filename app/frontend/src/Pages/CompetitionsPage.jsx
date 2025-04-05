@@ -44,6 +44,7 @@ export default function CompetitionsPage() {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div className="competitions-page">
       <h1>All Competitions</h1>
       <div className="competitions-list">
@@ -57,6 +58,9 @@ export default function CompetitionsPage() {
         ))}
 =======
     <div className="homepage-container" style={{ backgroundColor: 'white' }}> {/* Default light gray background */}
+=======
+    <div className="homepage-container" style={{ backgroundColor: '#f3f4f6' }}> {/* Default light gray background */}
+>>>>>>> 6a9900e (Added Search in All Competitions Page)
       <header className="homepage-header">
         <h1>All Competitions</h1>
         <p>View all current competitions</p>
