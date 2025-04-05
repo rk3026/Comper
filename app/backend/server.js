@@ -12,7 +12,6 @@ async function startServer() {
   try {
     // Connect to the database and initialize tables
     await connectToDatabase();
-    await initializeDatabase();
     
     app.use(cors());
     app.use(bodyParser.json());
