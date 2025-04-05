@@ -1,4 +1,3 @@
-
 /* Homepage.css */
 
 .homepage-container {
@@ -43,12 +42,24 @@
   outline: none;
 }
 
-.trending-section {
-  max-width: 1200px;
-  margin: 0 auto;
+/* Flexbox container for all competition sections */
+.competition-sections {
+  display: flex;
+  justify-content: space-evenly; /* Evenly space out the sections */
+  gap: 2rem;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.trending-section h2 {
+.trending-section, 
+.closing-soon-section, 
+.about-to-start-section {
+  width: 30%; /* Each section will take up 30% of the available width */
+}
+
+.trending-section h2, 
+.closing-soon-section h2, 
+.about-to-start-section h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: #111827;
