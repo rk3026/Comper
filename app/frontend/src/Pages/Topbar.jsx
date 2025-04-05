@@ -14,11 +14,7 @@ export default function Topbar() {
       <nav className="topbar-nav">
         <Link to="/">Home</Link>
         <Link to="/topics">Topics</Link>
-        <Link to="/create">+ Competition</Link>
-        <Link to="/threads/1">Thread 1</Link>
         <Link to="/competitions">Competitions</Link>
-
-        <Link to={`/vote/${TEST_COMP_ID}/${TEST_SUBMISSION_ID}`}>vote</Link>
       </nav>
     </div>
   );
