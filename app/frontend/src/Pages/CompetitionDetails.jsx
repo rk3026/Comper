@@ -49,7 +49,7 @@ export default function CompetitionDetails() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userID: 'anonymous' }) // Replace with the actual user data
+      body: JSON.stringify({ userID: 'anonymous' })
     })
       .then(res => res.json())
       .then(data => {
