@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const submissionController = require('../Controllers/SubmissionController');
 
+/*
 // POST /api/submissions - Create a new submission
 router.post('/', submissionController.createSubmission);
 
@@ -18,5 +19,9 @@ router.put('/:subID', submissionController.updateSubmission);
 
 // DELETE /api/submissions/:subID - Delete a submission by ID
 router.delete('/:subID', submissionController.deleteSubmission);
+
+*/
+
+router.post('/details', submissionController.getSubmission);
 
 module.exports = router;

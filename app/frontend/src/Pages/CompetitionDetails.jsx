@@ -9,6 +9,7 @@ export default function CompetitionDetails() {
 
   const [competition, setCompetition] = useState({});
   const [submissions, setSubmissions] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,27 +32,24 @@ export default function CompetitionDetails() {
       console.error('Error fetching competition details: ', err);
       setLoading(false);
     });
-  }, [competitionId]); // <- effect waits till the competition id is received
+  }, []);
 
   if (!competitionId) {
     return (
-      <div className="details-container">
+      <div className="no-data-found">
         <h2>No competition data found.</h2>
         <button onClick={() => navigate('/')}>Go Back</button>
       </div>
     );
   }
 
-  if (loading) {
-    return <div>Loading Submissions...</div>;
-  }
-
-  console.log(competition);
-
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
+<<<<<<< HEAD
 
+=======
+>>>>>>> EvanBranch
       <div className="competition-info">
         {competition.attachmentURL && (
           <div>
@@ -65,9 +63,10 @@ export default function CompetitionDetails() {
         <p><strong>Status:</strong> {competition.status}</p>
       </div>
 
+    {/*
       <div className="comments-section">
         <h2>Comments</h2>
-        {loadingComments ? (
+        {loading ? (
           <p>Loading comments...</p>
         ) : (
           <div>
@@ -83,10 +82,11 @@ export default function CompetitionDetails() {
           </div>
         )}
       </div>
+  */}
 
       <div className="submissions-section">
         <h2>Submissions</h2>
-        {loadingSubmissions ? (
+        {loading ? (
           <p>Loading submissions...</p>
         ) : (
           <div className="submissions-grid">
@@ -94,8 +94,8 @@ export default function CompetitionDetails() {
               <p>No submissions yet. Be the first to submit!</p>
             ) : (
               submissions.map((submission, index) => (
-                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/${submission.submissionID}`)}>
-                  <img src={submission.imageURL} alt="Submission" className="submission-image" />
+                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/details`, { state: { submission: { id: submission.id }}})}>
+                  <img src={submission.attachmentURL} alt="Submission" className="submission-image" width="100" height="100" />
                   <h3>{submission.title}</h3>
                   <p>{submission.description}</p>
                 </div>
@@ -105,12 +105,17 @@ export default function CompetitionDetails() {
         )}
       </div>
 
+    {/*
       <div className="join-section">
         <button className="join-button" onClick={handleJoinCompetition} disabled={joining}>
           {joining ? 'Joining...' : 'Join Competition'}
         </button>
       </div>
+<<<<<<< HEAD
 
+=======
+  */}
+>>>>>>> EvanBranch
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
   );

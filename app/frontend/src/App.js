@@ -9,6 +9,7 @@ import CreateSubmission from './Pages/CreateSubmission';
 import SubmissionPage from './Pages/SubmissionPage';
 import CompetitionDetails from './Pages/CompetitionDetails';
 import CompetitionsPage from './Pages/CompetitionsPage';
+import SubmissionDetails from './Pages/SubmissionDetails';
 import TopicsPage from './Pages/TopicsPage';
 import ThreadPage from './Pages/ThreadPage';
 import VotingPage from './Pages/VotingPage';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/competitions" element={<CompetitionsPage />} />
         <Route path="/competitions/details" element={<CompetitionDetails />} />
         <Route path="/create" element={<CreateCompetition />} />
+	<Route path="/submissions/details" element={<SubmissionDetails />} /> // after clicking a specific submission under a competition
 
         {/* Submissions */}
         <Route path="/submission" element={<SubmissionPage />} />

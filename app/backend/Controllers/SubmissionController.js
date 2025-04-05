@@ -1,4 +1,18 @@
-// controllers/SubmissionController.js
+const submissionModel = require('../Models/Submission');
+
+async function getSubmission(req, res) {
+  try {
+    const subID = req.body.id;
+    const submission = await submissionModel.getSubmission(subID);
+    res.status(200).json(submission);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { getSubmission };
+
+/*
 const { 
     createSubmission, 
     listSubmissions, 
@@ -7,6 +21,7 @@ const {
     deleteSubmission 
   } = require('../Models/Submission');
   const { v4: uuidv4 } = require('uuid');
+  
   
   exports.createSubmission = async (req, res) => {
     try {
@@ -64,4 +79,4 @@ const {
       res.status(500).json({ error: err.message });
     }
   };
-  
+  */
