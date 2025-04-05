@@ -90,8 +90,8 @@ export default function CompetitionDetails() {
               <p>No submissions yet. Be the first to submit!</p>
             ) : (
               submissions.map((submission, index) => (
-                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/details`, { state: { submission: { id: submission.submissionID }}})}>
-                  <img src={submission.imageURL} alt="Submission" className="submission-image" />
+                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/details`, { state: { submission: { id: submission.id }}})}>
+                  <img src={submission.attachmentURL} alt="Submission" className="submission-image" width="100" height="100" />
                   <h3>{submission.title}</h3>
                   <p>{submission.description}</p>
                 </div>
@@ -101,11 +101,13 @@ export default function CompetitionDetails() {
         )}
       </div>
 
+    {/*
       <div className="join-section">
         <button className="join-button" onClick={handleJoinCompetition} disabled={joining}>
           {joining ? 'Joining...' : 'Join Competition'}
         </button>
       </div>
+  */}
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
   );
