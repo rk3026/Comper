@@ -32,8 +32,8 @@ export default function Homepage() {
 
     useEffect(() => {
       fetch('http://localhost:5000/api/competitions')
-	.then(response => response.json())
-	.then(data => setCompetitions(data));
+.then(response => response.json())
+.then(data => setCompetitions(data));
     }, []);
 
   return (

@@ -10,7 +10,7 @@ echo ================================
 echo Installing backend dependencies
 echo ================================
 call cd app\backend
-call npm install cors axios express body-parser sqlite3 mssql dotenv
+call npm install cors axios express body-parser mssql dotenv
 call cd ..\..
 
 echo ================================
