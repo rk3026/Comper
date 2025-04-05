@@ -10,7 +10,7 @@ router.get('/', competitionController.listCompetitions);
 //router.get('/:compID', competitionController.getCompetition);
 
 // POST /api/competitions - Create a new competition
-router.post('/', competitionController.createCompetition);
+//router.post('/', competitionController.createCompetition);
 
 // PUT /api/competitions/:compID - Update a competition by ID
 //router.put('/:compID', competitionController.updateCompetition);
