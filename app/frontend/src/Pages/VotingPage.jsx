@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 // Replace with your actual API base URL
-const API_BASE_URL = 'https://your-api-link.com/api';
+const API_BASE_URL = `${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria`;
 // For demonstration, we use a simple fixed captcha value
 const CAPTCHA_VALUE = '12345';
 
@@ -25,7 +25,7 @@ const VotingPage = () => {
   useEffect(() => {
     const fetchCriteria = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/criteria?compID=${compId}`);
+        const response = await fetch(`${API_BASE_URL}/${compId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch criteria.');
         }
