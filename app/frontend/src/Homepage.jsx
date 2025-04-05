@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
+// Just listing out all competitions for the trending section instead of figuring out which one is trending currently
+/*
 const trendingCompetitions = [
   {
     id: 1,
@@ -25,9 +27,15 @@ const trendingCompetitions = [
     endTime: 'April 22, 2025 8:00 PM'
   }
 ];
+*/
 
 export default function Homepage() {
   const navigate = useNavigate();
+  const [competitions, setCompetitions] = useState([]);
+
+  fetch('http://localhost:5000/api/competitions')
+	.then(response => response.json())
+	.then(data => setCompetitions(data));
 
   const handleJoin = (competition) => {
     navigate(`/competition/${competition.id}`, { state: { competition } });
@@ -36,8 +44,8 @@ export default function Homepage() {
   return (
     <div className="homepage-container">
       <header className="homepage-header">
-        <div className="header-top">
-          <div className="header-content">
+        <div className="header-content">
+          <div>
             <h1>Welcome to Compers</h1>
             <p>Your anonymous arena for competitive glory</p>
           </div>
@@ -66,8 +74,8 @@ export default function Homepage() {
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
-          {trendingCompetitions.map((comp) => (
-            <div key={comp.id} className="competition-card">
+          {trendingCompetitions.map((comp, index) => (
+            <div key={index} className="competition-card">
               <h3>{comp.title}</h3>
               <p>{comp.description}</p>
               <p><strong>Start:</strong> {comp.startTime}</p>
@@ -80,6 +88,7 @@ export default function Homepage() {
               </button>
             </div>
           ))}
+    */}
         </div>
       </section>
     </div>
