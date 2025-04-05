@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
+// Just listing out all competitions for the trending section instead of figuring out which one is trending currently
+/*
 const trendingCompetitions = [
   {
     title: 'Competition Placeholder 1',
@@ -22,9 +24,15 @@ const trendingCompetitions = [
     endTime: 'April 22, 2025 8:00 PM'
   }
 ];
+*/
 
 export default function Homepage() {
   const navigate = useNavigate();
+  const [competitions, setCompetitions] = useState([]);
+
+  fetch('http://localhost:5000/api/competitions')
+	.then(response => response.json())
+	.then(data => setCompetitions(data));
 
   return (
     <div className="homepage-container">
@@ -51,6 +59,15 @@ export default function Homepage() {
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
+    {competitions.map((comp, index) => (
+	<div key={index} className="competition-card">
+	    <h3>{comp.name}</h3>
+	    <p>{comp.description}</p>
+	</div>
+    ))}
+
+    
+      {/*
           {trendingCompetitions.map((comp, index) => (
             <div key={index} className="competition-card">
               <h3>{comp.title}</h3>
@@ -60,6 +77,7 @@ export default function Homepage() {
               <button className="join-button">Join Anonymously</button>
             </div>
           ))}
+    */}
         </div>
       </section>
     </div>

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { getCompetitions } = require('../Models/Competition.js');
+
 // Sample data for competitions
 const competitions = [
     { id: 1, name: 'Coding Challenge', description: 'A coding competition' },
@@ -9,6 +11,7 @@ const competitions = [
 
 // Route to get all competitions
 router.get('/', (req, res) => {
+    await getCompetitions();
     res.json(competitions);
 });
 

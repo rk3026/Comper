@@ -1,7 +1,7 @@
 // routes/competitionRoutes.js
 const express = require('express');
 const router = express.Router();
-const competitionController = require('../controllers/CompetitionController');
+const competitionController = require('../Controllers/CompetitionController');
 
 // GET /api/competitions - Retrieve a list of competitions
 router.get('/', competitionController.listCompetitions);
