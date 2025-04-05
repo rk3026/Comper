@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-//import './CompetitionDetails.css';
+import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
   const location = useLocation();
@@ -51,6 +51,7 @@ export default function CompetitionDetails() {
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
+<<<<<<< HEAD
       <p><strong>Description:</strong> {competition.description}</p>
       <p><strong>Start:</strong> {new Date(competition.startTime).toLocaleString()}</p>
       <p><strong>End:</strong> {new Date(competition.endTime).toLocaleString()}</p>
@@ -61,6 +62,67 @@ export default function CompetitionDetails() {
 	  <p>{submission.description}</p>
 	</div>
       ))}
+=======
+
+      <div className="competition-info">
+        {competition.attachmentURL && (
+          <div>
+            <img src={competition.attachmentURL} alt="Competition Attachment" className="competition-attachment" />
+          </div>
+        )}
+        <p><strong>Description:</strong> {competition.description}</p>
+        <p><strong>Start Time:</strong> {new Date(competition.startTime).toLocaleString()}</p>
+        <p><strong>End Time:</strong> {new Date(competition.endTime).toLocaleString()}</p>
+        <p><strong>Submission File Type:</strong> {competition.submissionFileType}</p>
+        <p><strong>Status:</strong> {competition.status}</p>
+      </div>
+
+      <div className="comments-section">
+        <h2>Comments</h2>
+        {loadingComments ? (
+          <p>Loading comments...</p>
+        ) : (
+          <div>
+            {comments.length === 0 ? (
+              <p>No comments yet. Be the first to comment!</p>
+            ) : (
+              comments.map((comment, index) => (
+                <div key={index} className="comment">
+                  <p><strong>{comment.username}</strong>: {comment.text}</p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="submissions-section">
+        <h2>Submissions</h2>
+        {loadingSubmissions ? (
+          <p>Loading submissions...</p>
+        ) : (
+          <div className="submissions-grid">
+            {submissions.length === 0 ? (
+              <p>No submissions yet. Be the first to submit!</p>
+            ) : (
+              submissions.map((submission, index) => (
+                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/${submission.submissionID}`)}>
+                  <img src={submission.imageURL} alt="Submission" className="submission-image" />
+                  <h3>{submission.title}</h3>
+                  <p>{submission.description}</p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="join-section">
+        <button className="join-button" onClick={handleJoinCompetition} disabled={joining}>
+          {joining ? 'Joining...' : 'Join Competition'}
+        </button>
+      </div>
+>>>>>>> origin/RossBranch
 
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
