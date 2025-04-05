@@ -28,7 +28,7 @@ async function getSubmission(subID) {
   const pool = await poolPromise;
   const result = await pool.request()
     .input('subID', sql.UniqueIdentifier, subID)
-    .query(`SELECT * FROM Submission WHERE subID = @subID`);
+    .query(`SELECT * FROM Submission WHERE id = @subID`);
   return result.recordset[0];
 }
 
