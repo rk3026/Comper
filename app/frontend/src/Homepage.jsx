@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
@@ -30,9 +30,11 @@ export default function Homepage() {
   const navigate = useNavigate();
   const [competitions, setCompetitions] = useState([]);
 
-  fetch('http://localhost:5000/api/competitions')
-	.then(response => response.json())
-	.then(data => setCompetitions(data));
+    useEffect(() => {
+      fetch('http://localhost:5000/api/competitions')
+.then(response => response.json())
+.then(data => setCompetitions(data));
+    }, []);
 
   return (
     <div className="homepage-container">
@@ -61,8 +63,12 @@ export default function Homepage() {
         <div className="trending-row">
     {competitions.map((comp, index) => (
 	<div key={index} className="competition-card">
-	    <h3>{comp.name}</h3>
-	    <p>{comp.description}</p>
+	    <h3>{comp.title}</h3>
+	    <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
+	    <p><strong>Start:</strong> {comp.startTime}</p>
+            <p><strong>End:</strong> {comp.deadline}</p>
+	    <img src={comp.attachmentURL} width="200" height="200"/>
+	    <button className="join-button">Join Anonymously</button>
 	</div>
     ))}
 
