@@ -15,17 +15,22 @@
     text-align: center;
   }
   
-  .details-container p {
+  .competition-info {
     font-size: 1.2rem;
     color: #555;
     line-height: 1.6;
+    margin-top: 20px;
   }
   
-  .details-container strong {
+  .competition-info strong {
     font-weight: bold;
   }
   
-  .details-container img {
+  .competition-info p {
+    margin: 8px 0;
+  }
+  
+  .competition-attachment {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
@@ -48,19 +53,5 @@
   
   .details-container .back-button:hover {
     background-color: #0056b3;
-  }
-  
-  .details-container button {
-    background-color: #28a745;
-    color: white;
-    font-size: 1.1rem;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .details-container button:hover {
-    background-color: #218838;
   }
   
