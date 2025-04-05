@@ -35,9 +35,17 @@ export default function Homepage() {
             <p>Your anonymous arena for competitive glory</p>
           </div>
         </div>
-        <button className="add-competition-button" onClick={() => navigate('/create')}>
-          + Add Competition
-        </button>
+        <div className="button-row">
+          <button className="add-competition-button" onClick={() => navigate('/create')}>
+            + Add Competition
+          </button>
+          <button className="go-to-thread-button" onClick={() => navigate('/thread')}>
+            → Go to Thread Page
+          </button>
+          <button className="browse-topics-button" onClick={() => navigate('/topics')}>
+            📂 Browse Topics
+          </button>
+        </div>
       </header>
 
       <section className="search-section">
