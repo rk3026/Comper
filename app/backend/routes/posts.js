@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../db/database');  // Correct path to database.js
+const { pool } = require('../db/database');
 
 // Get all posts
 router.get('/', async (req, res) => {
