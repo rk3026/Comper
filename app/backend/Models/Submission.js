@@ -35,10 +35,32 @@ async function getSubmission(subID) {
   return submission[0];
 }
 
+async function getCommentsBySubmissionId(subID) {
+  const pool = getPool();
+  const result = await pool.request()
+    .input('subID', sql.Int, subID)
+    .query(`SELECT * FROM submissionComments WHERE subID = @subID ORDER BY creationTime DESC`);
+  return result.recordset;
+}
+
+async function addCommentToSubmission(subID, content) {
+  const pool = getPool();
+  const result = await pool.request()
+    .input('subID', sql.Int, subID)
+    .input('content', sql.Text, content)
+    .query(`
+      INSERT INTO submissionComments (subID, content, creationTime)
+      VALUES (@subID, @content, GETDATE())
+    `);
+  return result;
+}
+
 
 
 module.exports = { 
   createSubmission, 
   listSubmissions, 
   getSubmission, 
+  getCommentsBySubmissionId,
+  addCommentToSubmission
 };
