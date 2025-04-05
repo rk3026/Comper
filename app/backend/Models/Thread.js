@@ -32,7 +32,7 @@ async function createThread(name, topics = []) {
 
 // List all threads (optionally filtered by topic)
 async function listThreads(topic = null) {
-  const pool = getPool(); // Use getPool() to retrieve the pool
+  const pool = getPool();
 
   let result;
   if (topic) {
@@ -58,7 +58,7 @@ async function listThreads(topic = null) {
 
 // Get a thread and its comments
 async function getThreadWithComments(threadID) {
-  const pool = getPool(); // Use getPool() to retrieve the pool
+  const pool = getPool();
 
   const threadResult = await pool.request()
     .input('threadID', sql.Int, threadID)

@@ -25,7 +25,7 @@ async function startServer() {
     app.use('/api/submissions', submissionRoutes);
     app.use('/api/comments', commentRoutes);
     app.use('/api/criteria', criterionRoutes);
-    app.use('api/threads', threadRoutes)
+    app.use('/api/threads', threadRoutes)
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-//import './CompetitionDetails.css';
+import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
   const location = useLocation();
