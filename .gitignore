@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react,node,python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,node,python,visualstudiocode
 
+# Neovim
+tags
+tags.lock
+tags.temp
+
 ### Node ###
 # Logs
 logs

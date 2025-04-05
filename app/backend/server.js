@@ -2,12 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/posts');
+<<<<<<< HEAD
 const compRoutes1 = require('./routes/competitions');
 const compRoutes = require('./routes/competitionRoutes');
 const submissionRoutes = require('./routes/submissionsRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const criterionRoutes = require('./routes/criterionRoutes');
 
+=======
+const compRoutes = require('./routes/competitionRoutes');
+>>>>>>> 461dd72a82defc7b5eeb5ed024f433903226281b
 const { connectToDatabase, initializeDatabase } = require('./db/database');
 
 const app = express();
