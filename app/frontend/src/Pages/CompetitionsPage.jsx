@@ -3,18 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import './Homepage.css'; // Use the same styles as Homepage
 
 export default function CompetitionsPage() {
-  const [competitions, setCompetitions] = useState([]);
-  const [filteredCompetitions, setFilteredCompetitions] = useState([]);
+  const [competitions, setCompetitions] = useState([]); // All competitions
+  const [filteredCompetitions, setFilteredCompetitions] = useState([]); // Filtered competitions based on search
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
+  // Fetch competitions on component mount
   useEffect(() => {
-<<<<<<< HEAD
-    fetch('http://localhost:5000/api/competitions') // Make sure this matches your backend
-=======
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
->>>>>>> origin/EvanBranch
       .then(res => res.json())
       .then(data => {
         setCompetitions(data);
@@ -27,79 +24,54 @@ export default function CompetitionsPage() {
       });
   }, []);
 
+  // Filter competitions based on the search query
   useEffect(() => {
-    // Filter competitions based on the search query (title and description)
     if (searchQuery.trim() === '') {
-      setFilteredCompetitions(competitions);
+      setFilteredCompetitions(competitions); // If no search query, show all competitions
     } else {
       const filtered = competitions.filter(comp =>
         comp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         comp.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredCompetitions(filtered);
+      setFilteredCompetitions(filtered); // Update the filtered competitions list
     }
-  }, [searchQuery, competitions]);
+  }, [searchQuery, competitions]); // Re-run whenever searchQuery or competitions change
 
   if (loading) return <div>Loading competitions...</div>;
 
   return (
-<<<<<<< HEAD
-    <div className="homepage-container" style={{ backgroundColor: '#f3f4f6' }}> {/* Default light gray background */}
-      <header className="homepage-header">
-        <h1>All Competitions</h1>
-        <p>View all current competitions</p>
-        <button className="add-competition-button" onClick={() => navigate('/')}>
-          ← Back to Homepage
-        </button>
-      </header>
+    <div className="competitions-page">
+      <h1>All Competitions</h1>
 
+      {/* Search Bar Section */}
       <section className="search-section">
         <input
           type="text"
           placeholder="Search competitions..."
           className="search-bar"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update the search query as user types
         />
       </section>
 
-      <div className="competition-sections">
-        <div className="trending-row">
-          {filteredCompetitions.length === 0 ? (
-            <p>No competitions found.</p>
-          ) : (
-            filteredCompetitions.map((comp, index) => (
-              <div key={index} className="competition-card" onClick={() => navigate(`/competitions/${comp.id}`)}>
-                <h3>{comp.title}</h3>
-                <p>{comp.description}</p>
-                <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
-                <p><strong>End:</strong> {new Date(comp.deadline).toLocaleString()}</p>
-                {comp.attachmentURL && (
-                  <img
-                    src={comp.attachmentURL}
-                    width="200"
-                    height="200"
-                    alt="Competition"
-                  />
-                )}
-                <button className="join-button">Join Anonymously</button>
-              </div>
-            ))
-          )}
-        </div>
-=======
-    <div className="competitions-page">
-      <h1>All Competitions</h1>
+      {/* List of Competitions */}
       <div className="competitions-list">
-        {competitions.map((comp) => (
-          <div key={comp.id} className="competition-card" onClick={() => navigate(`/competitions/details`, { state: { competition: { id: comp.id }}})}>
-            <h2>{comp.title}</h2>
-            <p>{comp.description}</p>
-            <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
-            <p><strong>Deadline:</strong> {new Date(comp.deadline).toLocaleString()}</p>
-          </div>
-        ))}
->>>>>>> origin/EvanBranch
+        {filteredCompetitions.length === 0 ? (
+          <p>No competitions found.</p>
+        ) : (
+          filteredCompetitions.map((comp) => (
+            <div 
+              key={comp.id} 
+              className="competition-card" 
+              onClick={() => navigate(`/competitions/details`, { state: { competition: comp }})} // Pass competition details
+            >
+              <h2>{comp.title}</h2>
+              <p>{comp.description}</p>
+              <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
+              <p><strong>Deadline:</strong> {new Date(comp.deadline).toLocaleString()}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
