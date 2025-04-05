@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/posts');
-const compRoutes = require('./routes/competitions');
+const compRoutes = require('./routes/competitionRoutes');
 const { connectToDatabase, initializeDatabase } = require('./db/database');
 
 const app = express();

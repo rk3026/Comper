@@ -1,0 +1,77 @@
+/* CreateCompetition.css */
+
+.create-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f3f4f6; /* light gray */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+  }
+  
+  .create-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1f2937;
+  }
+  
+  .create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .create-form label {
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .create-form input,
+  .create-form textarea {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .create-form textarea {
+    resize: vertical;
+  }
+  
+  .tag-input {
+    margin-bottom: 0.5rem;
+  }
+  
+  .add-tag-button {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background-color: #e5e7eb;
+    border: none;
+    border-radius: 4px;
+    color: #1f2937;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .add-tag-button:hover {
+    background-color: #d1d5db;
+  }
+  
+  .submit-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    background-color: #374151;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submit-button:hover {
+    background-color: #1f2937;
+  }
