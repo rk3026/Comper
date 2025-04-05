@@ -1,6 +1,6 @@
 const submissionModel = require('../Models/Submission');
 
-module.exports.getSubmission = async (req, res) => {
+async function getSubmission(req, res) {
   try {
     const subID = req.body.id;
     const submission = await submissionModel.getSubmission(subID);
@@ -10,6 +10,7 @@ module.exports.getSubmission = async (req, res) => {
   }
 };
 
+module.exports = { getSubmission };
 
 /*
 const { 
