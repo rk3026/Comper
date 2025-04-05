@@ -1,0 +1,121 @@
+/* Homepage.css */
+
+.homepage-container {
+  min-height: 100vh;
+  background-color: #f3f4f6; /* light gray */
+  color: #1f2937; /* dark text */
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.homepage-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(to right, #515253, #d1d5db); /* gray gradient */
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-header h1 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.homepage-header p {
+  color: #f9fafb;
+  margin-top: 0.5rem;
+}
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  width: 700px;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #9ca3af;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* Flexbox container for all competition sections */
+.competition-sections {
+  display: flex;
+  justify-content: space-evenly; /* Evenly space out the sections */
+  gap: 2rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.trending-section, 
+.closing-soon-section, 
+.about-to-start-section {
+  width: 30%; /* Each section will take up 30% of the available width */
+}
+
+.trending-section h2, 
+.closing-soon-section h2, 
+.about-to-start-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #111827;
+  text-align: center;
+}
+
+.trending-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.competition-card {
+  min-width: 300px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.competition-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.competition-card p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.join-button {
+  margin-top: 1rem;
+  background-color: #374151;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.join-button:hover {
+  background-color: #1f2937;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+}
