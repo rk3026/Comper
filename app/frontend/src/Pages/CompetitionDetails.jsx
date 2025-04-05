@@ -9,6 +9,7 @@ export default function CompetitionDetails() {
 
   const [competition, setCompetition] = useState({});
   const [submissions, setSubmissions] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,10 +43,6 @@ export default function CompetitionDetails() {
     );
   }
 
-  if (loading) {
-    return <div>Loading Submissions...</div>;
-  }
-
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
@@ -62,9 +59,10 @@ export default function CompetitionDetails() {
         <p><strong>Status:</strong> {competition.status}</p>
       </div>
 
+    {/*
       <div className="comments-section">
         <h2>Comments</h2>
-        {loadingComments ? (
+        {loading ? (
           <p>Loading comments...</p>
         ) : (
           <div>
@@ -80,10 +78,11 @@ export default function CompetitionDetails() {
           </div>
         )}
       </div>
+  */}
 
       <div className="submissions-section">
         <h2>Submissions</h2>
-        {loadingSubmissions ? (
+        {loading ? (
           <p>Loading submissions...</p>
         ) : (
           <div className="submissions-grid">
@@ -91,7 +90,7 @@ export default function CompetitionDetails() {
               <p>No submissions yet. Be the first to submit!</p>
             ) : (
               submissions.map((submission, index) => (
-                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/${submission.submissionID}`)}>
+                <div key={index} className="submission-card" onClick={() => navigate(`/submissions/details`, { state: { submission: { id: submission.submissionID }}})}>
                   <img src={submission.imageURL} alt="Submission" className="submission-image" />
                   <h3>{submission.title}</h3>
                   <p>{submission.description}</p>
