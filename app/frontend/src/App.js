@@ -36,7 +36,7 @@ function App() {
         <Route path="/createSubmission" element={<CreateSubmission />} />
 
         {/* Voting */}
-        <Route path="/vote" element={<VotingPage />} />
+        <Route path="/vote/:compId/:submissionId" element={<VotingPage />} />
 
         {/* Topics & Threads */}
         <Route path="/topics" element={<TopicsPage />} />
