@@ -15,7 +15,7 @@ export default function CompetitionDetails() {
   const navigate = useNavigate();
   const competitionId = location.state?.competition.id;
 
-  // webpage variables that can change the html
+  // Competition data states
   const [competition, setCompetition] = useState({});
   const [submissions, setSubmissions] = useState([]);
   const [comments, setComments] = useState([]);
@@ -23,8 +23,14 @@ export default function CompetitionDetails() {
   const [loading, setLoading] = useState(true);
   const [replyTo, setReplyTo] = useState(null);
 
+  // Criteria states
+  const [criteria, setCriteria] = useState([]);
+  const [criteriaError, setCriteriaError] = useState('');
+  const [criteriaLoading, setCriteriaLoading] = useState(true);
+
   const commentFormRef = useRef(null);
 
+  // Fetch competition details
   useEffect(() => {
     if (!competitionId) return;
 
@@ -54,7 +60,28 @@ export default function CompetitionDetails() {
         setLoading(false);
       });
   }, [competitionId]);
-    
+
+  // Fetch criteria for the competition
+  useEffect(() => {
+    if (!competitionId) return;
+
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria/${competitionId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch criteria.');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setCriteria(data);
+        setCriteriaLoading(false);
+      })
+      .catch((err) => {
+        setCriteriaError(err.message);
+        setCriteriaLoading(false);
+      });
+  }, [competitionId]);
+
   // Handles when a user clicks the post comment button
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {
@@ -95,16 +122,15 @@ export default function CompetitionDetails() {
     commentFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
-  // Smoothly scrools to a comment given its id
+  // Smoothly scrolls to a comment given its id
   const scrollToComment = (commentId) => {
     const commentElement = document.getElementById(`comment-${commentId}`);
     commentElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
-  // Wait to show everything till the details have been fetched from the server successfuly
+  // Wait to show everything till the details have been fetched from the server successfully
   if (loading) return <div className="details-container">Loading competition details...</div>;
 
-    // Competition Info section
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
@@ -116,17 +142,61 @@ export default function CompetitionDetails() {
             className="competition-attachment"
           />
         )}
-        <p style={{ whiteSpace: 'pre-line' }}><strong>Description:</strong><br />
-        {competition.description}</p>
-        <p><strong>Start Time:</strong> {new Date(competition.startTime).toLocaleString()}</p>
-        <p><strong>End Time:</strong> {new Date(competition.endTime).toLocaleString()}</p>
-        <p><strong>Submission File Type:</strong> {competition.submissionFileType}</p>
-        <p><strong>Status:</strong> {competition.status}</p>
+        <p style={{ whiteSpace: 'pre-line' }}>
+          <strong>Description:</strong>
+          <br />
+          {competition.description}
+        </p>
+        <p>
+          <strong>Start Time:</strong> {new Date(competition.startTime).toLocaleString()}
+        </p>
+        <p>
+          <strong>End Time:</strong> {new Date(competition.endTime).toLocaleString()}
+        </p>
+        <p>
+          <strong>Submission File Type:</strong> {competition.submissionFileType}
+        </p>
+        <p>
+          <strong>Status:</strong> {competition.status}
+        </p>
+      </div>
+
+      {/* Criteria Table Section */}
+      <div className="criteria-section">
+        <h2>Criteria</h2>
+        {criteriaLoading ? (
+          <p>Loading criteria...</p>
+        ) : criteriaError ? (
+          <p style={{ color: 'red' }}>Error: {criteriaError}</p>
+        ) : criteria.length === 0 ? (
+          <p>No criteria available for this competition.</p>
+        ) : (
+          <table border="1" cellPadding="8" cellSpacing="0" style={{ width: '100%', marginTop: '1rem' }}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Max Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              {criteria.map((c) => (
+                <tr key={c.id}>
+                  <td>{c.name}</td>
+                  <td>{c.description}</td>
+                  <td>{c.maxPoints}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <button
         className="view-submissions-button"
-        onClick={() => navigate(`/viewSubmissions`, { state: { competition: { id: competitionId }}})}
+        onClick={() =>
+          navigate(`/viewSubmissions`, { state: { competition: { id: competitionId } } })
+        }
       >
         View Submissions
       </button>
@@ -180,7 +250,12 @@ export default function CompetitionDetails() {
       </section>
 
       <div className="submit-submission-section">
-        <button className="submit-submission-button" onClick={() => navigate(`/createSubmission`, { state: { competition: { id: competitionId }}})}>
+        <button
+          className="submit-submission-button"
+          onClick={() =>
+            navigate(`/createSubmission`, { state: { competition: { id: competitionId } } })
+          }
+        >
           Submit your attempt!
         </button>
       </div>
@@ -197,17 +272,16 @@ export default function CompetitionDetails() {
                 navigate(`/submissions/details`, { state: { submission: { id: submission.id } } })
               }
             >
-              <img
-                src={submission.attachmentURL}
-                alt={submission.title}
-              />
+              <img src={submission.attachmentURL} alt={submission.title} />
               <h4>{submission.title}</h4>
             </div>
           ))
         )}
       </div>
 
-      <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
+      <button className="back-button" onClick={() => navigate('/')}>
+        Return to Homepage
+      </button>
     </div>
   );
 }
