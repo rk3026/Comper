@@ -15,6 +15,5 @@ start /B npm start
 cd ..\..
 
 echo ================================
-echo ✅ Both frontend and backend are running!
+echo Both frontend and backend are running!
 echo ================================
-pause
