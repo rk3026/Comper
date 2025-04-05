@@ -17,6 +17,7 @@
  *   `location.state`.
  * - Allows users to post new comments, which are then re-fetched and displayed.
  * - Displays a "Vote for this Submission" button that navigates to the voting page for the submission.
+ * - Shows vote count and a computed rating = (totalCriteriaPoints / voteCount).
  * - Handles loading and error states gracefully.
  * 
  * @dependencies
@@ -129,6 +130,11 @@ export default function SubmissionDetails() {
     return <div>Loading Submission...</div>;
   }
 
+  // Compute rating as totalCriteriaPoints divided by voteCount, if available
+  const rating = submission.voteCount > 0 
+    ? (submission.totalCriteriaPoints / submission.voteCount).toFixed(2)
+    : 'N/A';
+
   // Main component rendering
   return (
     <div className="details-submission">
@@ -137,6 +143,16 @@ export default function SubmissionDetails() {
       <p className="submission-description">
         <strong>Description:</strong> {submission.description}
       </p>
+
+      {/* Display vote count and computed rating */}
+      <div className="vote-rating">
+        <p>
+          <strong>Vote Count:</strong> {submission.voteCount || 0}
+        </p>
+        <p>
+          <strong>Rating:</strong> {rating}
+        </p>
+      </div>
 
       {/* Display submission attachment if available */}
       {submission.attachmentURL && (
