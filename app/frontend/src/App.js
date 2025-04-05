@@ -26,8 +26,7 @@ function App() {
 
         {/* Competitions */}
         <Route path="/competitions" element={<CompetitionsPage />} />
-        <Route path="/competitions/details" element={<CompetitionDetailsPage />} />
-        //<Route path="/competitions/:id" element={<CompetitionDetails />} />
+        <Route path="/competitions/details" element={<CompetitionDetails />} />
         <Route path="/create" element={<CreateCompetition />} />
 
         {/* Submissions */}
