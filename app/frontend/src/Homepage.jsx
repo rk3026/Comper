@@ -31,7 +31,7 @@ export default function Homepage() {
       <header className="homepage-header">
         <div className="header-content">
           <div>
-            <h1>Welcome to Compers</h1>
+            <h1>Welcome Compers</h1>
             <p>Your anonymous arena for competitive glory</p>
           </div>
         </div>
