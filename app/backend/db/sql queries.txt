@@ -1,0 +1,16 @@
+CREATE TABLE competitions (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    title NVARCHAR(255),
+    filetype NVARCHAR(255),
+    description NVARCHAR(2000),
+    startDesc NVARCHAR(2000),
+    startTime SMALLDATETIME,
+    deadline SMALLDATETIME,
+    voteEndTime SMALLDATETIME,
+    attachmentURL NVARCHAR(2000)
+);
+
+//example entry
+INSERT INTO [dbo].[competitions]
+(title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
+VALUES ('CANADA', 'png,jpg,gif', 'aosdjfoajsodfhoaSIHDFOAHSODFHAPHFPOH', 'no', '20250404 11:59:59 PM', '20250405 11:59:59 PM', '20250407 11:59:59 AM', 'https://comperfiles.blob.core.windows.net/attachments/canada.png');
