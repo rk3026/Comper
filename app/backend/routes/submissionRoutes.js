@@ -1,7 +1,7 @@
 // routes/submissionRoutes.js
 const express = require('express');
 const router = express.Router();
-const submissionController = require('../controllers/SubmissionController');
+const submissionController = require('../Controllers/SubmissionController');
 
 // POST /api/submissions - Create a new submission
 router.post('/', submissionController.createSubmission);

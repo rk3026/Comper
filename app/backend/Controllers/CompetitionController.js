@@ -1,32 +1,28 @@
-// controllers/CompetitionController.js
 const competitionModel = require('../Models/Competition');
-const { v4: uuidv4 } = require('uuid');
 
 /**
  * Controller to create a new competition.
  */
 async function createCompetition(req, res) {
-  try {
-    // Create a competition object using data from the request body
-    const data = {
-      compID: uuidv4(), // Generate a unique ID
-      title: req.body.title,
-      description: req.body.description,
-	startDesc: req.body.startDesc,
-      fileType: req.body.fileType,
-      attachmentURL: req.body.attachmentURL,
-      startTime: req.body.startTime,
-      deadline: req.body.deadline,
-	voteEndTime: req.body.voteEndTime,
-      status: req.body.status || 'Sub' // Default status (e.g., "Sub" for Submission phase)
-    };
+    console.log("received createCompetition fetch request");
 
-    // Call the model to create a competition in the database
-    await competitionModel.createCompetition(data);
+    console.log(req.body);
+
+/*
+const data = {
+      title: req.body.title,
+      filetype: req.body.filetype,
+      description: req.body.description,
+      startDesc: req.body.startDesc || '', // optional field
+      startTime: req.body.startTime,
+      deadline: body.deadline,
+      voteEndTime: body.voteEndTime || body.deadline, // use deadline as default
+      attachmentURL: body.attachmentURL
+    };
+*/
+
+    await competitionModel.createCompetition(req.body);
     res.status(201).json({ message: 'Competition created successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
 }
 
 /**

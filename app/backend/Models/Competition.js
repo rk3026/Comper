@@ -1,29 +1,32 @@
 // models/Competition.js
-const { sql, getPool } = require('../db/database');
+const { getPool } = require('../db/database');
+const sql = require('mssql');
 
 /**
  * Create a new competition record in the database.
  * @param {Object} data - Competition data
  */
+
+
 async function createCompetition(data) {
   try {
-    const pool = await poolPromise;
+    console.log("createCompetition in Competition.js");
+
+    const pool = await getPool();
     await pool.request()
-      .input('compID', sql.UniqueIdentifier, data.compID)
       .input('title', sql.NVarChar(255), data.title)
-      .input('description', sql.Text, data.description)
-	.input('startDesc', sql.Text, data.startDesc)
-      .input('fileType', sql.NVarChar(50), data.fileType)
-      .input('attachmentURL', sql.NVarChar(255), data.attachmentURL)
-      .input('startTime', sql.DateTime, data.startTime)
-      .input('deadline', sql.DateTime, data.deadline)
-	.input('voteEndTime', sql.DateTime, data.voteEndTime)
-      //.input('status', sql.NVarChar(10), data.status) // Example: "Sub" for Submission phase
+      .input('filetype', sql.NVarChar(255), data.filetype)
+      .input('description', sql.NVarChar(2000), data.description)
+      .input('startDesc', sql.NVarChar(2000), data.startDesc)
+      .input('startTime', sql.SmallDateTime, data.startTime)
+      .input('deadline', sql.SmallDateTime, data.deadline)
+      .input('voteEndTime', sql.SmallDateTime, data.voteEndTime)
+      .input('attachmentURL', sql.NVarChar(2000), data.attachmentURL)
       .query(`
-        INSERT INTO Competition 
-          (compID, title, description, submissionFileType, attachment, startTime, endTime, status)
+        INSERT INTO [dbo].[competitions]
+          (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
         VALUES 
-          (@compID, @title, @description, @submissionFileType, @attachment, @startTime, @endTime, @status)
+          (@title, @filetype, @description, @startDesc, @startTime, @deadline, @voteEndTime, @attachmentURL);
       `);
   } catch (err) {
     console.error('SQL error in createCompetition:', err);
