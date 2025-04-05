@@ -12,10 +12,12 @@ async function createCompetition(req, res) {
       compID: uuidv4(), // Generate a unique ID
       title: req.body.title,
       description: req.body.description,
-      submissionFileType: req.body.submissionFileType,
-      attachment: req.body.attachment,
+	startDesc: req.body.startDesc,
+      fileType: req.body.fileType,
+      attachmentURL: req.body.attachmentURL,
       startTime: req.body.startTime,
-      endTime: req.body.endTime,
+      deadline: req.body.deadline,
+	voteEndTime: req.body.voteEndTime,
       status: req.body.status || 'Sub' // Default status (e.g., "Sub" for Submission phase)
     };
 

@@ -12,11 +12,13 @@ async function createCompetition(data) {
       .input('compID', sql.UniqueIdentifier, data.compID)
       .input('title', sql.NVarChar(255), data.title)
       .input('description', sql.Text, data.description)
-      .input('submissionFileType', sql.NVarChar(50), data.submissionFileType)
-      .input('attachment', sql.NVarChar(255), data.attachment)
+	.input('startDesc', sql.Text, data.startDesc)
+      .input('fileType', sql.NVarChar(50), data.fileType)
+      .input('attachmentURL', sql.NVarChar(255), data.attachmentURL)
       .input('startTime', sql.DateTime, data.startTime)
-      .input('endTime', sql.DateTime, data.endTime)
-      .input('status', sql.NVarChar(10), data.status) // Example: "Sub" for Submission phase
+      .input('deadline', sql.DateTime, data.deadline)
+	.input('voteEndTime', sql.DateTime, data.voteEndTime)
+      //.input('status', sql.NVarChar(10), data.status) // Example: "Sub" for Submission phase
       .query(`
         INSERT INTO Competition 
           (compID, title, description, submissionFileType, attachment, startTime, endTime, status)
