@@ -1,5 +1,5 @@
 // models/Competition.js
-const { sql, poolPromise } = require('../db/database');
+const { sql, getPool } = require('../db/database');
 
 /**
  * Create a new competition record in the database.
@@ -34,8 +34,8 @@ async function createCompetition(data) {
  */
 async function getCompetitions() {
   try {
-    const pool = await poolPromise;
-    const result = await pool.request().query('SELECT * FROM Competition');
+    const pool = await getPool();
+    const result = await pool.request().query('SELECT * FROM Competitions');
     return result.recordset;
   } catch (err) {
     console.error('SQL error in getCompetitions:', err);

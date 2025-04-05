@@ -57,7 +57,7 @@ export default function Homepage() {
       </section>
 
       <section className="trending-section">
-        <h2>Trending Competitions</h2>
+        <h2>Trending Competitions!!!</h2>
         <div className="trending-row">
     {competitions.map((comp, index) => (
 	<div key={index} className="competition-card">
