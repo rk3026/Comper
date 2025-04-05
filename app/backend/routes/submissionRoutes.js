@@ -26,4 +26,6 @@ router.post('/details', submissionController.getSubmission);
 
 router.post('/create', submissionController.createSubmission);
 
+router.post('/', submissionController.listSubmissions);
+
 module.exports = router;

@@ -1,5 +1,14 @@
 const submissionModel = require('../Models/Submission');
 
+async function listSubmissions(req, res) {
+  try {
+    const submissions = await submissionModel.listSubmissions(req.body.compID);
+    res.status(200).json(submissions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 async function getSubmission(req, res) {
   try {
     const subID = req.body.id;
@@ -30,7 +39,7 @@ async function createSubmission(req, res) {
     }
 }
 
-module.exports = { getSubmission, createSubmission };
+module.exports = { getSubmission, createSubmission, listSubmissions };
 
 /*
 const { 

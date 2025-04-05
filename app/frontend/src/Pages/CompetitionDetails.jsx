@@ -130,6 +130,14 @@ export default function CompetitionDetails() {
         <p><strong>Status:</strong> {competition.status}</p>
       </div>
 
+      <div className="submit-submission-section">
+	<button className="submit-submission-button" onClick={() => navigate(`/viewSubmissions`, { state: { competition: { id: competitionId }}})}>View Submissions</button>
+      </div>
+
+      <div className="submit-submission-section">
+	<button className="submit-submission-button" onClick={() => navigate(`/createSubmissions`, { state: { competition: { id: competitionId }}})}>Submit your attempt!</button>
+      </div>
+
       {/* Comments Section */}
       <div className="comments-section">
         <h2>Comments</h2>
@@ -181,39 +189,6 @@ export default function CompetitionDetails() {
           Post Comment
         </button>
       </section>
-
-      <div className="submit-submission-section">
-	<button className="submit-submission-button" onClick={() => navigate(`/createSubmission`, { state: { competition: { id: competitionId }}})}>Submit your attempt!</button>
-      </div>
-
-      <div className="submissions-section">
-        <h2>Submissions</h2>
-        {submissions.length === 0 ? (
-          <p>No submissions yet. Be the first to submit!</p>
-        ) : (
-          <div className="submissions-grid">
-            {submissions.map((submission, index) => (
-              <div
-                key={index}
-                className="submission-card"
-                onClick={() =>
-                  navigate(`/submissions/details`, { state: { submission: { id: submission.id } } })
-                }
-              >
-                <img
-                  src={submission.attachmentURL}
-                  alt="Submission"
-                  className="submission-image"
-                  width="100"
-                  height="100"
-                />
-                <h3>{submission.title}</h3>
-                <p>{submission.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
 
       <button className="back-button" onClick={() => navigate('/')}>
         Return to Homepage
