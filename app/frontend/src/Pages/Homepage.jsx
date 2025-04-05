@@ -6,16 +6,21 @@ export default function Homepage() {
   const navigate = useNavigate();
   const [competitions, setCompetitions] = useState([]);
   const [threads, setThreads] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCompetitions, setFilteredCompetitions] = useState([]);
 
-  // Fetch competitions from your API
+  // Fetch competitions and initialize filteredCompetitions
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
       .then(response => response.json())
-      .then(data => setCompetitions(data))
+      .then(data => {
+        setCompetitions(data);
+        setFilteredCompetitions(data); // Initially show all competitions
+      })
       .catch(err => console.error('Error fetching competitions:', err));
   }, []);
 
-  // Fetch threads from your API
+  // Fetch threads from the API
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/threads`)
       .then(response => response.json())
@@ -23,13 +28,30 @@ export default function Homepage() {
       .catch(err => console.error('Error fetching threads:', err));
   }, []);
 
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter competitions based on the search query
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredCompetitions(competitions);
+    } else {
+      const filtered = competitions.filter(comp =>
+        comp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        comp.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredCompetitions(filtered);
+    }
+  }, [searchQuery, competitions]);
+
+  // Navigation handlers
   const handleCompetitionClick = (competition) => {
-    // Pass the entire competition object via navigate state
     navigate('/competitions/details', { state: { competition } });
   };
 
   const handleThreadClick = (thread) => {
-    // Navigate to a new page: /threads/:threadID
     navigate(`/threads/${thread.id}`);
   };
 
@@ -42,10 +64,7 @@ export default function Homepage() {
             <p>Your anonymous arena for competitive glory</p>
           </div>
         </div>
-        <button 
-          className="add-competition-button" 
-          onClick={() => navigate('/create')}
-        >
+        <button className="add-competition-button" onClick={() => navigate('/create')}>
           + Add Competition
         </button>
       </header>
@@ -56,22 +75,22 @@ export default function Homepage() {
           type="text"
           placeholder="Search competitions or topics..."
           className="search-bar"
-          value={searchQuery}  // Bind the input value to the state
-          onChange={handleSearchChange}  // Update the state when the user types
+          value={searchQuery}
+          onChange={handleSearchChange}
         />
       </section>
 
-      {/* Single Trending Section with two clearly separated parts */}
+      {/* Trending Section with Competitions and Threads */}
       <section className="trending-section">
         <h2>Trending</h2>
         <div className="trending-container">
           <div className="trending-competitions">
             <h3>Competitions</h3>
             <div className="trending-row">
-              {competitions.map((comp) => (
-                <div 
-                  key={comp.id} 
-                  className="competition-card" 
+              {filteredCompetitions.map((comp) => (
+                <div
+                  key={comp.id}
+                  className="competition-card"
                   onClick={() => handleCompetitionClick(comp)}
                 >
                   <h4>{comp.title}</h4>
@@ -83,11 +102,11 @@ export default function Homepage() {
                     <strong>End:</strong> {new Date(comp.deadline).toLocaleString()}
                   </p>
                   {comp.attachmentURL && (
-                    <img 
-                      src={comp.attachmentURL} 
-                      width="200" 
-                      height="200" 
-                      alt={comp.title} 
+                    <img
+                      src={comp.attachmentURL}
+                      width="200"
+                      height="200"
+                      alt={comp.title}
                     />
                   )}
                   <button className="join-button">Join Anonymously</button>
@@ -100,9 +119,9 @@ export default function Homepage() {
             <h3>Threads</h3>
             <div className="trending-row">
               {threads.map((thread) => (
-                <div 
-                  key={thread.id} 
-                  className="thread-card" 
+                <div
+                  key={thread.id}
+                  className="thread-card"
                   onClick={() => handleThreadClick(thread)}
                 >
                   <h2>{thread.name}</h2>
