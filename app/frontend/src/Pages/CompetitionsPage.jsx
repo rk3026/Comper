@@ -3,18 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import './Homepage.css'; // Use the same styles as Homepage
 
 export default function CompetitionsPage() {
-  const [competitions, setCompetitions] = useState([]);
-  const [filteredCompetitions, setFilteredCompetitions] = useState([]);
+  const [competitions, setCompetitions] = useState([]); // All competitions
+  const [filteredCompetitions, setFilteredCompetitions] = useState([]); // Filtered competitions based on search
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
+  // Fetch competitions on component mount
   useEffect(() => {
+<<<<<<< HEAD
 <<<<<<< HEAD
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
 =======
     fetch('http://localhost:5000/api/competitions') // Make sure this matches your backend
 >>>>>>> 61d62b1 (Worked on All Competitions page)
+=======
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
+>>>>>>> f84a7f2 (Small fix)
       .then(res => res.json())
       .then(data => {
         setCompetitions(data);
@@ -27,22 +32,23 @@ export default function CompetitionsPage() {
       });
   }, []);
 
+  // Filter competitions based on the search query
   useEffect(() => {
-    // Filter competitions based on the search query (title and description)
     if (searchQuery.trim() === '') {
-      setFilteredCompetitions(competitions);
+      setFilteredCompetitions(competitions); // If no search query, show all competitions
     } else {
       const filtered = competitions.filter(comp =>
         comp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         comp.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredCompetitions(filtered);
+      setFilteredCompetitions(filtered); // Update the filtered competitions list
     }
-  }, [searchQuery, competitions]);
+  }, [searchQuery, competitions]); // Re-run whenever searchQuery or competitions change
 
   if (loading) return <div>Loading competitions...</div>;
 
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <div className="competitions-page">
@@ -68,17 +74,23 @@ export default function CompetitionsPage() {
           ← Back to Homepage
         </button>
       </header>
+=======
+    <div className="competitions-page">
+      <h1>All Competitions</h1>
+>>>>>>> f84a7f2 (Small fix)
 
+      {/* Search Bar Section */}
       <section className="search-section">
         <input
           type="text"
           placeholder="Search competitions..."
           className="search-bar"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update the search query as user types
         />
       </section>
 
+<<<<<<< HEAD
       <div className="competition-sections">
         <div className="trending-row">
           {filteredCompetitions.length === 0 ? (
@@ -104,6 +116,26 @@ export default function CompetitionsPage() {
           )}
         </div>
 >>>>>>> 61d62b1 (Worked on All Competitions page)
+=======
+      {/* List of Competitions */}
+      <div className="competitions-list">
+        {filteredCompetitions.length === 0 ? (
+          <p>No competitions found.</p>
+        ) : (
+          filteredCompetitions.map((comp) => (
+            <div 
+              key={comp.id} 
+              className="competition-card" 
+              onClick={() => navigate(`/competitions/details`, { state: { competition: comp }})} // Pass competition details
+            >
+              <h2>{comp.title}</h2>
+              <p>{comp.description}</p>
+              <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
+              <p><strong>Deadline:</strong> {new Date(comp.deadline).toLocaleString()}</p>
+            </div>
+          ))
+        )}
+>>>>>>> f84a7f2 (Small fix)
       </div>
     </div>
   );
