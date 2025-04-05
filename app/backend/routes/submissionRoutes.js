@@ -15,4 +15,6 @@ router.get('/comments/:subID', submissionController.getCommentsForSubmission);
 // Route to add a comment to a specific submission (POST /:subID/comments)
 router.post('/comments/:subID', submissionController.addCommentToSubmission);
 
+router.post('/create', submissionController.createSubmission);
+
 module.exports = router;
