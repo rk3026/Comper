@@ -17,4 +17,6 @@ router.post('/comments/:subID', submissionController.addCommentToSubmission);
 
 router.post('/create', submissionController.createSubmission);
 
+router.post('/', submissionController.listSubmissions);
+
 module.exports = router;

@@ -126,10 +126,7 @@ export default function CompetitionDetails() {
 
       <button
         className="view-submissions-button"
-        onClick={() => {
-          const el = document.getElementById("submissions-preview");
-          el?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }}
+        onClick={() => navigate(`/viewSubmissions`, { state: { competition: { id: competitionId }}})}
       >
         View Submissions
       </button>

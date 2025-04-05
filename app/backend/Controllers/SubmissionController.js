@@ -5,6 +5,14 @@
 
 const submissionModel = require('../Models/Submission');
 
+async function listSubmissions(req, res) {
+  try {
+    const submissions = await submissionModel.listSubmissions(req.body.compID);
+    res.status(200).json(submissions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 async function getCommentsForSubmission(req, res) {
   try {
     const { subID } = req.params;
@@ -57,7 +65,7 @@ async function createSubmission(req, res) {
     }
 }
 
-module.exports = { getSubmission, createSubmission, getCommentsForSubmission, addCommentToSubmission };
+module.exports = {listSubmissions, getSubmission, createSubmission, getCommentsForSubmission, addCommentToSubmission };
 
 /*
 const { 
