@@ -122,7 +122,8 @@ export default function CompetitionDetails() {
             />
           </div>
         )}
-        <p><strong>Description:</strong> {competition.description}</p>
+        <p style={{ whiteSpace: 'pre-line' }}><strong>Description:</strong><br />
+        {competition.description}</p>
         <p><strong>Start Time:</strong> {new Date(competition.startTime).toLocaleString()}</p>
         <p><strong>End Time:</strong> {new Date(competition.endTime).toLocaleString()}</p>
         <p><strong>Submission File Type:</strong> {competition.submissionFileType}</p>
