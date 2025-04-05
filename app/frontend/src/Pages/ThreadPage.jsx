@@ -39,13 +39,13 @@ export default function ThreadPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content: newComment.trim() }),
         });
-
+  
         if (res.ok) {
           const result = await res.json();
           const newEntry = {
             id: result.id,
             content: newComment.trim(),
-            creationTime: result.creationTime,
+            creationTime: result.creationTime ? new Date(result.creationTime).toISOString() : new Date().toISOString(),  // Ensure it's a valid date
           };
           setComments([...comments, newEntry]);
           setNewComment('');
@@ -68,14 +68,22 @@ export default function ThreadPage() {
       </header>
 
       <section className="thread-posts">
-        {comments.map((comment, index) => (
-          <div key={comment.id} className="comment-card">
-            <span className="comment-id">Anon #{index + 1}</span>
-            <span className="comment-time">{new Date(comment.creationTime).toLocaleString()}</span>
-            <p className="comment-content">{comment.content}</p>
-          </div>
-        ))}
+        {comments.map((comment, index) => {
+          const commentTime = new Date(comment.creationTime);
+          const formattedTime = commentTime instanceof Date && !isNaN(commentTime) 
+            ? commentTime.toLocaleString() 
+            : 'Invalid date';
+
+          return (
+            <div key={comment.id} className="comment-card">
+              <span className="comment-id">#{index + 1}</span>
+              <span className="comment-time">{formattedTime}</span>
+              <p className="comment-content">{comment.content}</p>
+            </div>
+          );
+        })}
       </section>
+
 
       <section className="comment-form">
         <textarea
