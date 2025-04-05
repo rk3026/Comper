@@ -5,7 +5,7 @@ const { getPool } = require('../db/database');
 // Get all posts
 router.get('/', async (req, res) => {
   try {
-    const pool = getPool();  // Use the getter to access the pool
+    const pool = getPool();
     const result = await pool.request().query('SELECT * FROM posts ORDER BY timestamp DESC');
 
     if (result.recordset.length === 0) {
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { title, content } = req.body;
   try {
-    const pool = getPool();  // Use the getter to access the pool
+    const pool = getPool();
     const result = await pool.request()
       .input('title', sql.NVarChar, title)
       .input('content', sql.NVarChar, content)
