@@ -2,18 +2,18 @@
 echo ================================
 echo Installing frontend dependencies
 echo ================================
-cd app/frontend
+call cd app\frontend
 call npm install
-cd ..
+call cd ..\..
 
 echo ================================
 echo Installing backend dependencies
 echo ================================
-cd app/backend
-call npm install cors express body-parser sqlite3
-cd ..
+call cd app\backend
+call npm install cors express body-parser sqlite3 mssql dotenv
+call cd ..\..
 
 echo ================================
-echo ✅ All dependencies installed!
+echo Setup Complete.
 echo ================================
 pause
