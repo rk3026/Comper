@@ -55,8 +55,8 @@ const VotingPage = () => {
     }));
   };
 
-  // Function to calculate total score and display the success message.
-  const submitVote = () => {
+  // Function to calculate total score, update submission via API, and display the success message.
+  const submitVote = async () => {
     let totalScore = 0;
     for (const [id, value] of Object.entries(scores)) {
       const numericValue = parseFloat(value);
@@ -67,10 +67,26 @@ const VotingPage = () => {
       totalScore += numericValue;
     }
 
-    // Instead of an API call, we simply display the result
-    setSuccess(`Vote Incremented! Total Score: ${totalScore}`);
-    // Optionally, you could navigate to a confirmation page here.
-    // For now, we display a "Go Back" button after the success message.
+    try {
+      // Make an API call to update the submission
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/vote/${submissionId}/${totalScore}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update submission. Please try again.');
+      }
+
+      // Clear any previous error and display success message
+      setError('');
+      setSuccess(`Vote Incremented! Total Score: ${totalScore}`);
+      alert('Your vote has been successfully submitted!');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   // Handle form submission by showing the captcha prompt
@@ -88,16 +104,25 @@ const VotingPage = () => {
       return;
     }
     // Captcha verified; proceed with vote submission
-    submitVote();
+    submitVote().then(() => {
+      alert('Thank you for voting! Your submission has been recorded.');
+    });
     setShowCaptcha(false);
   };
 
   if (loading) return <p>Loading criteria...</p>;
-  if (error && !showCaptcha) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div>
       <h2>Voting Page</h2>
+      {/* Display error or success messages on the main page */}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {success && (
+        <div>
+          <p style={{ color: 'green' }}>{success}</p>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      )}
       <form onSubmit={handleFormSubmit}>
         <table border="1" cellPadding="8" cellSpacing="0">
           <thead>
@@ -151,15 +176,7 @@ const VotingPage = () => {
               <button onClick={handleCaptchaSubmit}>Verify & Submit Vote</button>
               <button onClick={() => setShowCaptcha(false)} style={{ marginLeft: '1rem' }}>Cancel</button>
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
-        </div>
-      )}
-      
-      {success && (
-        <div>
-          <p style={{ color: 'green' }}>{success}</p>
-          <button onClick={() => navigate(-1)}>Go Back</button>
         </div>
       )}
     </div>
