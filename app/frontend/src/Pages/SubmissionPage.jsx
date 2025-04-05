@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './SubmissionPage.css';
 
 const SubmissionPage = () => {
     const { subID } = useParams();
@@ -36,24 +37,24 @@ const SubmissionPage = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
-            <h1>Submission Details</h1>
+        <div className="submission-container">
+            <h1 className="submission-heading">Submission Details</h1>
             {submission ? (
-                <div>
-                    <h2>{submission.title}</h2>
-                    <p>{submission.description}</p>
-                    <div>
-                        <h3>Comments</h3>
-                        {/* Placeholder for comments */}
-                        <p>No comments yet. Be the first to comment!</p>
+                <div className="submission-card">
+                    <h2 className="submission-title">{submission.title}</h2>
+                    <p className="submission-description">{submission.description}</p>
+                    <div className="submission-comments">
+                        <h3 className="comments-heading">Comments</h3>
+                        <p className="no-comments">No comments yet. Be the first to comment!</p>
                     </div>
-                    <button onClick={handleVote}>Vote</button>
+                    <button className="vote-button" onClick={handleVote}>Vote</button>
                 </div>
             ) : (
-                <p>Submission not found.</p>
+                <p className="not-found">Submission not found.</p>
             )}
         </div>
     );
+
 };
 
 export default SubmissionPage;

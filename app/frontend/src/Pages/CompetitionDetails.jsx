@@ -21,44 +21,40 @@ export default function CompetitionDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(true);
-  const [replyTo, setReplyTo] = useState(null); // To store the comment ID being replied to
+  const [replyTo, setReplyTo] = useState(null);
 
-  // Reference for the comment form to scroll to it
   const commentFormRef = useRef(null);
 
   useEffect(() => {
     if (!competitionId) return;
-  
-    // Fetch competition details along with comments
+
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        id: competitionId,  // Send the competitionId in the body to fetch details and comments
-      }),
+      body: JSON.stringify({ id: competitionId }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data && data.details) {
-          setCompetition(data.details);  // Set competition details
-          setSubmissions(data.submissions || []);  // Set submissions, default to empty array if not found
-          setComments(data.comments || []);  // Set comments, default to empty array if not found
+          setCompetition(data.details);
+          setSubmissions(data.submissions || []);
+          setComments(data.comments || []);
         } else {
           console.error('No competition details found.');
-          setCompetition(null);  // Clear competition if no details are found
-          setSubmissions([]);  // Clear submissions if no competition found
-          setComments([]);  // Clear comments if no competition found
+          setCompetition(null);
+          setSubmissions([]);
+          setComments([]);
         }
-        setLoading(false);  // Set loading to false after the data is fetched
+        setLoading(false);
       })
       .catch((err) => {
         console.error('Error fetching competition details: ', err);
-        setLoading(false);  // Set loading to false in case of an error
+        setLoading(false);
       });
   }, [competitionId]);
-  
+    
   // Handles when a user clicks the post comment button
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {
@@ -68,7 +64,7 @@ export default function CompetitionDetails() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             content: newComment.trim(),
-            replyTo: replyTo || null,  // Include the reply-to information
+            replyTo: replyTo || null,
           }),
         });
 
@@ -82,7 +78,7 @@ export default function CompetitionDetails() {
           };
           setComments([...comments, newEntry]);
           setNewComment('');
-          setReplyTo(null);  // Reset replyTo after posting
+          setReplyTo(null);
         } else {
           console.error('Failed to post comment');
         }
@@ -96,24 +92,13 @@ export default function CompetitionDetails() {
   const handleReplyTo = (commentId) => {
     setReplyTo(commentId);
     setNewComment(`>>${commentId} `);
-
-    if (commentFormRef.current) {
-      commentFormRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
+    commentFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   // Smoothly scrools to a comment given its id
   const scrollToComment = (commentId) => {
     const commentElement = document.getElementById(`comment-${commentId}`);
-    if (commentElement) {
-      commentElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
+    commentElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   // Wait to show everything till the details have been fetched from the server successfuly
@@ -125,13 +110,11 @@ export default function CompetitionDetails() {
       <h1>{competition.title}</h1>
       <div className="competition-info">
         {competition.attachmentURL && (
-          <div>
-            <img
-              src={competition.attachmentURL}
-              alt="Competition Attachment"
-              className="competition-attachment"
-            />
-          </div>
+          <img
+            src={competition.attachmentURL}
+            alt="Competition Attachment"
+            className="competition-attachment"
+          />
         )}
         <p style={{ whiteSpace: 'pre-line' }}><strong>Description:</strong><br />
         {competition.description}</p>
@@ -141,7 +124,16 @@ export default function CompetitionDetails() {
         <p><strong>Status:</strong> {competition.status}</p>
       </div>
 
-      {/* Comments Section */}
+      <button
+        className="view-submissions-button"
+        onClick={() => {
+          const el = document.getElementById("submissions-preview");
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
+      >
+        View Submissions
+      </button>
+
       <div className="comments-section">
         <h2>Comments</h2>
         {comments.length === 0 ? (
@@ -159,7 +151,6 @@ export default function CompetitionDetails() {
                 <div key={comment.id} id={`comment-${comment.id}`} className="comment-card">
                   <span className="comment-id">#{comment.id}</span>
                   <span className="comment-time">{formattedTime}</span>
-
                   {comment.replyTo && (
                     <span
                       className="comment-reply-link"
@@ -169,7 +160,6 @@ export default function CompetitionDetails() {
                       Replying to #{comment.replyTo}
                     </span>
                   )}
-
                   <p className="comment-content">{comment.content}</p>
                   <button onClick={() => handleReplyTo(comment.id)}>Reply</button>
                 </div>
@@ -179,7 +169,6 @@ export default function CompetitionDetails() {
         )}
       </div>
 
-      {/* Comment Form */}
       <section className="comment-form" ref={commentFormRef}>
         <textarea
           className="comment-input"
@@ -194,41 +183,34 @@ export default function CompetitionDetails() {
       </section>
 
       <div className="submit-submission-section">
-	<button className="submit-submission-button" onClick={() => navigate(`/createSubmission`, { state: { competition: { id: competitionId }}})}>Submit your attempt!</button>
+        <button className="submit-submission-button" onClick={() => navigate(`/createSubmission`, { state: { competition: { id: competitionId }}})}>
+          Submit your attempt!
+        </button>
       </div>
 
-      <div className="submissions-section">
-        <h2>Submissions</h2>
+      <div id="submissions-preview" className="submissions-preview">
         {submissions.length === 0 ? (
           <p>No submissions yet. Be the first to submit!</p>
         ) : (
-          <div className="submissions-grid">
-            {submissions.map((submission, index) => (
-              <div
-                key={index}
-                className="submission-card"
-                onClick={() =>
-                  navigate(`/submissions/details`, { state: { submission: { id: submission.id } } })
-                }
-              >
-                <img
-                  src={submission.attachmentURL}
-                  alt="Submission"
-                  className="submission-image"
-                  width="100"
-                  height="100"
-                />
-                <h3>{submission.title}</h3>
-                <p>{submission.description}</p>
-              </div>
-            ))}
-          </div>
+          submissions.map((submission, index) => (
+            <div
+              key={index}
+              className="submission-preview-card"
+              onClick={() =>
+                navigate(`/submissions/details`, { state: { submission: { id: submission.id } } })
+              }
+            >
+              <img
+                src={submission.attachmentURL}
+                alt={submission.title}
+              />
+              <h4>{submission.title}</h4>
+            </div>
+          ))
         )}
       </div>
 
-      <button className="back-button" onClick={() => navigate('/')}>
-        Return to Homepage
-      </button>
+      <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
   );
 }
