@@ -124,3 +124,26 @@
 .join-button:hover {
   background-color: #1f2937;
 }
+
+.search-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 250px;
+}
+
+.date-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
