@@ -7,20 +7,8 @@ const { v4: uuidv4 } = require('uuid');
  */
 async function createCompetition(req, res) {
   try {
-    // Create a competition object using data from the request body
-    const data = {
-      compID: uuidv4(), // Generate a unique ID
-      title: req.body.title,
-      description: req.body.description,
-      submissionFileType: req.body.submissionFileType,
-      attachment: req.body.attachment,
-      startTime: req.body.startTime,
-      endTime: req.body.endTime,
-      status: req.body.status || 'Sub' // Default status (e.g., "Sub" for Submission phase)
-    };
-
     // Call the model to create a competition in the database
-    await competitionModel.createCompetition(data);
+    await competitionModel.createCompetition(req.body);
     res.status(201).json({ message: 'Competition created successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
