@@ -1,7 +1,7 @@
 # Comper  
 An anonymous, privacy-focused hobby forum. Visit us at: [https://comper.space](https://comper.space)
 
-![image](https://github.com/user-attachments/assets/8dcf38e9-7750-4c0e-a522-b25f3e971498)
+![image](https://github.com/user-attachments/assets/80557ee2-25e5-48b3-bab0-49e703fd34ca)
 
 
 **Developers:**  
