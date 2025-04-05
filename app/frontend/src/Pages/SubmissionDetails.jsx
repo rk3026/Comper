@@ -49,6 +49,7 @@ export default function SubmissionDetails() {
       <h1>{submission.title}</h1>
       <p><strong>Description:</strong> {submission.description}</p>
       <img src={submission.attachmentURL} alt="Submission" className="submission-image" width="100" height="100" />
+      <button className="vote-button" onClick={() => navigate(`/vote/${submission.compID}/${submissionId}`)}>VOTE</button>
     </div>
   );
 }
