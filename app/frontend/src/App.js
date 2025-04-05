@@ -38,9 +38,8 @@ function App() {
 
         {/* Topics & Threads */}
         <Route path="/topics" element={<TopicsPage />} />
-        <Route path="/thread" element={<ThreadPage />} />
-     
-
+        <Route path="/threads/:threadID" element={<ThreadPage />} />
+        <Route path="/competitions/details" element={<CompetitionDetails />} />
       </Routes>
     </Router>
   );

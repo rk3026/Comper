@@ -1,35 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './ThreadPage.css';
 
 export default function ThreadPage() {
-  const [comments, setComments] = useState([
-    { id: 1, content: 'This is the first comment in this thread.' },
-    { id: 2, content: 'Anonymous thoughts go here.' },
-  ]);
+  const { threadID } = useParams();
+  const [thread, setThread] = useState(null);
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const handlePostComment = () => {
+  useEffect(() => {
+    async function fetchThreadData() {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/threads/${threadID}`);
+        const data = await res.json();
+        
+        setThread({
+          name: data.name,
+          topics: data.topics || [],
+        });
+        
+        setComments(data.comments || []);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching thread:', err);
+        setLoading(false);
+      }
+    }
+
+    fetchThreadData();
+  }, [threadID]);
+
+  const handlePostComment = async () => {
     if (newComment.trim() !== '') {
-      const newEntry = {
-        id: comments.length + 1,
-        content: newComment.trim(),
-      };
-      setComments([...comments, newEntry]);
-      setNewComment('');
+      try {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/threads/${threadID}/comments`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: newComment.trim() }),
+        });
+
+        if (res.ok) {
+          const result = await res.json();
+          const newEntry = {
+            id: result.id,
+            content: newComment.trim(),
+            creationTime: result.creationTime,
+          };
+          setComments([...comments, newEntry]);
+          setNewComment('');
+        } else {
+          console.error('Failed to post comment');
+        }
+      } catch (err) {
+        console.error('Error posting comment:', err);
+      }
     }
   };
+
+  if (loading) return <div className="thread-container">Loading thread...</div>;
 
   return (
     <div className="thread-container">
       <header className="thread-header">
-        <h1>Discussion Thread</h1>
-        <p>Topic: Anonymous Internet Culture</p>
+        <h1><strong>Thread Name:</strong> {thread?.name} </h1>
+        <p><strong>Topics:</strong> {thread?.topics?.join(', ')}</p>
       </header>
 
       <section className="thread-posts">
-        {comments.map((comment) => (
+        {comments.map((comment, index) => (
           <div key={comment.id} className="comment-card">
-            <span className="comment-id">Anon #{comment.id}</span>
+            <span className="comment-id">Anon #{index + 1}</span>
+            <span className="comment-time">{new Date(comment.creationTime).toLocaleString()}</span>
             <p className="comment-content">{comment.content}</p>
           </div>
         ))}
