@@ -63,6 +63,7 @@ export default function Homepage() {
 	<div key={index} className="competition-card">
 	    <h3>{comp.title}</h3>
 	    <p>{comp.description}</p>
+	    <img src={comp.attachmentURL} width="200" height="200"/>
 	</div>
     ))}
 
