@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-// Replace with your actual API base URL
-const API_BASE_URL = 'https://your-api-link.com/api';
+// Replace with your actual API base URL if needed
+const API_BASE_URL = `${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria`;
 // For demonstration, we use a simple fixed captcha value
 const CAPTCHA_VALUE = '12345';
 
@@ -25,7 +25,7 @@ const VotingPage = () => {
   useEffect(() => {
     const fetchCriteria = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/criteria?compID=${compId}`);
+        const response = await fetch(`${API_BASE_URL}/${compId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch criteria.');
         }
@@ -55,9 +55,8 @@ const VotingPage = () => {
     }));
   };
 
-  // Function that submits the vote data to the API
+  // Function to calculate total score, update submission via API, and display the success message.
   const submitVote = async () => {
-    // Validate and sum up the scores
     let totalScore = 0;
     for (const [id, value] of Object.entries(scores)) {
       const numericValue = parseFloat(value);
@@ -68,26 +67,23 @@ const VotingPage = () => {
       totalScore += numericValue;
     }
 
-    const voteData = {
-      totalCriteriaPoints: totalScore,
-      voteCount: 1, // Assuming each vote increases the count by 1
-    };
-
     try {
-      const response = await fetch(`${API_BASE_URL}/submissions/${submissionId}/vote`, {
+      // Make an API call to update the submission
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/vote/${submissionId}/${totalScore}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(voteData)
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit vote.');
+        throw new Error('Failed to update submission. Please try again.');
       }
-      setSuccess('Vote submitted successfully!');
-      // Navigate to a thank-you or confirmation page
-      navigate('/thank-you');
+
+      // Clear any previous error and display success message
+      setError('');
+      setSuccess(`Vote Incremented! Total Score: ${totalScore}`);
+      alert('Your vote has been successfully submitted!');
     } catch (err) {
       setError(err.message);
     }
@@ -108,15 +104,25 @@ const VotingPage = () => {
       return;
     }
     // Captcha verified; proceed with vote submission
-    submitVote();
+    submitVote().then(() => {
+      alert('Thank you for voting! Your submission has been recorded.');
+    });
+    setShowCaptcha(false);
   };
 
   if (loading) return <p>Loading criteria...</p>;
-  if (error && !showCaptcha) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div>
       <h2>Voting Page</h2>
+      {/* Display error or success messages on the main page */}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {success && (
+        <div>
+          <p style={{ color: 'green' }}>{success}</p>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      )}
       <form onSubmit={handleFormSubmit}>
         <table border="1" cellPadding="8" cellSpacing="0">
           <thead>
@@ -170,12 +176,9 @@ const VotingPage = () => {
               <button onClick={handleCaptchaSubmit}>Verify & Submit Vote</button>
               <button onClick={() => setShowCaptcha(false)} style={{ marginLeft: '1rem' }}>Cancel</button>
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
         </div>
       )}
-      
-      {success && <p style={{ color: 'green' }}>{success}</p>}
     </div>
   );
 };
