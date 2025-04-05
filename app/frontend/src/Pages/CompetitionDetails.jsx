@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './CompetitionDetails.css';
+//import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
   const location = useLocation();
@@ -18,10 +18,12 @@ export default function CompetitionDetails() {
 
   return (
     <div className="details-container">
-      <h1>{competition.title}</h1>
+      <h1>{competition.id}</h1>
+      {/*
       <p><strong>Description:</strong> {competition.description}</p>
       <p><strong>Start:</strong> {competition.startTime}</p>
       <p><strong>End:</strong> {competition.endTime}</p>
+*/}
 
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
