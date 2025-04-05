@@ -5,23 +5,25 @@ const { sql, getPool } = require('../db/database');
  * Create a new competition record in the database.
  * @param {Object} data - Competition data
  */
+
+
 async function createCompetition(data) {
   try {
-    const pool = await poolPromise;
+    const pool = await getPool();
     await pool.request()
-      .input('compID', sql.UniqueIdentifier, data.compID)
       .input('title', sql.NVarChar(255), data.title)
-      .input('description', sql.Text, data.description)
-      .input('submissionFileType', sql.NVarChar(50), data.submissionFileType)
-      .input('attachment', sql.NVarChar(255), data.attachment)
-      .input('startTime', sql.DateTime, data.startTime)
-      .input('endTime', sql.DateTime, data.endTime)
-      .input('status', sql.NVarChar(10), data.status) // Example: "Sub" for Submission phase
+      .input('filetype', sql.NVarChar(255), data.filetype)
+      .input('description', sql.NVarChar(2000), data.description)
+      .input('startDesc', sql.NVarChar(2000), data.startDesc)
+      .input('startTime', sql.SmallDateTime, data.startTime)
+      .input('deadline', sql.SmallDateTime, data.deadline)
+      .input('voteEndTime', sql.SmallDateTime, data.voteEndTime)
+      .input('attachmentURL', sql.NVarChar(2000), data.attachmentURL)
       .query(`
-        INSERT INTO Competition 
-          (compID, title, description, submissionFileType, attachment, startTime, endTime, status)
+        INSERT INTO competitions 
+          (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
         VALUES 
-          (@compID, @title, @description, @submissionFileType, @attachment, @startTime, @endTime, @status)
+          (@title, @filetype, @description, @startDesc, @startTime, @deadline, @voteEndTime, @attachmentURL)
       `);
   } catch (err) {
     console.error('SQL error in createCompetition:', err);
