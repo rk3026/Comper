@@ -1,7 +1,7 @@
 // models/Competition.js
-const { getPool } = require('../db/database');
-const sql = require('mssql');
+const { sql, getPool } = require('../db/database');
 const { queryFromPool } = require('./Utility');
+//const sql = require('mssql');
 
 /**
  * Retrieve all competitions from the database.

@@ -4,7 +4,7 @@ async function getSubmission(req, res) {
   try {
     const subID = req.body.id;
     const submission = await submissionModel.getSubmission(subID);
-    res.json(submission);
+    res.status(200).json(submission);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
