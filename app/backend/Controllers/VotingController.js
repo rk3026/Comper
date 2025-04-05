@@ -1,8 +1,24 @@
 // controllers/VotingController.js
+const voteModel = require('../models/Vote'); 
+
+async function castVote(req, res)
+{
+  try {
+    voteModel.castVote(req.params.subID, req.params.points);
+    res.status(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { castVote };
+
+/*
 const { castVote } = require('../models/Vote');       // If you store votes
 const { getSubmission, updateSubmission } = require('../models/Submission');
 const { verifyCaptcha } = require('../utils/captcha'); // If using CAPTCHA
 const { v4: uuidv4 } = require('uuid');
+
 
 exports.castVote = async (req, res) => {
   try {
@@ -51,3 +67,4 @@ exports.castVote = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+*/
