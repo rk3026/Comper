@@ -1,47 +1,105 @@
-/* CreateCompetition.css */
+/* CreateSubmission.css */
 
-.criteria-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* More space between form fields */
+}
+
+label {
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 600;
+}
+
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: border 0.3s ease;
+  width: 100%; /* Ensure inputs and textareas fill available space */
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.3s ease;
+  flex: 1; /* Buttons will take equal space */
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+button[type="button"] {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #e04a4a;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+}
+
+.success-message {
+  margin-top: 1rem;
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
   }
-  
-  .criteria-table th, .criteria-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+  input, textarea {
+    font-size: 0.9rem;
   }
-  
-  .criteria-table input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+  button {
+    font-size: 1rem;
   }
-  
-  .add-criteria-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .add-criteria-button:hover {
-    background-color: #45a049;
-  }
-  
-  .remove-criteria-button {
-    background-color: #ff6b6b;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .remove-criteria-button:hover {
-    background-color: #e04a4a;
-  }
-  
+}
