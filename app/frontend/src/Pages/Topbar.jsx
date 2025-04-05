@@ -14,6 +14,8 @@ export default function Topbar() {
         <Link to="/create">+ Competition</Link>
         <Link to="/thread">Threads</Link>
         <Link to="/competitions">Competitions</Link>
+
+        <Link to="/vote">vote</Link>
       </nav>
     </div>
   );

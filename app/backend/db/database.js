@@ -32,4 +32,4 @@ function getPool() {
   return pool;
 }
 
-module.exports = { connectToDatabase, getPool };
+module.exports = { sql, connectToDatabase, getPool };

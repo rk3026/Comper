@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './CompetitionDetails.css';
+//import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const competition = location.state?.competition;
+  const competitionId = location.state?.competition.id;
 
-  if (!competition) {
+  const [competition, setCompetition] = useState({});
+  const [submissions, setSubmissions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!competitionId) return;
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details`, {
+      method: 'POST',
+      headers: {
+	'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+	id: competitionId
+      })
+    }).then(response => response.json())
+    .then(data => {
+      setCompetition(data.details);
+      setSubmissions(data.submissions);
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error('Error fetching competition details: ', err);
+      setLoading(false);
+    });
+  }, [competitionId]); // <- effect waits till the competition id is received
+
+  if (!competitionId) {
     return (
       <div className="details-container">
         <h2>No competition data found.</h2>
@@ -15,6 +41,12 @@ export default function CompetitionDetails() {
       </div>
     );
   }
+
+  if (loading) {
+    return <div>Loading Submissions...</div>;
+  }
+
+  console.log(competition);
 
   return (
     <div className="details-container">

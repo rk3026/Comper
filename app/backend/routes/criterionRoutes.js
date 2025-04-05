@@ -1,7 +1,7 @@
 // routes/criterionRoutes.js
 const express = require('express');
 const router = express.Router();
-const criterionController = require('../controllers/CriterionController');
+const criterionController = require('../Controllers/CriterionController');
 
 // Endpoint to create a new criterion (if needed by admins)
 router.post('/', criterionController.createCriterion);

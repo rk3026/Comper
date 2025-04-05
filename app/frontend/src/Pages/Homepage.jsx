@@ -31,7 +31,7 @@ export default function Homepage() {
   const [competitions, setCompetitions] = useState([]);
 
     useEffect(() => {
-      fetch('http://localhost:5000/api/competitions')
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
 .then(response => response.json())
 .then(data => setCompetitions(data));
     }, []);
@@ -65,8 +65,8 @@ export default function Homepage() {
 	<div key={index} className="competition-card">
 	    <h3>{comp.title}</h3>
 	    <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
-	    <p><strong>Start:</strong> {comp.startTime}</p>
-            <p><strong>End:</strong> {comp.deadline}</p>
+	    <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
+            <p><strong>End:</strong> {new Date(comp.deadline).toLocaleString()}</p>
 	    <img src={comp.attachmentURL} width="200" height="200"/>
 	    <button className="join-button">Join Anonymously</button>
 	</div>
