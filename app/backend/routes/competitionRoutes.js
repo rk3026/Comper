@@ -6,8 +6,8 @@ const competitionController = require('../Controllers/CompetitionController');
 // GET /api/competitions - Retrieve a list of competitions
 router.get('/', competitionController.listCompetitions);
 
-// GET /api/competitions/:compID - Retrieve a single competition by ID
-//router.get('/:compID', competitionController.getCompetition);
+// GET /api/competitions/details - Retrieve a single competition by ID
+router.post('/details', competitionController.getCompetitionDetails);
 
 // POST /api/competitions - Create a new competition
 router.post('/create', competitionController.createCompetition);

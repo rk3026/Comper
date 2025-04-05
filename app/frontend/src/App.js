@@ -14,7 +14,6 @@ import ThreadPage from './Pages/ThreadPage';
 import VotingPage from './Pages/VotingPage';
 import Topbar from './Pages/Topbar';
 
-// Your global CSS
 import './App.css';
 
 function App() {
@@ -27,7 +26,8 @@ function App() {
 
         {/* Competitions */}
         <Route path="/competitions" element={<CompetitionsPage />} />
-        <Route path="/competitions/:id" element={<CompetitionDetails />} />
+        <Route path="/competitions/details" element={<CompetitionDetailsPage />} />
+        //<Route path="/competitions/:id" element={<CompetitionDetails />} />
         <Route path="/create" element={<CreateCompetition />} />
 
         {/* Submissions */}
@@ -40,6 +40,8 @@ function App() {
         {/* Topics & Threads */}
         <Route path="/topics" element={<TopicsPage />} />
         <Route path="/thread" element={<ThreadPage />} />
+     
+
       </Routes>
     </Router>
   );

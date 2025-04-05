@@ -1,13 +1,32 @@
 const competitionModel = require('../Models/Competition');
 
 /**
+ * Controller to list all competitions.
+ */
+async function listCompetitions(req, res) {
+  try {
+    const competitions = await competitionModel.getCompetitions();
+    res.status(200).json(competitions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function getCompetitionDetails(req, res) {
+  try {
+    const details = await competitionModel.getCompetitionDetails(req.body.id);
+    const submissions = await competitionModel.getSubmissions(req.body.id);
+    res.status(200).json({ details: details, submissions: submissions });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
+  }
+}
+
+/**
  * Controller to create a new competition.
  */
 async function createCompetition(req, res) {
-    console.log("received createCompetition fetch request");
-
-    console.log(req.body);
-
 /*
 const data = {
       title: req.body.title,
@@ -25,16 +44,4 @@ const data = {
     res.status(201).json({ message: 'Competition created successfully' });
 }
 
-/**
- * Controller to list all competitions.
- */
-async function listCompetitions(req, res) {
-  try {
-    const competitions = await competitionModel.getCompetitions();
-    res.status(200).json(competitions);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-
-module.exports = { createCompetition, listCompetitions };
+module.exports = { listCompetitions, getCompetitionDetails, createCompetition };

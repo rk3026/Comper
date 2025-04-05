@@ -27,7 +27,7 @@ export default function CompetitionsPage() {
       <h1>All Competitions</h1>
       <div className="competitions-list">
         {competitions.map((comp) => (
-          <div key={comp.id} className="competition-card" onClick={() => navigate(`/competitions/${comp.id}`)}>
+          <div key={comp.id} className="competition-card" onClick={() => navigate(`/competitions/details`, { state: { competition: { id: comp.id }}})}>
             <h2>{comp.title}</h2>
             <p>{comp.description}</p>
             <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
