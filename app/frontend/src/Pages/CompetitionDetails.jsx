@@ -52,8 +52,15 @@ export default function CompetitionDetails() {
     <div className="details-container">
       <h1>{competition.title}</h1>
       <p><strong>Description:</strong> {competition.description}</p>
-      <p><strong>Start:</strong> {competition.startTime}</p>
-      <p><strong>End:</strong> {competition.endTime}</p>
+      <p><strong>Start:</strong> {new Date(competition.startTime).toLocaleString()}</p>
+      <p><strong>End:</strong> {new Date(competition.endTime).toLocaleString()}</p>
+
+      {submissions.map((submission) => (
+	<div key={submission.id} className="submission-card" onClick={() => navigate('/submissions/details', { state: { submission: { id: submission.id }}})}>
+	  <h2>{submission.title}</h2>
+	  <p>{submission.description}</p>
+	</div>
+      ))}
 
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
