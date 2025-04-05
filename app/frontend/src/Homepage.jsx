@@ -64,7 +64,7 @@ export default function Homepage() {
     {competitions.map((comp, index) => (
 	<div key={index} className="competition-card">
 	    <h3>{comp.title}</h3>
-	    <p>{comp.description}</p>
+	    <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
 	    <p><strong>Start:</strong> {comp.startTime}</p>
             <p><strong>End:</strong> {comp.deadline}</p>
 	    <img src={comp.attachmentURL} width="200" height="200"/>
