@@ -9,55 +9,52 @@ export default function SubmissionDetails() {
   const [submission, setSubmission] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!submissionId) return;
 
-    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const submissionRes = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/details`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: submissionId }),
+        });
+        const submissionData = await submissionRes.json();
+        setSubmission(submissionData);
 
-    // Fetch submission details using the POST route for '/details'
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/details`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: submissionId })
-    })
-    .then(res => res.json())
-    .then(data => {
-      setSubmission(data);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error('Error fetching submission details: ', err);
-      setLoading(false);
-    });
+        const commentsRes = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/comments/${submissionId}`);
+        const commentsData = await commentsRes.json();
+        console.log('Fetched Comments:', commentsData);
+        setComments(commentsData);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    fetchComments();
+    fetchData();
   }, [submissionId]);
-
-  const fetchComments = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/${submissionId}/comments`);
-      const data = await res.json();
-      setComments(data);
-    } catch (err) {
-      console.error('Failed to load comments:', err);
-    }
-  };
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
 
     try {
-      // Using the same POST route to add a comment
-      await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/${submissionId}/comments`, {
+      // Post new comment
+      await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/comments/${submissionId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subID: submissionId, content: newComment })
       });
 
       setNewComment(''); // Reset comment input field
-      fetchComments(); // Reload comments
+
+      // Re-fetch comments after posting new one
+      const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/comments/${submissionId}`);
+      const commentsData = await res.json();
+      setComments(commentsData);
     } catch (err) {
       console.error('Failed to post comment:', err);
     }
@@ -99,12 +96,16 @@ export default function SubmissionDetails() {
       </div>
 
       <ul className="comment-list">
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            <p>{comment.content}</p>
-            <small>{new Date(comment.creationTime).toLocaleString()}</small>
-          </li>
-        ))}
+        {comments.length === 0 ? (
+          <li>No comments available.</li>
+        ) : (
+          comments.map((comment) => (
+            <li key={comment.id}>
+              <p>{comment.content}</p>
+              <small>{new Date(comment.creationTime).toLocaleString()}</small>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

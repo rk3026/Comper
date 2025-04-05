@@ -6,9 +6,9 @@ const submissionController = require('../Controllers/SubmissionController');
 router.post('/details', submissionController.getSubmission);
 
 // Route to fetch comments for a specific submission (GET /:subID/comments)
-router.get('/:subID/comments', submissionController.getCommentsForSubmission);
+router.get('/comments/:subID', submissionController.getCommentsForSubmission);
 
 // Route to add a comment to a specific submission (POST /:subID/comments)
-router.post('/:subID/comments', submissionController.addCommentToSubmission);
+router.post('/comments/:subID', submissionController.addCommentToSubmission);
 
 module.exports = router;

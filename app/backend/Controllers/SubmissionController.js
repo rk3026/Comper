@@ -2,8 +2,8 @@ const submissionModel = require('../Models/Submission');
 
 async function getCommentsForSubmission(req, res) {
   try {
-    const { id } = req.params;
-    const comments = await submissionModel.getCommentsBySubmissionId(id);
+    const { subID } = req.params;
+    const comments = await submissionModel.getCommentsBySubmissionId(subID);
     res.status(200).json(comments);
   } catch (err) {
     console.error(err.message);
