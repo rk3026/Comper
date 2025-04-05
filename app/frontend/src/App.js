@@ -7,6 +7,7 @@ import ThreadPage from './Pages/ThreadPage';
 import Topbar from './Pages/Topbar';
 import CompetitionsPage from './Pages/CompetitionsPage';
 import CompetitionDetailsPage from './Pages/CompetitionDetails';
+import SubmissionDetailsPage from './Pages/SubmissionDetails';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/thread" element={<ThreadPage />} />
         <Route path="/competitions" element={<CompetitionsPage />} />
 	<Route path="/competitions/details" element={<CompetitionDetailsPage />} />
+	<Route path="/submissions/details" element={<SubmissionDetailsPage />} />
       </Routes>
     </Router>
   );

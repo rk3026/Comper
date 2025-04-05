@@ -31,11 +31,11 @@ export default function CompetitionDetails() {
       console.error('Error fetching competition details: ', err);
       setLoading(false);
     });
-  }, [competitionId]); // <- effect waits till the competition id is received
+  }, []);
 
   if (!competitionId) {
     return (
-      <div className="details-container">
+      <div className="no-data-found">
         <h2>No competition data found.</h2>
         <button onClick={() => navigate('/')}>Go Back</button>
       </div>
@@ -45,8 +45,6 @@ export default function CompetitionDetails() {
   if (loading) {
     return <div>Loading Submissions...</div>;
   }
-
-  console.log(competition);
 
   return (
     <div className="details-container">
