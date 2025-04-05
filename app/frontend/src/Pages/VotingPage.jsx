@@ -82,7 +82,7 @@ const VotingPage = () => {
 
       // Clear any previous error and display success message
       setError('');
-      setSuccess(`Vote Incremented! Total Score: ${totalScore}`);
+      setSuccess(true);
       alert('Your vote has been successfully submitted!');
     } catch (err) {
       setError(err.message);
@@ -105,7 +105,8 @@ const VotingPage = () => {
     }
     // Captcha verified; proceed with vote submission
     submitVote().then(() => {
-      alert('Thank you for voting! Your submission has been recorded.');
+      //alert('Thank you for voting! Your submission has been recorded.');
+      navigate(-1);
     });
     setShowCaptcha(false);
   };
