@@ -18,6 +18,7 @@ async function connectToDatabase() {
   try {
     pool = await sql.connect(config);
     console.log('Connected to Azure SQL Database');
+    console.log('Pool:', pool);
   } catch (err) {
     console.error('Database connection error:', err.message);
     throw new Error('Failed to connect to the database');
@@ -36,8 +37,8 @@ async function initializeDatabase() {
           content NVARCHAR(255),
           timestamp DATETIME DEFAULT GETDATE()
         );
-      END
-    `;
+      END`
+    ;
     // Check if the 'competitions' table exists, and create it if it doesn't
     const queryCompetitions = `
       IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'competitions' AND xtype = 'U')
@@ -49,8 +50,8 @@ async function initializeDatabase() {
           deadline DATE,
           timestamp DATETIME DEFAULT GETDATE()
         );
-      END
-    `;
+      END`
+    ;
     
     await pool.request().query(queryPosts);
     await pool.request().query(queryCompetitions);
@@ -61,4 +62,12 @@ async function initializeDatabase() {
   }
 }
 
-module.exports = { connectToDatabase, pool, initializeDatabase };
+// Provide a getter for the pool
+function getPool() {
+  if (!pool) {
+    throw new Error('Database pool is not initialized');
+  }
+  return pool;
+}
+
+module.exports = { connectToDatabase, initializeDatabase, getPool };
