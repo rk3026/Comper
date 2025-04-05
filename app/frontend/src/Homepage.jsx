@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import React, { useState, useEffect } from 'react';
+>>>>>>> origin/main
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
+// Just listing out all competitions for the trending section instead of figuring out which one is trending currently
+/*
 const trendingCompetitions = [
   {
     title: 'Competition Placeholder 1',
@@ -22,9 +28,11 @@ const trendingCompetitions = [
     endTime: 'April 22, 2025 8:00 PM'
   }
 ];
+*/
 
 export default function Homepage() {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [searchTerm, setSearchTerm] = useState('');
   const [availableDate, setAvailableDate] = useState('');
 
@@ -48,13 +56,22 @@ export default function Homepage() {
     return matchesText && isAvailableOnDate;
   });
 
+=======
+  const [competitions, setCompetitions] = useState([]);
+
+    useEffect(() => {
+      fetch('http://localhost:5000/api/competitions')
+.then(response => response.json())
+.then(data => setCompetitions(data));
+    }, []);
+>>>>>>> origin/main
 
   return (
     <div className="homepage-container">
       <header className="homepage-header">
         <div className="header-content">
           <div>
-            <h1>Welcome to Compers</h1>
+            <h1>Welcome Compers</h1>
             <p>Your anonymous arena for competitive glory</p>
           </div>
         </div>
@@ -88,6 +105,7 @@ export default function Homepage() {
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
+<<<<<<< HEAD
           {filteredCompetitions.length > 0 ? (
             filteredCompetitions.map((comp, index) => (
               <div key={index} className="competition-card">
@@ -103,6 +121,31 @@ export default function Homepage() {
               <p>No competitions are available on this date.</p>
             </div>
           )}
+=======
+    {competitions.map((comp, index) => (
+	<div key={index} className="competition-card">
+	    <h3>{comp.title}</h3>
+	    <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
+	    <p><strong>Start:</strong> {comp.startTime}</p>
+            <p><strong>End:</strong> {comp.deadline}</p>
+	    <img src={comp.attachmentURL} width="200" height="200"/>
+	    <button className="join-button">Join Anonymously</button>
+	</div>
+    ))}
+
+    
+      {/*
+          {trendingCompetitions.map((comp, index) => (
+            <div key={index} className="competition-card">
+              <h3>{comp.title}</h3>
+              <p>{comp.description}</p>
+              <p><strong>Start:</strong> {comp.startTime}</p>
+              <p><strong>End:</strong> {comp.endTime}</p>
+              <button className="join-button">Join Anonymously</button>
+            </div>
+          ))}
+    */}
+>>>>>>> origin/main
         </div>
       </section>
     </div>

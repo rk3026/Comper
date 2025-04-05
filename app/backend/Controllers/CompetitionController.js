@@ -1,5 +1,5 @@
 // controllers/CompetitionController.js
-const competitionModel = require('../models/Competition');
+const competitionModel = require('../Models/Competition');
 const { v4: uuidv4 } = require('uuid');
 
 /**
