@@ -1,0 +1,47 @@
+/* CreateCompetition.css */
+
+.criteria-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .criteria-table th, .criteria-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .criteria-table input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .add-criteria-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-criteria-button:hover {
+    background-color: #45a049;
+  }
+  
+  .remove-criteria-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .remove-criteria-button:hover {
+    background-color: #e04a4a;
+  }
+  
