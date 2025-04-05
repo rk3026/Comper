@@ -46,6 +46,10 @@ export default function CompetitionDetails() {
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4c6daf (Tried to solve conflict)
       <div className="competition-info">
         {competition.attachmentURL && (
           <div>
@@ -107,7 +111,11 @@ export default function CompetitionDetails() {
           {joining ? 'Joining...' : 'Join Competition'}
         </button>
       </div>
+<<<<<<< HEAD
   */}
+=======
+
+>>>>>>> f4c6daf (Tried to solve conflict)
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>
   );

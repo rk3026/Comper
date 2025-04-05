@@ -49,6 +49,7 @@ export default function Homepage() {
       setFilteredCompetitions(filtered); // Update the filtered competitions list
     }
   }, [searchQuery, competitions]); // Re-run whenever searchQuery or competitions change
+<<<<<<< HEAD
   const handleCompetitionClick = (competition) => {
     // Pass the entire competition object via navigate state
     navigate('/competitions/details', { state: { competition } });
@@ -58,6 +59,8 @@ export default function Homepage() {
     // Navigate to a new page: /threads/:threadID
     navigate(`/threads/${thread.id}`);
   };
+=======
+>>>>>>> f4c6daf (Tried to solve conflict)
 
   return (
     <div className="homepage-container">
