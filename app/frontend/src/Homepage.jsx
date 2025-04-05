@@ -32,8 +32,8 @@ export default function Homepage() {
 
     useEffect(() => {
       fetch('http://localhost:5000/api/competitions')
-	.then(response => response.json())
-	.then(data => setCompetitions(data));
+.then(response => response.json())
+.then(data => setCompetitions(data));
     }, []);
 
   return (
@@ -62,14 +62,14 @@ export default function Homepage() {
         <h2>Trending Competitions</h2>
         <div className="trending-row">
     {competitions.map((comp, index) => (
-	<div key={index} className="competition-card">
-	    <h3>{comp.title}</h3>
-	    <p>{comp.description}</p>
-	    <p><strong>Start:</strong> {comp.startTime}</p>
+<div key={index} className="competition-card">
+    <h3>{comp.title}</h3>
+    <p>{comp.description}</p>
+    <p><strong>Start:</strong> {comp.startTime}</p>
             <p><strong>End:</strong> {comp.deadline}</p>
-	    <img src={comp.attachmentURL} width="200" height="200"/>
-	    <button className="join-button">Join Anonymously</button>
-	</div>
+    <img src={comp.attachmentURL} width="200" height="200"/>
+    <button className="join-button">Join Anonymously</button>
+</div>
     ))}
 
     
