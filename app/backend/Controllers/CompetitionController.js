@@ -16,7 +16,7 @@ async function getCompetitionDetails(req, res) {
   try {
     const details = await competitionModel.getCompetitionDetails(req.body.id);
     const submissions = await competitionModel.getSubmissions(req.body.id);
-    res.status(200).json({ details: details, submissions: submissions });
+    res.status(200).json({ details: details[0], submissions: submissions });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ error: err.message });
