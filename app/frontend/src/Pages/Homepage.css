@@ -96,7 +96,7 @@
   background-color: white;
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Increased shadow opacity */
   flex-shrink: 0;
 }
 
@@ -158,4 +158,25 @@
 
 .browse-topics-button:hover {
   background-color: #005fa3;
+}
+
+
+.thread-card {
+  min-width: 300px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  flex-shrink: 0;
+  cursor: pointer;
+  /* Optionally center the thread name */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: adjust typography for thread cards */
+.thread-card h4 {
+  margin: 0;
+  font-size: 1.2rem;
 }

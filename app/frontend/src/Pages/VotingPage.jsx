@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-// Replace with your actual API base URL
+// Replace with your actual API base URL if needed
 const API_BASE_URL = `${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria`;
 // For demonstration, we use a simple fixed captcha value
 const CAPTCHA_VALUE = '12345';
@@ -55,9 +55,8 @@ const VotingPage = () => {
     }));
   };
 
-  // Function that submits the vote data to the API
-  const submitVote = async () => {
-    // Validate and sum up the scores
+  // Function to calculate total score and display the success message.
+  const submitVote = () => {
     let totalScore = 0;
     for (const [id, value] of Object.entries(scores)) {
       const numericValue = parseFloat(value);
@@ -68,29 +67,10 @@ const VotingPage = () => {
       totalScore += numericValue;
     }
 
-    const voteData = {
-      totalCriteriaPoints: totalScore,
-      voteCount: 1, // Assuming each vote increases the count by 1
-    };
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/submissions/${submissionId}/vote`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(voteData)
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit vote.');
-      }
-      setSuccess('Vote submitted successfully!');
-      // Navigate to a thank-you or confirmation page
-      navigate('/thank-you');
-    } catch (err) {
-      setError(err.message);
-    }
+    // Instead of an API call, we simply display the result
+    setSuccess(`Vote Incremented! Total Score: ${totalScore}`);
+    // Optionally, you could navigate to a confirmation page here.
+    // For now, we display a "Go Back" button after the success message.
   };
 
   // Handle form submission by showing the captcha prompt
@@ -109,6 +89,7 @@ const VotingPage = () => {
     }
     // Captcha verified; proceed with vote submission
     submitVote();
+    setShowCaptcha(false);
   };
 
   if (loading) return <p>Loading criteria...</p>;
@@ -175,7 +156,12 @@ const VotingPage = () => {
         </div>
       )}
       
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {success && (
+        <div>
+          <p style={{ color: 'green' }}>{success}</p>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      )}
     </div>
   );
 };
