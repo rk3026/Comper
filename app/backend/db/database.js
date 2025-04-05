@@ -26,22 +26,30 @@ async function connectToDatabase() {
 
 async function initializeDatabase() {
   try {
+    // Check if the 'posts' table exists, and create it if it doesn't
     const queryPosts = `
-      CREATE TABLE IF NOT EXISTS posts (
-        id INT PRIMARY KEY IDENTITY(1,1),
-        title NVARCHAR(255),
-        content NVARCHAR(255),
-        timestamp DATETIME DEFAULT GETDATE()
-      )
+      IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'posts' AND xtype = 'U')
+      BEGIN
+        CREATE TABLE posts (
+          id INT PRIMARY KEY IDENTITY(1,1),
+          title NVARCHAR(255),
+          content NVARCHAR(255),
+          timestamp DATETIME DEFAULT GETDATE()
+        );
+      END
     `;
+    // Check if the 'competitions' table exists, and create it if it doesn't
     const queryCompetitions = `
-      CREATE TABLE IF NOT EXISTS competitions (
-        id INT PRIMARY KEY IDENTITY(1,1),
-        title NVARCHAR(255),
-        description NVARCHAR(255),
-        deadline DATE,
-        timestamp DATETIME DEFAULT GETDATE()
-      )
+      IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'competitions' AND xtype = 'U')
+      BEGIN
+        CREATE TABLE competitions (
+          id INT PRIMARY KEY IDENTITY(1,1),
+          title NVARCHAR(255),
+          description NVARCHAR(255),
+          deadline DATE,
+          timestamp DATETIME DEFAULT GETDATE()
+        );
+      END
     `;
     
     await pool.request().query(queryPosts);
