@@ -1,5 +1,5 @@
 // controllers/CommentController.js
-const { createComment, getCommentsBySubmission, updateComment, deleteComment } = require('../models/Comment');
+const { createComment, getCommentsBySubmission, updateComment, deleteComment } = require('../Models/Comment');
 const { v4: uuidv4 } = require('uuid');
 
 exports.createComment = async (req, res) => {

@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Homepage from './Homepage';
-import CreateCompetition from './CreateCompetition';
-import TopicsPage from './TopicsPage';
-import ThreadPage from './ThreadPage';
-import Topbar from './Topbar';
-import CompetitionsPage from './CompetitionsPage';
+import Homepage from './Pages/Homepage';
+import CreateCompetition from './Pages/CreateCompetition';
+import TopicsPage from './Pages/TopicsPage';
+import ThreadPage from './Pages/ThreadPage';
+import Topbar from './Pages/Topbar';
+import CompetitionsPage from './Pages/CompetitionsPage';
+import CompetitionDetailsPage from './Pages/CompetitionDetails';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/topics" element={<TopicsPage />} />
         <Route path="/thread" element={<ThreadPage />} />
         <Route path="/competitions" element={<CompetitionsPage />} />
+	<Route path="/competitions/details" element={<CompetitionDetailsPage />} />
       </Routes>
     </Router>
   );

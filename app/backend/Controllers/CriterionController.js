@@ -1,5 +1,5 @@
 // controllers/CriterionController.js
-const { createCriterion, getCriteriaByCompetition } = require('../models/Criterion');
+const { createCriterion, getCriteriaByCompetition } = require('../Models/Criterion');
 const { v4: uuidv4 } = require('uuid');
 
 exports.createCriterion = async (req, res) => {
