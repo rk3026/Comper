@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const threadController = require('./Controllers/threadController');
+const threadController = require('../Controllers/ThreadController');
 
 // POST /api/threads - Create a new thread
 router.post('/', threadController.createThread);

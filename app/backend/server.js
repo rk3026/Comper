@@ -5,7 +5,7 @@ const compRoutes = require('./routes/competitionRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const criterionRoutes = require('./routes/criterionRoutes');
-const threadRoutes = require('./routes/threadRoutes.js')
+const threadRoutes = require('./routes/threadRoutes')
 
 const { connectToDatabase } = require('./db/database');
 
