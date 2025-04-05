@@ -13,7 +13,7 @@ async function createThread(name, topics = []) {
       OUTPUT INSERTED.id
       VALUES (@name)
     `);
-  
+
   const threadID = threadResult.recordset[0].id;
 
   // Insert thread topics
@@ -76,6 +76,11 @@ async function getThreadWithComments(threadID) {
       WHERE threadID = @threadID
       ORDER BY creationTime ASC
     `);
+
+  // Replace the id with a serial number starting from 1
+  commentsResult.recordset.forEach((comment, index) => {
+    comment.id = index + 1;
+  });
 
   return {
     ...threadResult.recordset[0],
