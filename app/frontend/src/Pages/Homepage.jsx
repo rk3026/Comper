@@ -117,7 +117,7 @@ export default function Homepage() {
                       alt={comp.title}
                     />
                   )}
-                  <button className="join-button">Join Anonymously</button>
+
                 </div>
               ))}
             </div>
