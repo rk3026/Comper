@@ -88,7 +88,6 @@ export default function Homepage() {
               </button>
             </div>
           ))}
-    */}
         </div>
       </section>
     </div>
