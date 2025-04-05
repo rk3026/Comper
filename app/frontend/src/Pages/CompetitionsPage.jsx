@@ -39,7 +39,7 @@ export default function CompetitionsPage() {
   if (loading) return <div>Loading competitions...</div>;
 
   return (
-    <div className="homepage-container" style={{ backgroundColor: 'white' }}> {/* Default light gray background */}
+    <div className="homepage-container" style={{ backgroundColor: '#f3f4f6' }}> {/* Default light gray background */}
       <header className="homepage-header">
         <h1>All Competitions</h1>
         <p>View all current competitions</p>
