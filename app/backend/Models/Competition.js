@@ -24,8 +24,6 @@ async function getSubmissions(compID) {
  */
 async function createCompetition(data) {
   try {
-    console.log("createCompetition in Competition.js");
-
     const pool = await getPool();
     await pool.request()
       .input('title', sql.NVarChar(255), data.title)

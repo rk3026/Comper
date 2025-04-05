@@ -80,6 +80,10 @@ export default function CompetitionDetails() {
       </div>
   */}
 
+      <div className="submit-submission-section">
+	<button className="submit-submission-button" onClick={() => navigate(`/createSubmission`, { state: { competition: { id: competitionId }}})}>Submit your attempt!</button>
+      </div>
+
       <div className="submissions-section">
         <h2>Submissions</h2>
         {loading ? (
