@@ -1,31 +1,4 @@
-// controllers/CompetitionController.js
 const competitionModel = require('../Models/Competition');
-const { v4: uuidv4 } = require('uuid');
-
-/**
- * Controller to create a new competition.
- */
-async function createCompetition(req, res) {
-  try {
-    // Create a competition object using data from the request body
-    const data = {
-      compID: uuidv4(), // Generate a unique ID
-      title: req.body.title,
-      description: req.body.description,
-      submissionFileType: req.body.submissionFileType,
-      attachment: req.body.attachment,
-      startTime: req.body.startTime,
-      endTime: req.body.endTime,
-      status: req.body.status || 'Sub' // Default status (e.g., "Sub" for Submission phase)
-    };
-
-    // Call the model to create a competition in the database
-    await competitionModel.createCompetition(data);
-    res.status(201).json({ message: 'Competition created successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
 
 /**
  * Controller to list all competitions.
@@ -39,4 +12,36 @@ async function listCompetitions(req, res) {
   }
 }
 
-module.exports = { createCompetition, listCompetitions };
+async function getCompetitionDetails(req, res) {
+  try {
+    const details = await competitionModel.getCompetitionDetails(req.body.id);
+    const submissions = await competitionModel.getSubmissions(req.body.id);
+    res.status(200).json({ details: details[0], submissions: submissions });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: err.message });
+  }
+}
+
+/**
+ * Controller to create a new competition.
+ */
+async function createCompetition(req, res) {
+/*
+const data = {
+      title: req.body.title,
+      filetype: req.body.filetype,
+      description: req.body.description,
+      startDesc: req.body.startDesc || '', // optional field
+      startTime: req.body.startTime,
+      deadline: body.deadline,
+      voteEndTime: body.voteEndTime || body.deadline, // use deadline as default
+      attachmentURL: body.attachmentURL
+    };
+*/
+
+    await competitionModel.createCompetition(req.body);
+    res.status(201).json({ message: 'Competition created successfully' });
+}
+
+module.exports = { listCompetitions, getCompetitionDetails, createCompetition };

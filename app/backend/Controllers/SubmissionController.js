@@ -5,7 +5,7 @@ const {
     getSubmission, 
     updateSubmission, 
     deleteSubmission 
-  } = require('../models/Submission');
+  } = require('../Models/Submission');
   const { v4: uuidv4 } = require('uuid');
   
   exports.createSubmission = async (req, res) => {

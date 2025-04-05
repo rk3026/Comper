@@ -1,68 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './CompetitionDetails.css';
+//import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const competition = location.state?.competition;
+  const competitionId = location.state?.competition.id;
 
-  const [comments, setComments] = useState([]);
+  const [competition, setCompetition] = useState({});
   const [submissions, setSubmissions] = useState([]);
-  const [loadingComments, setLoadingComments] = useState(true);
-  const [loadingSubmissions, setLoadingSubmissions] = useState(true);
-  const [joining, setJoining] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch comments when competition data is available
   useEffect(() => {
-    if (competition) {
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/${competition.compID}/comments`)
-        .then(res => res.json())
-        .then(data => {
-          setComments(data);
-          setLoadingComments(false);
-        })
-        .catch(err => {
-          console.error('Error fetching comments:', err);
-          setLoadingComments(false);
-        });
-
-      // Fetch submissions when competition data is available
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/${competition.compID}/submissions`)
-        .then(res => res.json())
-        .then(data => {
-          setSubmissions(data);
-          setLoadingSubmissions(false);
-        })
-        .catch(err => {
-          console.error('Error fetching submissions:', err);
-          setLoadingSubmissions(false);
-        });
-    }
-  }, [competition]);
-
-  // Handle join competition logic
-  const handleJoinCompetition = () => {
-    setJoining(true);
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/${competition.compID}/join`, {
+    if (!competitionId) return;
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+	'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ userID: 'anonymous' })
-    })
-      .then(res => res.json())
-      .then(data => {
-        setJoining(false);
-        console.log('Successfully joined competition:', data);
+      body: JSON.stringify({
+	id: competitionId
       })
-      .catch(err => {
-        setJoining(false);
-        console.error('Error joining competition:', err);
-      });
-  };
+    }).then(response => response.json())
+    .then(data => {
+      setCompetition(data.details);
+      setSubmissions(data.submissions);
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error('Error fetching competition details: ', err);
+      setLoading(false);
+    });
+  }, [competitionId]); // <- effect waits till the competition id is received
 
-  if (!competition) {
+  if (!competitionId) {
     return (
       <div className="details-container">
         <h2>No competition data found.</h2>
@@ -70,6 +41,12 @@ export default function CompetitionDetails() {
       </div>
     );
   }
+
+  if (loading) {
+    return <div>Loading Submissions...</div>;
+  }
+
+  console.log(competition);
 
   return (
     <div className="details-container">

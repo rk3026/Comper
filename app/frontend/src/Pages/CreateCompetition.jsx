@@ -1,45 +1,89 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CreateCompetition.css';
 
-// This component allows users to create a new competition
 export default function CreateCompetition() {
-  const [tags, setTags] = useState(['']);
+  const navigate = useNavigate();
 
-  // Function to add a new empty tag to the list
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [tags, setTags] = useState(['']);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [submissionFileType, setSubmissionFileType] = useState('.pdf');
+  const [attachment, setAttachment] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
   const handleAddTag = () => {
     setTags([...tags, '']);
   };
 
-  // Function to update the value of a specific tag
   const handleTagChange = (index, value) => {
     const newTags = [...tags];
     newTags[index] = value;
     setTags(newTags);
   };
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Placeholder for submitting form data
-    console.log('Competition created');
+    console.log('Submitting form...');
+
+    const competitionData = {
+      title:title,
+      filetype: submissionFileType,
+      description: `${description}\nTags: ${tags.filter(t => t.trim()).join(', ')}`,
+      startDesc: '', // Optional or static string if needed
+      startTime: new Date(startDate).toISOString(),
+      deadline: new Date(endDate).toISOString(),
+      voteEndTime: new Date(endDate).toISOString(), // Or add another field
+      attachmentURL: attachment
+    };
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(competitionData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create competition');
+      }
+
+      setSuccess(true);
+      setTimeout(() => navigate('/'), 1500);
+
+    } catch (err) {
+      console.error(err);
+      setError('Error creating competition. Please try again.');
+    }
   };
 
   return (
     <div className="create-container">
-      {/* Page title */}
       <h1>Create a New Competition</h1>
-
-      {/* Form for creating a competition */}
       <form onSubmit={handleSubmit} className="create-form">
-        {/* Input for competition title */}
         <label>Title</label>
-        <input type="text" placeholder="Enter competition title" required />
+        <input
+          type="text"
+          placeholder="Enter competition title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
-        {/* Input for competition description */}
         <label>Description</label>
-        <textarea placeholder="Enter description" rows={4} required />
+        <textarea
+          placeholder="Enter description"
+          rows={4}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
 
-        {/* Section for adding criteria tags */}
         <label>Criteria Tags</label>
         {tags.map((tag, index) => (
           <input
@@ -51,23 +95,46 @@ export default function CreateCompetition() {
             className="tag-input"
           />
         ))}
-        {/* Button to add a new tag */}
         <button type="button" className="add-tag-button" onClick={handleAddTag}>
           + Add Tag
         </button>
 
-        {/* Input for start date */}
         <label>Start Date</label>
-        <input type="datetime-local" required />
+        <input
+          type="datetime-local"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+        />
 
-        {/* Input for end date */}
         <label>End Date</label>
-        <input type="datetime-local" required />
+        <input
+          type="datetime-local"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+        />
 
-        {/* Submit button */}
-        <button type="submit" className="submit-button">
-          Create Competition
-        </button>
+        <label>Submission File Type</label>
+        <input
+          type="text"
+          value={submissionFileType}
+          onChange={(e) => setSubmissionFileType(e.target.value)}
+          placeholder=".pdf, .docx etc."
+        />
+
+        <label>Attachment (URL)</label>
+        <input
+          type="text"
+          value={attachment}
+          onChange={(e) => setAttachment(e.target.value)}
+          placeholder="https://link-to-file"
+        />
+
+        <button type="submit" className="submit-button">Create Competition</button>
+
+        {success && <p className="success-message">✅ Competition created!</p>}
+        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
   );
