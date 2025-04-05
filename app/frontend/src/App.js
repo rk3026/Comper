@@ -6,6 +6,7 @@ import TopicsPage from './Pages/TopicsPage';
 import ThreadPage from './Pages/ThreadPage';
 import Topbar from './Pages/Topbar';
 import CompetitionsPage from './Pages/CompetitionsPage';
+import CompetitionDetailsPage from './Pages/CompetitionDetails';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/topics" element={<TopicsPage />} />
         <Route path="/thread" element={<ThreadPage />} />
         <Route path="/competitions" element={<CompetitionsPage />} />
+	<Route path="/competitions/details" element={<CompetitionDetailsPage />} />
       </Routes>
     </Router>
   );

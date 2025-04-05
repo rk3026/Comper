@@ -10,7 +10,11 @@ export default function CompetitionsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch('http://localhost:5000/api/competitions') // Make sure this matches your backend
+=======
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
+>>>>>>> origin/EvanBranch
       .then(res => res.json())
       .then(data => {
         setCompetitions(data);
@@ -39,6 +43,7 @@ export default function CompetitionsPage() {
   if (loading) return <div>Loading competitions...</div>;
 
   return (
+<<<<<<< HEAD
     <div className="homepage-container" style={{ backgroundColor: '#f3f4f6' }}> {/* Default light gray background */}
       <header className="homepage-header">
         <h1>All Competitions</h1>
@@ -82,6 +87,19 @@ export default function CompetitionsPage() {
             ))
           )}
         </div>
+=======
+    <div className="competitions-page">
+      <h1>All Competitions</h1>
+      <div className="competitions-list">
+        {competitions.map((comp) => (
+          <div key={comp.id} className="competition-card" onClick={() => navigate(`/competitions/details`, { state: { competition: { id: comp.id }}})}>
+            <h2>{comp.title}</h2>
+            <p>{comp.description}</p>
+            <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
+            <p><strong>Deadline:</strong> {new Date(comp.deadline).toLocaleString()}</p>
+          </div>
+        ))}
+>>>>>>> origin/EvanBranch
       </div>
     </div>
   );

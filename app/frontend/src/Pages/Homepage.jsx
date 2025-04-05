@@ -7,6 +7,7 @@ export default function Homepage() {
   const [competitions, setCompetitions] = useState([]);
   const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
 
+<<<<<<< HEAD
   useEffect(() => {
     fetch('http://localhost:5000/api/competitions')
       .then((response) => response.json())
@@ -23,6 +24,13 @@ export default function Homepage() {
     comp.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
     comp.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
+=======
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
+.then(response => response.json())
+.then(data => setCompetitions(data));
+    }, []);
+>>>>>>> origin/EvanBranch
 
   return (
     <div className="homepage-container">
@@ -51,7 +59,24 @@ export default function Homepage() {
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
+<<<<<<< HEAD
           {filteredCompetitions.map((comp, index) => (
+=======
+    {competitions.map((comp, index) => (
+	<div key={index} className="competition-card">
+	    <h3>{comp.title}</h3>
+	    <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
+	    <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
+            <p><strong>End:</strong> {new Date(comp.deadline).toLocaleString()}</p>
+	    <img src={comp.attachmentURL} width="200" height="200"/>
+	    <button className="join-button">Join Anonymously</button>
+	</div>
+    ))}
+
+    
+      {/*
+          {trendingCompetitions.map((comp, index) => (
+>>>>>>> origin/EvanBranch
             <div key={index} className="competition-card">
               <h3>{comp.title}</h3>
               <p>{comp.description}</p>
