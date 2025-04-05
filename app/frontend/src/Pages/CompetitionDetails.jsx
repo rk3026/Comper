@@ -19,28 +19,39 @@ export default function CompetitionDetails() {
 
   useEffect(() => {
     if (!competitionId) return;
-    // Fetch competition details
+  
+    // Fetch competition details along with comments
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: competitionId,
+        id: competitionId,  // Send the competitionId in the body to fetch details and comments
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        setCompetition(data.details);
-        setSubmissions(data.submissions);
-        setComments(data.comments || []);  // Set comments related to the competition
-        setLoading(false);
+        if (data && data.details) {
+          setCompetition(data.details);  // Set competition details
+          setSubmissions(data.submissions || []);  // Set submissions, default to empty array if not found
+          setComments(data.comments || []);  // Set comments, default to empty array if not found
+        } else {
+          console.error('No competition details found.');
+          setCompetition(null);  // Clear competition if no details are found
+          setSubmissions([]);  // Clear submissions if no competition found
+          setComments([]);  // Clear comments if no competition found
+        }
+        setLoading(false);  // Set loading to false after the data is fetched
       })
       .catch((err) => {
         console.error('Error fetching competition details: ', err);
-        setLoading(false);
+        setLoading(false);  // Set loading to false in case of an error
       });
   }, [competitionId]);
+  
+  
+  
 
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {

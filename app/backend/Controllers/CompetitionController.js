@@ -1,20 +1,6 @@
 const competitionModel = require('../Models/Competition');
 
 /**
- * Controller to get a competition and its comments.
- */
-async function getCompetitionWithComments(req, res) {
-  try {
-    const { compID } = req.params;
-    // Fetch competition details along with comments
-    const competition = await competitionModel.getCompetitionWithComments(compID);
-    res.status(200).json(competition);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-
-/**
  * Controller to add a comment to a competition.
  */
 async function addCommentToCompetition(req, res) {
@@ -51,14 +37,25 @@ async function listCompetitions(req, res) {
 
 async function getCompetitionDetails(req, res) {
   try {
-    const details = await competitionModel.getCompetitionDetails(req.body.id);
-    const submissions = await competitionModel.getSubmissions(req.body.id);
-    res.status(200).json({ details: details[0], submissions: submissions });
+    const { id } = req.body; // Get the competition ID from the request body
+    
+    // Fetch competition details, submissions, and comments
+    const competition = await competitionModel.getCompetitionDetails(id);
+    const submissions = await competitionModel.getSubmissions(id);
+    const comments = await competitionModel.getCompetitionComments(id);  // Fetch comments for the competition
+
+    // Respond with the combined data
+    res.status(200).json({
+      details: competition[0],  // Assuming competition is returned as an array
+      submissions: submissions,
+      comments: comments,
+    });
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).json({ error: err.message });
   }
 }
+
 
 /**
  * Controller to create a new competition.
@@ -81,4 +78,4 @@ const data = {
     res.status(201).json({ message: 'Competition created successfully' });
 }
 
-module.exports = { listCompetitions, getCompetitionDetails, createCompetition, getCompetitionWithComments, addCommentToCompetition };
+module.exports = { listCompetitions, getCompetitionDetails, createCompetition, addCommentToCompetition };

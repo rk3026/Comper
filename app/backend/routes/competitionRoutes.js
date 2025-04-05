@@ -6,9 +6,6 @@ const competitionController = require('../Controllers/CompetitionController');
 // GET /api/competitions - Retrieve a list of competitions
 router.get('/', competitionController.listCompetitions);
 
-// GET /api/competitions/:compID/comments - Retrieve all comments for a specific competition
-router.get('/:compID/comments', competitionController.getCompetitionWithComments);
-
 // POST /api/competitions/:compID/comments - Create a new comment for a competition
 router.post('/:compID/comments', competitionController.addCommentToCompetition);
 
