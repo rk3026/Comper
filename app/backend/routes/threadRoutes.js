@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for /api/threads
+ */
+
 const express = require('express');
 const router = express.Router();
 const threadController = require('../Controllers/ThreadController');

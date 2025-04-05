@@ -1,3 +1,8 @@
+/*
+ * Handles fetch requests for /api/submissions
+ * and sends any SQL queries to Submission.js
+ */
+
 const submissionModel = require('../Models/Submission');
 
 async function listSubmissions(req, res) {
@@ -5,6 +10,27 @@ async function listSubmissions(req, res) {
     const submissions = await submissionModel.listSubmissions(req.body.compID);
     res.status(200).json(submissions);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+async function getCommentsForSubmission(req, res) {
+  try {
+    const { subID } = req.params;
+    const comments = await submissionModel.getCommentsBySubmissionId(subID);
+    res.status(200).json(comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function addCommentToSubmission(req, res) {
+  try {
+    const { subID, content } = req.body;
+    const result = await submissionModel.addCommentToSubmission(subID, content);
+    res.status(201).json({ message: 'Comment added', id: result.insertId });
+  } catch (err) {
+    console.error(err.message);
     res.status(500).json({ error: err.message });
   }
 }
@@ -39,7 +65,7 @@ async function createSubmission(req, res) {
     }
 }
 
-module.exports = { getSubmission, createSubmission, listSubmissions };
+module.exports = {listSubmissions, getSubmission, createSubmission, getCommentsForSubmission, addCommentToSubmission };
 
 /*
 const { 

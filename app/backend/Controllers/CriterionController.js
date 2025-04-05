@@ -1,3 +1,8 @@
+/*
+ * Handles fetch requests for /api/criteria
+ * and sends any SQL queries to Criterion.js
+ */
+
 // controllers/CriterionController.js
 const {
   createCriterion: createCriterionModel,

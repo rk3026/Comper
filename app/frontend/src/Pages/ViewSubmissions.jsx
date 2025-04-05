@@ -72,7 +72,7 @@ export default function ViewSubmissions() {
                         <div
                             key={comp.id}
                             className="competition-card"
-                            onClick={() => navigate(`/submissions/details`, { state: { competition: comp } })} // Pass competition details
+                            onClick={() => navigate(`/submissions/details`, { state: { submission: { id: comp.id }} })} // Pass competition details
                         >
                             {/* Image at the top */}
                             {comp.attachmentURL && (

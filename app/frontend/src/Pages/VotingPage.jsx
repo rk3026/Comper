@@ -1,3 +1,8 @@
+/*
+ * Webpage for picking what score a particular submission should get.
+ * Also handles the submitting of the vote to the backend
+ */
+
 // votingPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';

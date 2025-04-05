@@ -1,3 +1,13 @@
+/*
+ * Handles webpage code for the homepage
+ *
+ * Trending competitions and threads list
+ *
+ * Search option
+ *
+ * Topbar
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
@@ -8,6 +18,7 @@ export default function Homepage() {
   const [threads, setThreads] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCompetitions, setFilteredCompetitions] = useState([]);
+  const [filteredThreads, setFilteredThreads] = useState([]);  // Added filteredThreads state
 
   // Fetch competitions and initialize filteredCompetitions
   useEffect(() => {
@@ -33,18 +44,25 @@ export default function Homepage() {
     setSearchQuery(e.target.value);
   };
 
-  // Filter competitions based on the search query
+  // Filter competitions and threads based on the search query
   useEffect(() => {
     if (searchQuery.trim() === '') {
       setFilteredCompetitions(competitions);
+      setFilteredThreads(threads);
     } else {
-      const filtered = competitions.filter(comp =>
+      const filteredCompetitions = competitions.filter(comp =>
         comp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         comp.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredCompetitions(filtered);
+      setFilteredCompetitions(filteredCompetitions);
+
+      const filteredThreads = threads.filter(thread =>
+        thread.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        thread.description?.toLowerCase().includes(searchQuery.toLowerCase()) // assuming thread has description
+      );
+      setFilteredThreads(filteredThreads);
     }
-  }, [searchQuery, competitions]);
+  }, [searchQuery, competitions, threads]);
 
   // Navigation handlers
   const handleCompetitionClick = (competition) => {
@@ -80,7 +98,7 @@ export default function Homepage() {
         />
       </section>
 
-      {/* Trending Section with Competitions and Threads */}
+      {/* Trending Section with Competitions */}
       <section className="trending-section">
         <h2>Trending</h2>
         <div className="trending-container">
@@ -115,16 +133,18 @@ export default function Homepage() {
             </div>
           </div>
 
+	{/* Trending Threads */}
           <div className="trending-threads">
             <h3>Threads</h3>
             <div className="trending-row">
-              {threads.map((thread) => (
+              {filteredThreads.map((thread) => (
                 <div
                   key={thread.id}
                   className="thread-card"
                   onClick={() => handleThreadClick(thread)}
                 >
                   <h2>{thread.name}</h2>
+                  {thread.description && <p>{thread.description}</p>}
                 </div>
               ))}
             </div>

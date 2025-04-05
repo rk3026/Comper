@@ -1,3 +1,7 @@
+/*
+ * Handles the webpage used for creating competitions
+ */
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateCompetition.css';
@@ -5,6 +9,7 @@ import './CreateCompetition.css';
 export default function CreateCompetition() {
   const navigate = useNavigate();
 
+  // state variables effecting how the webpage looks
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState(['']);
@@ -54,6 +59,7 @@ export default function CreateCompetition() {
     e.preventDefault();
     console.log('Submitting form...');
 
+    // Put the information entered by the user into a JSON object so that it can be sent to the backend
     const competitionData = {
       title: title,
       filetype: submissionFileType,
@@ -91,8 +97,11 @@ export default function CreateCompetition() {
   return (
     <div className="create-container">
       <h1>Create a New Competition</h1>
-
+      
+      {/* Form for entering the competition details */}
       <form onSubmit={handleSubmit} className="create-form">
+
+	{/* Title */}
         <label>Title</label>
         <input
           type="text"
@@ -102,6 +111,7 @@ export default function CreateCompetition() {
           required
         />
 
+	{/* Description */}
         <label>Description</label>
         <textarea
           placeholder="Enter description"
@@ -111,6 +121,7 @@ export default function CreateCompetition() {
           required
         />
 
+	{/* Topics */}
         <label>Topics</label>
         {tags.map((tag, index) => (
           <input
@@ -126,6 +137,7 @@ export default function CreateCompetition() {
           + Add Tag
         </button>
 
+	{/* Start Date */}
         <label>Start Date</label>
         <input
           type="datetime-local"
@@ -134,6 +146,7 @@ export default function CreateCompetition() {
           required
         />
 
+	{/* End Date */}
         <label>End Date</label>
         <input
           type="datetime-local"
@@ -142,6 +155,7 @@ export default function CreateCompetition() {
           required
         />
 
+	{/* File Type */}
         <label>Submission File Type</label>
         <input
           type="text"
@@ -150,6 +164,7 @@ export default function CreateCompetition() {
           placeholder=".pdf, .docx etc."
         />
 
+	{/* Attachment */}
         <label>Attachment (URL)</label>
         <input
           type="text"

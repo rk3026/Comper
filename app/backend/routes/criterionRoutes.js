@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for /api/criteria
+ */
+
 // routes/criterionRoutes.js
 const express = require('express');
 const router = express.Router();

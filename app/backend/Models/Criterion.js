@@ -1,3 +1,7 @@
+/*
+ * Handles SQL queries for getting or setting data for the criterion table
+ */
+
 // models/Criterion.js
 const { sql, getPool } = require('../db/database');
 

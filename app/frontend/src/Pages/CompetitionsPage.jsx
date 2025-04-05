@@ -1,3 +1,8 @@
+/*
+ * Webpage that displays a list of all the competitions in a grid like
+ * manner with a search bar
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CompetitionsPage.css'; // Use the existing styles

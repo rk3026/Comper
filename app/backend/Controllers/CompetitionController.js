@@ -1,3 +1,8 @@
+/*
+ * Handles fetch requests for /api/competitions
+ * and sends any SQL queries to Competition.js
+ */
+
 const competitionModel = require('../Models/Competition');
 
 /**

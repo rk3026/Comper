@@ -1,6 +1,11 @@
+/*
+ * Handles SQL queries for comment related tables
+ */
+
 // models/Comment.js
 const { sql, poolPromise } = require('../db/database');
 
+// Creates an entry in the comments table given the data
 async function createComment(data) {
   const pool = await poolPromise;
   await pool.request()
@@ -15,6 +20,7 @@ async function createComment(data) {
     `);
 }
 
+// Retrieves all comments for a submission id from the SQL database
 async function getCommentsBySubmission(subID) {
   const pool = await poolPromise;
   const result = await pool.request()
@@ -27,6 +33,7 @@ async function getCommentsBySubmission(subID) {
   return result.recordset;
 }
 
+// Updates an entry in the comments table in the SQL database
 async function updateComment(commentID, data) {
   const pool = await poolPromise;
   await pool.request()
@@ -39,6 +46,7 @@ async function updateComment(commentID, data) {
     `);
 }
 
+// Deletes an entry from the comments table given a commentID
 async function deleteComment(commentID) {
   const pool = await poolPromise;
   await pool.request()

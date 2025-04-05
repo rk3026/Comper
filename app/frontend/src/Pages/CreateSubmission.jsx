@@ -1,3 +1,9 @@
+/*
+ * Webpage for creating submissions to a specific competition
+ *
+ * Users supply their project as well as a title and description
+ */
+
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './CreateSubmission.css'; // Import your CSS file for styling

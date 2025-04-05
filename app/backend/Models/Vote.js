@@ -1,3 +1,7 @@
+/*
+ * Handles SQL queries for voting
+ */
+
 // models/Vote.js
 const { queryFromPool } = require('./Utility');
 

@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for api/comments
+ */
+
 // routes/commentRoutes.js
 const express = require('express');
 const router = express.Router();
