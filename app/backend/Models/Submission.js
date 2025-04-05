@@ -1,4 +1,5 @@
-const { sql, poolPromise } = require('../db/db1');
+// models/Submission.js
+const { sql, poolPromise } = require('../db/database');
 
 async function createSubmission(data) {
   const pool = await poolPromise;
@@ -9,18 +10,53 @@ async function createSubmission(data) {
     .input('submittedAt', sql.DateTime, data.submittedAt)
     .input('rating', sql.Float, data.rating)
     .input('voteCount', sql.Int, data.voteCount)
-    .input('name', sql.NVarChar(100), data.name)
-    .input('comment', sql.Text, data.comment)
-    .query(`INSERT INTO Submission (subID, compID, file, submittedAt, rating, voteCount, name, comment)
-            VALUES (@subID, @compID, @file, @submittedAt, @rating, @voteCount, @name, @comment)`);
+    .query(`
+      INSERT INTO Submission (subID, compID, file, submittedAt, rating, voteCount)
+      VALUES (@subID, @compID, @file, @submittedAt, @rating, @voteCount)
+    `);
 }
 
-async function getSubmissionsByCompID(compID) {
+async function listSubmissions(compID) {
   const pool = await poolPromise;
   const result = await pool.request()
     .input('compID', sql.UniqueIdentifier, compID)
-    .query('SELECT * FROM Submission WHERE compID = @compID');
+    .query(`SELECT * FROM Submission WHERE compID = @compID`);
   return result.recordset;
 }
 
-module.exports = { createSubmission, getSubmissionsByCompID };
+async function getSubmission(subID) {
+  const pool = await poolPromise;
+  const result = await pool.request()
+    .input('subID', sql.UniqueIdentifier, subID)
+    .query(`SELECT * FROM Submission WHERE subID = @subID`);
+  return result.recordset[0];
+}
+
+async function updateSubmission(subID, data) {
+  const pool = await poolPromise;
+  await pool.request()
+    .input('subID', sql.UniqueIdentifier, subID)
+    .input('file', sql.NVarChar(sql.MAX), data.file)
+    .input('rating', sql.Float, data.rating)
+    .input('voteCount', sql.Int, data.voteCount)
+    .query(`
+      UPDATE Submission
+      SET file = @file, rating = @rating, voteCount = @voteCount
+      WHERE subID = @subID
+    `);
+}
+
+async function deleteSubmission(subID) {
+  const pool = await poolPromise;
+  await pool.request()
+    .input('subID', sql.UniqueIdentifier, subID)
+    .query(`DELETE FROM Submission WHERE subID = @subID`);
+}
+
+module.exports = { 
+  createSubmission, 
+  listSubmissions, 
+  getSubmission, 
+  updateSubmission, 
+  deleteSubmission 
+};

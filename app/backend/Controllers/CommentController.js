@@ -1,42 +1,47 @@
-// controllers/CompetitionController.js
-const competitionModel = require('../models/Competition');
+// controllers/CommentController.js
+const { createComment, getCommentsBySubmission, updateComment, deleteComment } = require('../models/Comment');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Controller to create a new competition.
- */
-async function createCompetition(req, res) {
+exports.createComment = async (req, res) => {
   try {
-    // Create a competition object using data from the request body
     const data = {
-      compID: uuidv4(), // Generate a unique ID
-      title: req.body.title,
-      description: req.body.description,
-      submissionFileType: req.body.submissionFileType,
-      attachment: req.body.attachment,
-      startTime: req.body.startTime,
-      endTime: req.body.endTime,
-      status: req.body.status || 'Sub' // Default status (e.g., "Sub" for Submission phase)
+      ...req.body,
+      commentID: uuidv4(),          // Generate a unique ID for the comment
+      createdAt: new Date()         // Set the creation timestamp
     };
-
-    // Call the model to create a competition in the database
-    await competitionModel.createCompetition(data);
-    res.status(201).json({ message: 'Competition created successfully' });
+    await createComment(data);
+    res.status(201).json({ message: 'Comment created successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
-/**
- * Controller to list all competitions.
- */
-async function listCompetitions(req, res) {
+exports.getCommentsBySubmission = async (req, res) => {
   try {
-    const competitions = await competitionModel.getCompetitions();
-    res.status(200).json(competitions);
+    const { subID } = req.params;
+    const comments = await getCommentsBySubmission(subID);
+    res.json(comments);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
-module.exports = { createCompetition, listCompetitions };
+exports.updateComment = async (req, res) => {
+  try {
+    const { commentID } = req.params;
+    await updateComment(commentID, req.body);
+    res.json({ message: 'Comment updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  try {
+    const { commentID } = req.params;
+    await deleteComment(commentID);
+    res.json({ message: 'Comment deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
