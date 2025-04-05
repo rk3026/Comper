@@ -1,8 +1,9 @@
-const { sql, poolPromise } = require('../db/database');
+const sql = require('mssql');
+const { getPool } = require('../db/database');
 
 // Create a new thread and assign topics
 async function createThread(name, topics = []) {
-  const pool = await poolPromise;
+  const pool = getPool(); // Use getPool() to retrieve the pool
 
   // Insert the thread
   const threadResult = await pool.request()
@@ -31,7 +32,7 @@ async function createThread(name, topics = []) {
 
 // List all threads (optionally filtered by topic)
 async function listThreads(topic = null) {
-  const pool = await poolPromise;
+  const pool = getPool(); // Use getPool() to retrieve the pool
 
   let result;
   if (topic) {
@@ -57,11 +58,15 @@ async function listThreads(topic = null) {
 
 // Get a thread and its comments
 async function getThreadWithComments(threadID) {
-  const pool = await poolPromise;
+  const pool = getPool(); // Use getPool() to retrieve the pool
 
   const threadResult = await pool.request()
     .input('threadID', sql.Int, threadID)
-    .query(`SELECT id, name FROM threads WHERE id = @threadID`);
+    .query(`
+      SELECT id, name 
+      FROM threads 
+      WHERE id = @threadID
+    `);
 
   const commentsResult = await pool.request()
     .input('threadID', sql.Int, threadID)
@@ -80,15 +85,20 @@ async function getThreadWithComments(threadID) {
 
 // Add a comment to a thread
 async function addCommentToThread(threadID, content) {
-  const pool = await poolPromise;
-  await pool.request()
-    .input('threadID', sql.Int, threadID)
-    .input('content', sql.Text, content)
-    .input('creationTime', sql.SmallDateTime, new Date())
-    .query(`
-      INSERT INTO threadComments (threadID, content, creationTime)
-      VALUES (@threadID, @content, @creationTime)
-    `);
+  const pool = getPool();
+  try {
+    await pool.request()
+      .input('threadID', sql.Int, threadID)
+      .input('content', sql.Text, content)
+      .input('creationTime', sql.SmallDateTime, new Date())
+      .query(`
+        INSERT INTO threadComments (threadID, content, creationTime)
+        VALUES (@threadID, @content, @creationTime)
+      `);
+    console.log('Comment added successfully');
+  } catch (err) {
+    console.error('Error adding comment:', err.message);
+  }
 }
 
 module.exports = {

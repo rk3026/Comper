@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/create" element={<CreateCompetition />} />
         <Route path="/topics" element={<TopicsPage />} />
-        <Route path="/thread" element={<ThreadPage />} />
+        <Route path="/threads/:threadID" element={<ThreadPage />} />
         <Route path="/competitions" element={<CompetitionsPage />} />
         <Route path="/competitions/details" element={<CompetitionDetails />} />
       </Routes>
