@@ -6,6 +6,7 @@ const submissionRoutes = require('./routes/submissionRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const criterionRoutes = require('./routes/criterionRoutes');
 const threadRoutes = require('./routes/threadRoutes')
+const voteRoutes = require('./routes/voteRoutes')
 
 const { connectToDatabase } = require('./db/database');
 
@@ -26,6 +27,7 @@ async function startServer() {
     app.use('/api/comments', commentRoutes);
     app.use('/api/criteria', criterionRoutes);
     app.use('/api/threads', threadRoutes)
+    app.use('/api/vote', voteRoutes)
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

@@ -1,5 +1,5 @@
 // controllers/VotingController.js
-const voteModel = require('../models/Vote'); 
+const voteModel = require('../Models/Vote'); 
 
 async function castVote(req, res)
 {
