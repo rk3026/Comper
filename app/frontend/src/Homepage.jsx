@@ -26,12 +26,28 @@ const trendingCompetitions = [
 export default function Homepage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [availableDate, setAvailableDate] = useState('');
 
-  // Filter competitions by search term
-  const filteredCompetitions = trendingCompetitions.filter(comp =>
-    comp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    comp.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const formatDateOnly = date => date.toISOString().split('T')[0];
+
+  const toDateOnlyString = date => new Date(date).toLocaleDateString('en-CA'); // "YYYY-MM-DD"
+
+  const filteredCompetitions = trendingCompetitions.filter(comp => {
+    const matchesText =
+      comp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      comp.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (!availableDate) return matchesText;
+
+    const selectedDateStr = availableDate; // already "YYYY-MM-DD"
+    const startStr = toDateOnlyString(comp.startTime);
+    const endStr = toDateOnlyString(comp.endTime);
+
+    const isAvailableOnDate = selectedDateStr >= startStr && selectedDateStr <= endStr;
+
+    return matchesText && isAvailableOnDate;
+  });
+
 
   return (
     <div className="homepage-container">
@@ -55,7 +71,19 @@ export default function Homepage() {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
+        <div className="date-filters">
+          <label htmlFor="available-date">Available on:</label>
+          <input
+            type="date"
+            id="available-date"
+            value={availableDate}
+            onChange={e => setAvailableDate(e.target.value)}
+            className="date-input"
+          />
+        </div>
       </section>
+
+
 
       <section className="trending-section">
         <h2>Trending Competitions</h2>
@@ -71,7 +99,9 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <p>No competitions found.</p>
+            <div className="no-results">
+              <p>No competitions are available on this date.</p>
+            </div>
           )}
         </div>
       </section>
