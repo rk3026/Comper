@@ -84,22 +84,31 @@ async function getThreadWithComments(threadID) {
 }
 
 // Add a comment to a thread
-async function addCommentToThread(threadID, content) {
+async function addCommentToThread(threadID, content, replyTo = null) {
   const pool = getPool();
   try {
-    await pool.request()
+    // Define the SQL query to insert the comment and return the inserted data
+    const query = `
+      INSERT INTO threadComments (threadID, content, creationTime)
+      OUTPUT INSERTED.id, INSERTED.content, INSERTED.creationTime
+      VALUES (@threadID, @content, @creationTime);
+    `;
+
+    // Execute the query
+    const result = await pool.request()
       .input('threadID', sql.Int, threadID)
       .input('content', sql.Text, content)
       .input('creationTime', sql.SmallDateTime, new Date())
-      .query(`
-        INSERT INTO threadComments (threadID, content, creationTime)
-        VALUES (@threadID, @content, @creationTime)
-      `);
-    console.log('Comment added successfully');
+      .query(query);
+
+    // Return the result, which contains the inserted comment data
+    return result.recordset[0]; // Get the first row from the result
+
   } catch (err) {
     console.error('Error adding comment:', err.message);
   }
 }
+
 
 module.exports = {
   createThread,

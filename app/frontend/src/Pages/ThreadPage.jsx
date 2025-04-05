@@ -87,8 +87,8 @@ export default function ThreadPage() {
         behavior: 'smooth',
         block: 'center',
       });
-      setSelectedComment(commentId);  // This triggers the highlight by setting the selected comment
     }
+    setSelectedComment(Number(commentId));  // Convert commentId to a number for consistency
   };
   
 
