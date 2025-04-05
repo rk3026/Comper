@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/posts');
 const compRoutes = require('./routes/competitions');
-const { connectToDatabase, initializeDatabase } = require('./db/database');
+const { connectToDatabase } = require('./db/database');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
