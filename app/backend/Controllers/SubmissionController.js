@@ -1,5 +1,27 @@
 const submissionModel = require('../Models/Submission');
 
+async function getCommentsForSubmission(req, res) {
+  try {
+    const { subID } = req.params;
+    const comments = await submissionModel.getCommentsBySubmissionId(subID);
+    res.status(200).json(comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function addCommentToSubmission(req, res) {
+  try {
+    const { subID, content } = req.body;
+    const result = await submissionModel.addCommentToSubmission(subID, content);
+    res.status(201).json({ message: 'Comment added', id: result.insertId });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+}
+
 async function getSubmission(req, res) {
   try {
     const subID = req.body.id;
@@ -30,7 +52,7 @@ async function createSubmission(req, res) {
     }
 }
 
-module.exports = { getSubmission, createSubmission };
+module.exports = { getSubmission, createSubmission, getCommentsForSubmission, addCommentToSubmission };
 
 /*
 const { 
