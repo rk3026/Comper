@@ -31,7 +31,7 @@ export default function Homepage() {
   const [competitions, setCompetitions] = useState([]);
 
     useEffect(() => {
-      fetch('http://localhost:5000/api/competitions')
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
 .then(response => response.json())
 .then(data => setCompetitions(data));
     }, []);
