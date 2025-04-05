@@ -43,6 +43,31 @@ CREATE TABLE submissionComments (
     creationTime SMALLDATETIME,
 );
 
+//THREADS
+CREATE TABLE threads (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name NVARCHAR(255)
+);
+
+CREATE TABLE threadComments (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    threadID INT FOREIGN KEY REFERENCES threads(id),
+    content TEXT,
+    creationTime SMALLDATETIME,
+);
+
+CREATE TABLE competitionTopics (
+    name NVARCHAR(255),
+    compID INT FOREIGN KEY REFERENCES competitions(id),
+    PRIMARY KEY(name, compID)
+);
+
+CREATE TABLE threadTopics (
+    name NVARCHAR(255),
+    threadID INT FOREIGN KEY REFERENCES threads(id),
+    PRIMARY KEY(name, threadID)
+);
+
 //example entries
 INSERT INTO [dbo].[competitions]
 (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
@@ -51,3 +76,61 @@ VALUES ('CANADA', 'png,jpg,gif', 'aosdjfoajsodfhoaSIHDFOAHSODFHAPHFPOH', 'no', '
 INSERT INTO [dbo].[competitions]
 (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
 VALUES ('RUSSIA', 'png,jpg,gif', 'line 1'+Char(10)+'line2'+Char(10)+'line 3', 'revealed desc.', '20250404 11:59:59 PM', '20250405 11:59:59 PM', '20250407 11:59:59 AM', 'https://comperfiles.blob.core.windows.net/attachments/umbrella.png');
+
+
+//MOROOREOROE EXAMPEPESLESL
+-- Additional Competitions
+INSERT INTO competitions (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL) VALUES
+('Summer Photography Contest', 'png', 'Capture the essence of summer.', 'Opens June 1st', '2025-06-01 00:00', '2025-06-20 23:59', '2025-06-25 23:59', 'https://comperfiles.blob.core.windows.net/attachments/canada2.png'),
+('Game Jam: Tiny Worlds', '*', 'Build a game exploring tiny worlds in 48 hours.', 'Starts July 15!', '2025-07-15 18:00', '2025-07-17 18:00', '2025-07-21 23:59', 'https://comperfiles.blob.core.windows.net/attachments/canada3.png'),
+('Short Story Contest', '*', 'Write a story under 1500 words.', 'Opens August 10', '2025-08-10 08:00', '2025-08-30 23:59', '2025-09-05 23:59', 'https://comperfiles.blob.core.windows.net/attachments/canada4.png');
+
+-- More Criteria
+INSERT INTO criteria (compID, name, description, maxPoints) VALUES
+(5, 'Composition', 'Is the photo composed thoughtfully?', 10),
+(5, 'Emotion', 'Does the photo evoke feeling?', 10),
+(6, 'Creativity', 'How imaginative is the concept?', 10),
+(6, 'Gameplay', 'How engaging is the gameplay?', 15),
+(7, 'Plot', 'Is the plot well-structured and interesting?', 10),
+(7, 'Writing Style', 'Is the writing style clear and expressive?', 10);
+
+-- More Submissions
+INSERT INTO submissions (compID, submissionTime, voteCount, totalCriteriaPoints, title, description, attachmentURL) VALUES
+(5, '2025-06-10 13:00', 45, 18, 'Sunset Stroll', 'A serene photo taken on a beach at sunset.', 'https://comperfiles.blob.core.windows.net/attachments/canada2.png'),
+(6, '2025-07-16 21:00', 25, 23, 'Microlands', 'A pixel-art game exploring ant-sized cities.', 'https://comperfiles.blob.core.windows.net/attachments/canada3.png'),
+(7, '2025-08-15 10:30', 60, 19, 'The Lantern Keeper', 'A short fantasy tale about guiding lost souls.', 'https://comperfiles.blob.core.windows.net/attachments/canada4.png');
+
+-- More Competition Comments
+INSERT INTO competitionComments (compID, content, creationTime) VALUES
+(5, 'Are drones allowed for aerial shots?', '2025-06-02 09:00'),
+(6, 'Is Unity allowed or only custom engines?', '2025-07-10 12:40'),
+(7, 'Can I submit a poem instead?', '2025-08-11 07:25');
+
+-- More Submission Comments
+INSERT INTO submissionComments (subID, content, creationTime) VALUES
+(1, 'Such a peaceful vibe in this shot!', '2025-06-11 14:10'),
+(2, 'I love the ant animation!', '2025-07-18 11:12'),
+(3, 'That ending gave me chills!', '2025-08-16 08:42');
+
+-- More Threads
+INSERT INTO threads (name) VALUES
+('Photography Tips'),
+('Story Draft Exchange');
+
+-- More Thread Comments
+INSERT INTO threadComments (threadID, content, creationTime) VALUES
+(1, 'Lighting really makes or breaks your photo.', '2025-06-03 16:00'),
+(2, 'Happy to trade feedback on short stories!', '2025-08-12 13:33');
+
+-- More Competition Topics
+INSERT INTO competitionTopics (name, compID) VALUES
+('Photography', 5),
+('Summer', 5),
+('Games', 6),
+('Fantasy', 7),
+('Writing', 7);
+
+-- More Thread Topics
+INSERT INTO threadTopics (name, threadID) VALUES
+('Photography', 1),
+('Writing', 2);
