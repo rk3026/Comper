@@ -8,7 +8,7 @@ export default function CompetitionsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/competitions')
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
       .then(res => res.json())
       .then(data => {
         setCompetitions(data);
