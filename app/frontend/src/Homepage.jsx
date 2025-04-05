@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
@@ -25,6 +25,13 @@ const trendingCompetitions = [
 
 export default function Homepage() {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter competitions by search term
+  const filteredCompetitions = trendingCompetitions.filter(comp =>
+    comp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    comp.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="homepage-container">
@@ -45,21 +52,27 @@ export default function Homepage() {
           type="text"
           placeholder="Search competitions or topics..."
           className="search-bar"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </section>
 
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
-          {trendingCompetitions.map((comp, index) => (
-            <div key={index} className="competition-card">
-              <h3>{comp.title}</h3>
-              <p>{comp.description}</p>
-              <p><strong>Start:</strong> {comp.startTime}</p>
-              <p><strong>End:</strong> {comp.endTime}</p>
-              <button className="join-button">Join Anonymously</button>
-            </div>
-          ))}
+          {filteredCompetitions.length > 0 ? (
+            filteredCompetitions.map((comp, index) => (
+              <div key={index} className="competition-card">
+                <h3>{comp.title}</h3>
+                <p>{comp.description}</p>
+                <p><strong>Start:</strong> {comp.startTime}</p>
+                <p><strong>End:</strong> {comp.endTime}</p>
+                <button className="join-button">Join Anonymously</button>
+              </div>
+            ))
+          ) : (
+            <p>No competitions found.</p>
+          )}
         </div>
       </section>
     </div>
