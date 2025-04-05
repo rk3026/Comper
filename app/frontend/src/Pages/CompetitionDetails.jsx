@@ -51,18 +51,6 @@ export default function CompetitionDetails() {
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>
-<<<<<<< HEAD
-      <p><strong>Description:</strong> {competition.description}</p>
-      <p><strong>Start:</strong> {new Date(competition.startTime).toLocaleString()}</p>
-      <p><strong>End:</strong> {new Date(competition.endTime).toLocaleString()}</p>
-
-      {submissions.map((submission) => (
-	<div key={submission.id} className="submission-card" onClick={() => navigate('/submissions/details', { state: { submission: { id: submission.id }}})}>
-	  <h2>{submission.title}</h2>
-	  <p>{submission.description}</p>
-	</div>
-      ))}
-=======
 
       <div className="competition-info">
         {competition.attachmentURL && (
@@ -122,7 +110,6 @@ export default function CompetitionDetails() {
           {joining ? 'Joining...' : 'Join Competition'}
         </button>
       </div>
->>>>>>> origin/RossBranch
 
       <button className="back-button" onClick={() => navigate('/')}>Return to Homepage</button>
     </div>

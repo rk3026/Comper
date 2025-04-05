@@ -11,7 +11,6 @@ export default function Homepage() {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions`)
       .then(response => response.json())
-<<<<<<< HEAD
       .then(data => {
         setCompetitions(data);
         setFilteredCompetitions(data); // Initially show all competitions
@@ -35,15 +34,6 @@ export default function Homepage() {
       setFilteredCompetitions(filtered); // Update the filtered competitions list
     }
   }, [searchQuery, competitions]); // Re-run whenever searchQuery or competitions change
-=======
-      .then(data => setCompetitions(data));
-  }, []);
-
-  const handleCompetitionClick = (competition) => {
-    // Pass the entire competition object via navigate state
-    navigate('/competitions/details', { state: { competition } });
-  };
->>>>>>> origin/RossBranch
 
   return (
     <div className="homepage-container">
@@ -74,22 +64,13 @@ export default function Homepage() {
       <section className="trending-section">
         <h2>Trending Competitions</h2>
         <div className="trending-row">
-<<<<<<< HEAD
           {filteredCompetitions.map((comp, index) => (
             <div key={index} className="competition-card">
-=======
-          {competitions.map((comp) => (
-            <div key={comp.id} className="competition-card" onClick={() => handleCompetitionClick(comp)}>
->>>>>>> origin/RossBranch
               <h3>{comp.title}</h3>
               <p style={{ whiteSpace: 'pre-line' }}>{comp.description}</p>
               <p><strong>Start:</strong> {new Date(comp.startTime).toLocaleString()}</p>
               <p><strong>End:</strong> {new Date(comp.deadline).toLocaleString()}</p>
-<<<<<<< HEAD
               <img src={comp.attachmentURL} width="200" height="200" alt="Competition" />
-=======
-              <img src={comp.attachmentURL} width="200" height="200" alt={comp.title} />
->>>>>>> origin/RossBranch
               <button className="join-button">Join Anonymously</button>
             </div>
           ))}
