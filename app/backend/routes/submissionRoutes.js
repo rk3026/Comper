@@ -6,8 +6,9 @@ const submissionController = require('../Controllers/SubmissionController');
 // POST /api/submissions - Create a new submission
 router.post('/', submissionController.createSubmission);
 
+// Not needed, done automatically when fetching specific details for a competition
 // GET /api/submissions/competition/:compID - List all submissions for a competition
-router.get('/competition/:compID', submissionController.listSubmissions);
+//router.get('/competition/:compID', submissionController.listSubmissions);
 
 // GET /api/submissions/:subID - Retrieve a single submission by ID
 router.get('/:subID', submissionController.getSubmission);
