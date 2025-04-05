@@ -10,7 +10,23 @@ CREATE TABLE competitions (
     attachmentURL NVARCHAR(2000)
 );
 
-//example entry
+CREATE TABLE posts (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    title NVARCHAR(255),
+    filetype NVARCHAR(255),
+    description NVARCHAR(2000),
+    startDesc NVARCHAR(2000),
+    startTime SMALLDATETIME,
+    deadline SMALLDATETIME,
+    voteEndTime SMALLDATETIME,
+    attachmentURL NVARCHAR(2000)
+);
+
+//example entries
 INSERT INTO [dbo].[competitions]
 (title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
 VALUES ('CANADA', 'png,jpg,gif', 'aosdjfoajsodfhoaSIHDFOAHSODFHAPHFPOH', 'no', '20250404 11:59:59 PM', '20250405 11:59:59 PM', '20250407 11:59:59 AM', 'https://comperfiles.blob.core.windows.net/attachments/canada.png');
+
+INSERT INTO [dbo].[competitions]
+(title, filetype, description, startDesc, startTime, deadline, voteEndTime, attachmentURL)
+VALUES ('RUSSIA', 'png,jpg,gif', 'line 1'+Char(10)+'line2'+Char(10)+'line 3', 'revealed desc.', '20250404 11:59:59 PM', '20250405 11:59:59 PM', '20250407 11:59:59 AM', 'https://comperfiles.blob.core.windows.net/attachments/umbrella.png');
