@@ -1,5 +1,13 @@
+/*
+ * CompetitionDetails handles the webpage for viewing a specific component
+ * where its id is passed in by a state object
+ */
+
+// Import libs
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+// Import style
 import './CompetitionDetails.css';
 
 export default function CompetitionDetails() {
@@ -7,6 +15,7 @@ export default function CompetitionDetails() {
   const navigate = useNavigate();
   const competitionId = location.state?.competition.id;
 
+  // webpage variables that can change the html
   const [competition, setCompetition] = useState({});
   const [submissions, setSubmissions] = useState([]);
   const [comments, setComments] = useState([]);
@@ -50,9 +59,7 @@ export default function CompetitionDetails() {
       });
   }, [competitionId]);
   
-  
-  
-
+  // Handles when a user clicks the post comment button
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {
       try {
@@ -85,6 +92,7 @@ export default function CompetitionDetails() {
     }
   };
 
+  // Reply to button click event handler
   const handleReplyTo = (commentId) => {
     setReplyTo(commentId);
     setNewComment(`>>${commentId} `);
@@ -97,6 +105,7 @@ export default function CompetitionDetails() {
     }
   };
 
+  // Smoothly scrools to a comment given its id
   const scrollToComment = (commentId) => {
     const commentElement = document.getElementById(`comment-${commentId}`);
     if (commentElement) {
@@ -107,8 +116,10 @@ export default function CompetitionDetails() {
     }
   };
 
+  // Wait to show everything till the details have been fetched from the server successfuly
   if (loading) return <div className="details-container">Loading competition details...</div>;
 
+    // Competition Info section
   return (
     <div className="details-container">
       <h1>{competition.title}</h1>

@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for /api/topics
+ */
+
 const express = require('express');
 const router = express.Router();
 const topicController = require('../Controllers/TopicController');

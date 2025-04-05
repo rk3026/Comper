@@ -1,3 +1,7 @@
+/*
+ * Webpage containing the list of available topics
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 

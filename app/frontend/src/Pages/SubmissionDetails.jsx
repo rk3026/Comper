@@ -1,3 +1,8 @@
+/*
+ * Shows all the detailed information about a submission for
+ * a competition including a comment section
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

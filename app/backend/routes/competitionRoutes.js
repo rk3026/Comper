@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for /api/competitions
+ */
+
 // routes/competitionRoutes.js
 const express = require('express');
 const router = express.Router();

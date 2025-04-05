@@ -1,3 +1,9 @@
+/*
+ * Main React component.
+ *
+ * Uses react-router-dom to specify which jsx files are used for each of the several webpages
+ */
+
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -32,7 +38,7 @@ function App() {
         <Route path="/create" element={<CreateCompetition />} />
 	<Route path="/submissions/details" element={<SubmissionDetails />} /> // after clicking a specific submission under a competition
 
-        {/* Submissions */}
+        {/* Submissions */}`
         <Route path="/submission" element={<SubmissionPage />} />
         <Route path="/createSubmission" element={<CreateSubmission />} />
 

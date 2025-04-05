@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests for /api/submissions
+ */
+
 const express = require('express');
 const router = express.Router();
 const submissionController = require('../Controllers/SubmissionController');

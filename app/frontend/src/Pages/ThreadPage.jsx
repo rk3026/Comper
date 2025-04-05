@@ -1,3 +1,7 @@
+/*
+ * Webpage for a single thread to a list of comments talking about a specific topic
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './ThreadPage.css';

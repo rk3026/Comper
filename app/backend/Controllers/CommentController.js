@@ -1,7 +1,13 @@
+/*
+ * Handles fetch requests for /api/comments
+ * and sends any SQL queries to Comment.js
+ */
+
 // controllers/CommentController.js
 const { createComment, getCommentsBySubmission, updateComment, deleteComment } = require('../Models/Comment');
 const { v4: uuidv4 } = require('uuid');
 
+// Handles when the user creates a new comment
 exports.createComment = async (req, res) => {
   try {
     const data = {
@@ -16,6 +22,7 @@ exports.createComment = async (req, res) => {
   }
 };
 
+// Handles when the user requests a list of all comments for a particular submission
 exports.getCommentsBySubmission = async (req, res) => {
   try {
     const { subID } = req.params;
@@ -26,6 +33,7 @@ exports.getCommentsBySubmission = async (req, res) => {
   }
 };
 
+// Handles when the user updates a comment
 exports.updateComment = async (req, res) => {
   try {
     const { commentID } = req.params;
@@ -36,6 +44,7 @@ exports.updateComment = async (req, res) => {
   }
 };
 
+// Handles when the user deletes a comment
 exports.deleteComment = async (req, res) => {
   try {
     const { commentID } = req.params;

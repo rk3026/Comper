@@ -1,3 +1,8 @@
+/*
+ * Handles fetch requests for /api/submissions
+ * and sends any SQL queries to Submission.js
+ */
+
 const submissionModel = require('../Models/Submission');
 
 async function getCommentsForSubmission(req, res) {

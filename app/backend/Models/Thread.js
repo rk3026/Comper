@@ -1,3 +1,7 @@
+/*
+ * Handles SQL queries for getting and setting data in the threads table
+ */
+
 const sql = require('mssql');
 const { getPool } = require('../db/database');
 

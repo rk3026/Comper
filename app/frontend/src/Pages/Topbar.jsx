@@ -1,3 +1,8 @@
+/*
+ * Handles html for the menu bar on the top of every webpage including a home button
+ * and a logo
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Topbar.css';
@@ -14,7 +19,7 @@ export default function Topbar() {
       <nav className="topbar-nav">
         <Link to="/">Home</Link>
         <Link to="/topics">Topics</Link>
-        <Link to="/create">+ Competition</Link>
+      {/*<Link to="/create">+ Competition</Link>*/}
         <Link to="/threads/1">Thread 1</Link>
         <Link to="/competitions">Competitions</Link>
 

@@ -1,3 +1,7 @@
+/*
+ * Contains example topics through which threads can be seen
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TopicsPage.css';

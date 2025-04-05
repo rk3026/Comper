@@ -1,3 +1,8 @@
+/*
+ * Handles fetch requests for /api/threads
+ * and sends any SQL queries to Thread.js
+ */
+
 const threadModel = require('../Models/Thread');
 
 /**

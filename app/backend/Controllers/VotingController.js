@@ -1,6 +1,12 @@
+/*
+ * Handles fetch requests for /api/vote
+ * and sends any SQL queries to Vote.js
+ */
+
 // controllers/VotingController.js
 const voteModel = require('../Models/Vote'); 
 
+// Handles the fetch request for when a user votes on a submission
 async function castVote(req, res)
 {
   try {

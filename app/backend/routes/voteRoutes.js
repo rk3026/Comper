@@ -1,3 +1,7 @@
+/*
+ * Reroutes fetch requests /api/vote
+ */
+
 const express = require('express');
 const router = express.Router();
 const votingController = require('../Controllers/VotingController');

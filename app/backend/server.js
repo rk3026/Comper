@@ -1,6 +1,13 @@
+/*
+ * Main express nodejs file that handles what routes scripts handle
+ * certain fetch requests.
+ */
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
+// All route scripts
 const compRoutes = require('./routes/competitionRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 const commentRoutes = require('./routes/commentRoutes');

@@ -1,5 +1,10 @@
+/*
+ * Handles SQL queries for setting and getting data from the topics table
+ */
+
 const { sql, getPool } = require('../db/database');
 
+// Retrieves all topics in the database
 async function getAllTopics() {
   const pool = getPool();
   const result = await pool.request().query(`
@@ -13,6 +18,7 @@ async function getAllTopics() {
   return result.recordset;
 }
 
+// Retrieves all competitions in the database that have a certain topic
 async function getCompetitionsByTopic(name) {
   const pool = getPool();
   const result = await pool.request()
@@ -26,6 +32,7 @@ async function getCompetitionsByTopic(name) {
   return result.recordset;
 }
 
+// Retrieves all threads in the database that have a certain topic
 async function getThreadsByTopic(name) {
   const pool = getPool();
   const result = await pool.request()

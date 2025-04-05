@@ -1,3 +1,7 @@
+/*
+ * Handles SQL queries for setting and getting data from the submissions table
+ */
+
 const { sql, getPool } = require('../db/database');
 const { queryFromPool } = require('./Utility');
 

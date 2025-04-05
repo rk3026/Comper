@@ -1,5 +1,11 @@
+/*
+ * Handles fetch requests for /api/topics
+ * and sends any SQL queries to Topic.js
+ */
+
 const topicModel = require('../Models/Topic');
 
+// Handles the fetch request for retrieving all topics
 async function listAllTopics(req, res) {
   try {
     const topics = await topicModel.getAllTopics();
@@ -10,6 +16,7 @@ async function listAllTopics(req, res) {
   }
 }
 
+// Handles the fetch request for retrieving all competitions under a certain topic
 async function getCompetitionsByTopic(req, res) {
   try {
     const { name } = req.params;
@@ -21,6 +28,7 @@ async function getCompetitionsByTopic(req, res) {
   }
 }
 
+// Handles the fetch request for retrieving all threads under a certain topic
 async function getThreadsByTopic(req, res) {
   try {
     const { name } = req.params;

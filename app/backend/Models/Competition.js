@@ -1,3 +1,7 @@
+/*
+ * Handles SQL queries for setting and retrieving data from the components table
+ */
+
 const { sql, getPool } = require('../db/database');
 const { queryFromPool } = require('./Utility');
 
@@ -8,10 +12,12 @@ async function getCompetitions() {
   return await queryFromPool('SELECT * FROM competitions');
 }
 
+// Retrieve the details of a specific competition
 async function getCompetitionDetails(compID) {
   return await queryFromPool(`SELECT * FROM competitions WHERE id = ${compID};`);
 }
 
+// Retrieve all the submissions of a specific competition
 async function getSubmissions(compID) {
   return await queryFromPool(`SELECT * FROM submissions WHERE compID = ${compID};`);
 }
@@ -62,6 +68,7 @@ async function createCompetition(data) {
   }
 }
 
+// Retrieve all comments associated with the given competition
 async function getCompetitionComments(compID) {
   try {
     // Fetch associated comments for the competition

@@ -1,3 +1,13 @@
+/*
+ * Handles webpage code for the homepage
+ *
+ * Trending competitions and threads list
+ *
+ * Search option
+ *
+ * Topbar
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
@@ -80,7 +90,7 @@ export default function Homepage() {
         />
       </section>
 
-      {/* Trending Section with Competitions and Threads */}
+      {/* Trending Section with Competitions */}
       <section className="trending-section">
         <h2>Trending</h2>
         <div className="trending-container">
@@ -115,6 +125,7 @@ export default function Homepage() {
             </div>
           </div>
 
+	{/* Trending Threads */}
           <div className="trending-threads">
             <h3>Threads</h3>
             <div className="trending-row">

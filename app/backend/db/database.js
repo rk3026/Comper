@@ -1,3 +1,7 @@
+/*
+ * Handles the basic functionality for connecting to a SQL database
+ */
+
 const sql = require('mssql');
 require('dotenv').config();
 
