@@ -52,6 +52,6 @@ The frontend is built using React, and it communicates with the backend API to d
 ### Hosting Platform
 We host our backend and frontend on Render. The frontend uses the static site option, and the backend uses the web service option.
 
-### DataBase
+### Database
 
 ![image](https://github.com/user-attachments/assets/3a617098-b4e9-40a8-82d4-24f0f879face)
