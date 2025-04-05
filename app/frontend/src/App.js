@@ -5,6 +5,7 @@ import CreateCompetition from './CreateCompetition';
 import TopicsPage from './TopicsPage';
 import ThreadPage from './ThreadPage';
 import Topbar from './Topbar';
+import CompetitionsPage from './CompetitionsPage';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/create" element={<CreateCompetition />} />
         <Route path="/topics" element={<TopicsPage />} />
         <Route path="/thread" element={<ThreadPage />} />
+        <Route path="/competitions" element={<CompetitionsPage />} />
       </Routes>
     </Router>
   );

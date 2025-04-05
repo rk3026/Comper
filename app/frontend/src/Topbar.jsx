@@ -13,6 +13,7 @@ export default function Topbar() {
         <Link to="/topics">Topics</Link>
         <Link to="/create">+ Competition</Link>
         <Link to="/thread">Threads</Link>
+        <Link to="/competitions">Competitions</Link>
       </nav>
     </div>
   );
