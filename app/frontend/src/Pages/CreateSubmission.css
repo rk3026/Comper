@@ -2,7 +2,7 @@
 
 .container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 12px;
@@ -12,7 +12,7 @@
 
 h1 {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   color: #333;
   margin-bottom: 1.5rem;
 }
@@ -20,29 +20,35 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* More space between form fields */
+  gap: 1.8rem; /* More space between form fields */
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 1.2rem;
 }
 
 label {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #444;
   font-weight: 600;
+  margin-bottom: 0.5rem; /* Space between label and input */
+  display: block; /* Ensures label appears above input */
 }
 
-input, textarea {
+input,
+textarea {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
   background-color: #f9fafb;
-  transition: border 0.3s ease;
-  width: 100%; /* Ensure inputs and textareas fill available space */
+  width: 100%;
 }
 
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 button {
@@ -52,7 +58,7 @@ button {
   border-radius: 10px;
   border: none;
   transition: background-color 0.3s ease;
-  flex: 1; /* Buttons will take equal space */
+  flex: 1;
 }
 
 button[type="submit"] {
@@ -60,7 +66,7 @@ button[type="submit"] {
   color: white;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:active {
   background-color: #45a049;
 }
 
@@ -69,34 +75,41 @@ button[type="button"] {
   color: white;
 }
 
-button[type="button"]:hover {
+button[type="button"]:active {
   background-color: #e04a4a;
 }
 
 .button-container {
   display: flex;
-  gap: 1rem; /* Space between buttons */
+  gap: 1.2rem;
+}
+
+.success-message,
+.error-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
 .success-message {
-  margin-top: 1rem;
-  color: green;
-  font-weight: bold;
-  text-align: center;
+  color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
 }
 
 .error-message {
-  margin-top: 1rem;
-  color: red;
-  font-weight: bold;
-  text-align: center;
+  color: #e04a4a;
+  background-color: rgba(224, 74, 74, 0.1);
 }
 
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem;
   }
-  input, textarea {
+  input,
+  textarea {
     font-size: 0.9rem;
   }
   button {
