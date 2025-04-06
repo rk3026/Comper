@@ -41,7 +41,7 @@ The backend is built using Node.js and Express. It handles API requests, manages
 - `Models/`: Interact directly with the Azure SQL server for data in the tables.
 
 ### Frontend
-The frontend is built using React, and it communicates with the backend API to display posts, threads, and user-submitted competition entries.
+The frontend is built using React, and it communicates with the backend API to display threads, competitions, and user-submitted competition entries.
 
 #### Key Files:
 - `src/App.js`: The main React component, rendering the entire app interface.
