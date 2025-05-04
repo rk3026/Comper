@@ -5,7 +5,7 @@
 
 // Import libs
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 // Import style
 import './CompetitionDetails.css';
@@ -13,7 +13,7 @@ import './CompetitionDetails.css';
 export default function CompetitionDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const competitionId = location.state?.competition.id;
+  const { compID } = useParams();
 
   // Competition data states
   const [competition, setCompetition] = useState({});
@@ -32,14 +32,14 @@ export default function CompetitionDetails() {
 
   // Fetch competition details
   useEffect(() => {
-    if (!competitionId) return;
+    if (!compID) return;
 
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details`, {
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/details/${compID}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: competitionId }),
+      body: JSON.stringify({ id: compID }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -59,13 +59,13 @@ export default function CompetitionDetails() {
         console.error('Error fetching competition details: ', err);
         setLoading(false);
       });
-  }, [competitionId]);
+  }, [compID]);
 
   // Fetch criteria for the competition
   useEffect(() => {
-    if (!competitionId) return;
+    if (!compID) return;
 
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria/${competitionId}`)
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/criteria/${compID}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch criteria.');
@@ -80,13 +80,13 @@ export default function CompetitionDetails() {
         setCriteriaError(err.message);
         setCriteriaLoading(false);
       });
-  }, [competitionId]);
+  }, [compID]);
 
   // Handles when a user clicks the post comment button
   const handlePostComment = async () => {
     if (newComment.trim() !== '') {
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/${competitionId}/comments`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/competitions/${compID}/comments`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -195,7 +195,7 @@ export default function CompetitionDetails() {
       <button
         className="view-submissions-button"
         onClick={() =>
-          navigate(`/viewSubmissions`, { state: { competition: { id: competitionId } } })
+          navigate(`/viewSubmissions/${compID}`)
         }
       >
         View Submissions
@@ -253,7 +253,7 @@ export default function CompetitionDetails() {
         <button
           className="submit-submission-button"
           onClick={() =>
-            navigate(`/createSubmission`, { state: { competition: { id: competitionId } } })
+            navigate(`/createSubmission/${compID}`)
           }
         >
           Submit your attempt!
@@ -269,7 +269,7 @@ export default function CompetitionDetails() {
               key={index}
               className="submission-preview-card"
               onClick={() =>
-                navigate(`/submissions/details`, { state: { submission: { id: submission.id } } })
+                navigate(`/submissions/details/${submission.id}`)
               }
             >
               <img src={submission.attachmentURL} alt={submission.title} />

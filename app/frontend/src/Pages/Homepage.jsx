@@ -66,7 +66,7 @@ export default function Homepage() {
 
   // Navigation handlers
   const handleCompetitionClick = (competition) => {
-    navigate('/competitions/details', { state: { competition } });
+    navigate(`/competitions/details/${competition.id}`);
   };
 
   const handleThreadClick = (thread) => {

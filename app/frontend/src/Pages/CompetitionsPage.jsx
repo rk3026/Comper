@@ -68,7 +68,7 @@ export default function CompetitionsPage() {
             <div 
               key={comp.id} 
               className="competition-card" 
-              onClick={() => navigate(`/competitions/details`, { state: { competition: comp }})} // Pass competition details
+              onClick={() => navigate(`/competitions/details/${comp.id}`)} // Pass competition details
             >
               {/* Image at the top */}
               {comp.attachmentURL && (

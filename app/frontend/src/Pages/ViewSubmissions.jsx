@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ViewSubmissions.css'; // Use the existing styles
 
 export default function ViewSubmissions() {
     const navigate = useNavigate();
     const location = useLocation();
-    const competitionId = location.state?.competition.id;
+    const { compID } = useParams();
 
     const [submissions, setSubmissions] = useState([]); // All competitions
     const [filteredSubmissions, setFilteredSubmissions] = useState([]); // Filtered competitions based on search
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch competitions on component mount
+    // Fetch submissions on component mount
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions`, {
+        fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/${compID}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({compID: competitionId})
+            body: JSON.stringify({compID: compID})
         })
             .then(res => res.json())
             .then(data => {
@@ -72,7 +72,7 @@ export default function ViewSubmissions() {
                         <div
                             key={comp.id}
                             className="competition-card"
-                            onClick={() => navigate(`/submissions/details`, { state: { submission: { id: comp.id }} })} // Pass competition details
+                            onClick={() => navigate(`/submissions/details/${comp.id}`)} // Pass competition details
                         >
                             {/* Image at the top */}
                             {comp.attachmentURL && (

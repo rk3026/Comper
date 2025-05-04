@@ -5,13 +5,13 @@
  */
 
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './CreateSubmission.css'; // Import your CSS file for styling
 
 const CreateSubmission = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const competitionId = location.state?.competition.id;
+  const competitionId = useParams().compID;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -30,7 +30,7 @@ const CreateSubmission = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/create`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/create/${competitionId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

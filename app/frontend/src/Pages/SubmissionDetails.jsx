@@ -48,13 +48,13 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './SubmissionDetails.css'; 
 
 export default function SubmissionDetails() {
   const location = useLocation(); // Access the current location to retrieve state
   const navigate = useNavigate(); // Navigation hook for programmatic routing
-  const submissionId = location.state?.submission.id; // Extract submission ID from location state
+  const submissionId = useParams().subID; // Extract submission ID from location state
 
   // State variables
   const [submission, setSubmission] = useState({}); // Stores submission details
@@ -69,7 +69,7 @@ export default function SubmissionDetails() {
     const fetchData = async () => {
       try {
         // Fetch submission details
-        const submissionRes = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/details`, {
+        const submissionRes = await fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/submissions/details/${submissionId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: submissionId }),

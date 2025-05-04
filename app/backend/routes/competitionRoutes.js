@@ -14,7 +14,7 @@ router.get('/', competitionController.listCompetitions);
 router.post('/:compID/comments', competitionController.addCommentToCompetition);
 
 // POST /api/competitions/details - Retrieve a single competition by ID
-router.post('/details', competitionController.getCompetitionDetails);
+router.post('/details/:compID', competitionController.getCompetitionDetails);
 
 // POST /api/competitions/create - Create a new competition
 router.post('/create', competitionController.createCompetition);

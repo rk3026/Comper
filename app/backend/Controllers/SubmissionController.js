@@ -7,7 +7,7 @@ const submissionModel = require('../Models/Submission');
 
 async function listSubmissions(req, res) {
   try {
-    const submissions = await submissionModel.listSubmissions(req.body.compID);
+    const submissions = await submissionModel.listSubmissions(req.params.compID);
     res.status(200).json(submissions);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -37,7 +37,7 @@ async function addCommentToSubmission(req, res) {
 
 async function getSubmission(req, res) {
   try {
-    const subID = req.body.id;
+    const subID = req.params.subID;
     const submission = await submissionModel.getSubmission(subID);
     res.status(200).json(submission);
   } catch (err) {
@@ -48,7 +48,7 @@ async function getSubmission(req, res) {
 async function createSubmission(req, res) {
     try {
 	const data = {
-	    compID: req.body.compID,
+	    compID: req.params.compID,
 	    submissionTime: (new Date()).toISOString(),
 	    voteCount: 0,
 	    totalCriteriaPoints: 0,

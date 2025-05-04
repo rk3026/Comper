@@ -35,14 +35,14 @@ function App() {
 
         {/* Competitions */}
         <Route path="/competitions" element={<CompetitionsPage />} />
-        <Route path="/competitions/details" element={<CompetitionDetails />} />
+        <Route path="/competitions/details/:compID" element={<CompetitionDetails />} />
         <Route path="/create" element={<CreateCompetition />} />
-	<Route path="/submissions/details" element={<SubmissionDetails />} /> // after clicking a specific submission under a competition
+	<Route path="/submissions/details/:subID" element={<SubmissionDetails />} /> // after clicking a specific submission under a competition
 
         {/* Submissions */}`
         <Route path="/submission" element={<SubmissionPage />} />
-        <Route path="/createSubmission" element={<CreateSubmission />} />
-        <Route path="/viewSubmissions" element={<ViewSubmissions />} />
+        <Route path="/createSubmission/:compID" element={<CreateSubmission />} />
+        <Route path="/viewSubmissions/:compID" element={<ViewSubmissions />} />
 
         {/* Voting */}
         <Route path="/vote/:compId/:submissionId" element={<VotingPage />} />
@@ -53,7 +53,6 @@ function App() {
 
         {/* Threads */}
         <Route path="/threads/:threadID" element={<ThreadPage />} />
-        <Route path="/competitions/details" element={<CompetitionDetails />} />
       </Routes>
     </Router>
   );

@@ -42,7 +42,7 @@ async function listCompetitions(req, res) {
 
 async function getCompetitionDetails(req, res) {
   try {
-    const { id } = req.body; // Get the competition ID from the request body
+    let id = req.params.compID; // Get the competition ID from the request body
     
     // Fetch competition details, submissions, and comments
     const competition = await competitionModel.getCompetitionDetails(id);
